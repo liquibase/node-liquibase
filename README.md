@@ -280,6 +280,9 @@ yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://loc
 yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
 ```
 
+### Sandbox: @pd
+If you'd like to see a working setup of `liquibase@pd` be sure to check out the `peer-dependency` branch of the [Node Liquibase Sandbox](https://github.com/tabuckner/node-liquibase-sandbox/blob/peer-dependency/index.ts). You can see a diff of the two approaches (Bundled v. Peer) [Here](https://github.com/tabuckner/node-liquibase-sandbox/compare/master...peer-dependency)
+
 ## Want to Help?
 
 This project needs some work on the infrastructure and build tooling side. For now the workflow to test an 'end user ready' version of the project, you'll first need to build/compile the code, and then you can run it using the Node CLI's REPL `node path/to/something.js`.
