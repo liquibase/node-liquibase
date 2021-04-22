@@ -81,19 +81,19 @@ node-liquibase
 --url="jdbc:postgresql://localhost:5432/postgres"
 --username="yourusername"
 --password="yoursecurepassword"
---classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar"
+--classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
 status
 ```
 
 #### Liquibase Executable "Peer Dependency"
 
 ```bash
-node-liquibase /Users/taylor/Dev/Liquibase/hackathons/node-liquibase/bin/liquibase/liquibase
+node-liquibase /Users/me/path/to/my/executable/for/liquibase
  --changeLogFile="/path/to/my/changelog.xml"
  --url="jdbc:postgresql://localhost:5432/postgres"
  --username="yourusername"
  --password="yoursecurepassword"
- --classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar"
+ --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
  status
 ```
 
@@ -227,6 +227,8 @@ npm i liquibase@pd
 
 Depending on your implementation method of choice (TS, JS, or CLI), you will need to let `node-liquibase` know where it can find your `liquibase` executable. This should be an **absolute path** to the executable.
 
+Additionally, we removed the bundled drivers from the `@pd` release to further reduce the size of your `node_modules`. There is a chance you will need to update your configurations to provide an absolute path on the `classpath` property to the drivers you need.
+
 ### Configuration Updates (TS or JS)
 Using the `liquibase` property on your config object.
 
@@ -268,12 +270,12 @@ Using the `--liquibase` flag on your CLI command.
 
 #### Before
 ```bash
-yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar" status
+yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
 ```
 
 #### After
 ```bash
-yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar" status
+yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
 ```
 
 ## Want to Help?
