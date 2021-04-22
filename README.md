@@ -21,6 +21,7 @@ Liquibase is an open-source database-independent library for tracking, managing 
 
 ## Table of Contents
 * [Installation](#installation)
+* [Sandbox](#sandbox)
 * [Usage](#usage)
   * [CLI](#cli)
   * [In Your Project Files](#in-your-project-files)
@@ -30,6 +31,9 @@ Liquibase is an open-source database-independent library for tracking, managing 
   * [Liquibase CLI Command API Parity](#liquibase-cli-command-api-parity)
   * [Liquibase CLI Peer Dependency](#liquibase-cli-peer-dependency-(optional))
   * [WTR!?](#wtr!?-why-the-re-write-!?)
+* [Bundled Releases](#bundled-releases)
+  * [Bundled Version Numbers](#bundled-version-numbers)
+* [Peer Dependency (@pd)](#peer-dependency-@pd)
 * [Want to Help?](#want-to-help)
   * [Build](#build)
   * [Tests](#tests)
@@ -52,6 +56,13 @@ or:
 $ NPM install --save liquibase
 ```
 
+### Sandbox
+> "If this isn't making sense, it doesn't make it lies." (Cornell, 1994).
+
+We have also provided a [Small Sandbox Project](https://github.com/tabuckner/node-liquibase-sandbox) where you can easily evaluate [Liquibase](https://github.com/liquibase/liquibase) and `node-liquibase` against a Postgres Database.
+
+The Sandbox project includes startup scripts, and examples to demonstrate how to use `node-liquibase` in TypeScript, JavaScript, and as a CLI tool.
+
 ## Usage
 
 Liquibase support rich pool of commands to keep your database up-to-date, like update, rollback, diff check out full list here: https://docs.liquibase.com/commands/home.html.
@@ -66,23 +77,23 @@ You can use this NPM package as a CLI tool under the namespace `node-liquibase` 
 
 ```bash
 node-liquibase
---changeLogFile="/examples/change-log-examples/postgreSQL/changelog.xml"
+--changeLogFile="/path/to/my/changelog.xml"
 --url="jdbc:postgresql://localhost:5432/postgres"
 --username="yourusername"
 --password="yoursecurepassword"
---classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar"
+--classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
 status
 ```
 
 #### Liquibase Executable "Peer Dependency"
 
 ```bash
-node-liquibase /Users/taylor/Dev/Liquibase/hackathons/node-liquibase/bin/liquibase/liquibase
- --changeLogFile="/examples/change-log-examples/postgreSQL/changelog.xml"
+node-liquibase /Users/me/path/to/my/executable/for/liquibase
+ --changeLogFile="/path/to/my/changelog.xml"
  --url="jdbc:postgresql://localhost:5432/postgres"
  --username="yourusername"
  --password="yoursecurepassword"
- --classpath="/Users/taylor/Dev/Liquibase/hackathons/node-liquibase/drivers/postgresql-42.2.8.jar"
+ --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
  status
 ```
 
@@ -180,6 +191,95 @@ and more of this:
 ```typescript
 liquibase.status();
 ```
+
+## Bundled Releases
+In order to make installation of Liquibase easier for people who are new to the Liquibase toolset, we've chosen to release 'bundled' versions of this project, `node-liquibase`. This means that if you are beholden to a particular version of [Liquibase Core](https://github.com/liquibase/liquibase) you will be able to install a related specific version of `node-liquibase` and have [Liquibase Core](https://github.com/liquibase/liquibase) ready at your fingertips.
+
+This makes the assumption that a consumer of `node-liquibase` _wants_ that. If this is not `true` and you prefer to make use of a more `peer dependency` type of experience, we offer a version of `node-liquibase` that **DOES NOT** bundle an associated version of [Liquibase Core](https://github.com/liquibase/liquibase).
+
+### Bundled Version Numbers
+Because [Liquibase Core](https://github.com/liquibase/liquibase) and `node-liquibase` both use a similar versioning strategy, and because NPM requires a version number bump for even the smallest change, there will not be 100% alignment between the version numbers of each project.
+
+It is safe to assume that the Major and Minor version numbers between the two projects will match on any given `npm` installation of `node-liquibase`.
+
+For example:
+* Let's assume you are required to use [Liquibase Core](https://github.com/liquibase/liquibase) `v4.3.3`
+* `node-liquibase` released `4.3.3` alongside [Liquibase Core](https://github.com/liquibase/liquibase), but needed to update documentation after the fact
+* `node-liquibase` patches its version number and releases `4.3.4`
+* As a User, you could run `yarn add liquibase@4.3` which would install the latest patch version of `4.3` in this case `4.3.4`
+* The "Bundled Liquibase" version would still be `4.3.3` but `node-liquibase` would be `4.3.4`
+
+If you wish to opt-out of the "Bundled Version" you can check out our [Peer Dependency](#peer-dependency-@pd) release.
+
+## Peer Dependency (@pd)
+### Install
+In order to use this `p[eer]-d[ependency]` version of `node-liquibase` you can install with:
+
+```bash
+yarn add liquibase@pd
+```
+
+or
+
+```bash
+npm i liquibase@pd
+```
+
+Depending on your implementation method of choice (TS, JS, or CLI), you will need to let `node-liquibase` know where it can find your `liquibase` executable. This should be an **absolute path** to the executable.
+
+Additionally, we removed the bundled drivers from the `@pd` release to further reduce the size of your `node_modules`. There is a chance you will need to update your configurations to provide an absolute path on the `classpath` property to the drivers you need.
+
+### Configuration Updates (TS or JS)
+Using the `liquibase` property on your config object.
+
+#### Before
+```typescript
+import { Liquibase, LiquibaseConfig, POSTGRESQL_DEFAULT_CONFIG } from 'liquibase';
+
+const myConfig: LiquibaseConfig = {
+  ...POSTGRESQL_DEFAULT_CONFIG,
+  changeLogFile: './changelog.xml',
+  url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
+  username: 'yourusername',
+  password: 'yoursecurepassword',
+}
+const inst = new Liquibase(myConfig);
+
+inst.status();
+```
+
+#### After
+```typescript
+import { Liquibase, LiquibaseConfig, POSTGRESQL_DEFAULT_CONFIG } from 'liquibase';
+
+const myConfig: LiquibaseConfig = {
+  ...POSTGRESQL_DEFAULT_CONFIG,
+  changeLogFile: './changelog.xml',
+  url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
+  username: 'yourusername',
+  password: 'yoursecurepassword',
+  liquibase: 'Users/me/absolute/path/to/executable/directory'
+}
+const inst = new Liquibase(myConfig);
+
+inst.status();
+```
+
+### Configuration Updates (CLI)
+Using the `--liquibase` flag on your CLI command.
+
+#### Before
+```bash
+yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
+```
+
+#### After
+```bash
+yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
+```
+
+### Sandbox: @pd
+If you'd like to see a working setup of `liquibase@pd` be sure to check out the `peer-dependency` branch of the [Node Liquibase Sandbox](https://github.com/tabuckner/node-liquibase-sandbox/blob/peer-dependency/index.ts). You can see a diff of the two approaches (Bundled v. Peer) [Here](https://github.com/tabuckner/node-liquibase-sandbox/compare/master...peer-dependency)
 
 ## Want to Help?
 

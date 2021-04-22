@@ -754,7 +754,6 @@ export class Liquibase {
 	private mergeParamsWithDefaults(params: LiquibaseConfig) {
 		const defaults: LiquibaseConfig = {
 			...POSTGRESQL_DEFAULT_CONFIG,
-			// liquibase: join(__dirname, '../bin/liquibase/liquibase'), // NOTE: Changed this while debuggin.
 			liquibase: FileHelper.bundledLiquibasePath,
 		}
 		this.params = Object.assign({}, defaults, params);
