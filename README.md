@@ -15,6 +15,8 @@
 [4]: https://github.com/liquibase/liquibase
 [5]: https://www.youtube.com/channel/UC5qMsRjObu685rTBq0PJX8w
 
+# **NOTE:** This is the `@pd` or peer dependency version of this package. Please be sure to update your configurations accordingly to ensure that any drivers, or liquibase executables are made known to `node-liquibase`. [Read More](#peer-dependency-@pd).
+
 ![Node and Liquibase](/docs/assets/node-liquibase.png)
 Use Node and databases? Want to do smart architecture decisions? Do not invent wheel, use Liquibase.
 Liquibase is an open-source database-independent library for tracking, managing and applying database schema changes.
