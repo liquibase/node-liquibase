@@ -7,16 +7,14 @@ _liquibase()
 
     # Liquibase options, has to be improved to be more context aware
     opts="
-  help
-  update
-  updateSQL
-  updateCount
-  updateCountSQL
-  updateToTag
-  updateToTagSQL
+  help 
+  update 
+  updateSQL 
+  updateCount 
+  updateCountSQL 
+  updateToTag 
+  updateToTagSQL 
   status
-  registerChangeLog
-  syncHub
   rollback
   rollbackSQL
   rollbackOneChangeSet
@@ -46,8 +44,6 @@ _liquibase()
   clearCheckSums
   changelogSync
   changelogSyncSQL
-changeLogSyncToTag
-changeLogSyncToTagSQL
   markNextChangeSetRan
   markNextChangeSetRanSQL
   listLocks
