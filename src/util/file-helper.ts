@@ -10,17 +10,17 @@ export class FileHelper {
 		return this.bundledLiquibasePathForExternalConsumers;
 	}
 
-	public static get bundledLiquibasePathForExternalConsumers(): string {
+	public static readFileContent(absolutePathToPropertyFile: string): string {
+		return readFileSync(absolutePathToPropertyFile, { encoding: 'utf-8' });
+	}
+
+	private static get bundledLiquibasePathForExternalConsumers(): string {
 		const liquibaseExecutablePath = join(__dirname, 'liquibase/liquibase');
 		return liquibaseExecutablePath;
 	}
 
-	public static get bundledLiquibasePathForInternalConsumers(): string {
+	private static get bundledLiquibasePathForInternalConsumers(): string {
 		const liquibaseExecutablePath = join(__dirname, '../../bin/liquibase/liquibase');
 		return liquibaseExecutablePath;
-	}
-
-	public static readFileContent(absolutePathToPropertyFile: string): string {
-		return readFileSync(absolutePathToPropertyFile, { encoding: 'utf-8' });
 	}
 }

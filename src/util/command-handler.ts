@@ -1,13 +1,14 @@
 import { exec } from 'child_process';
+import { Logger } from '../util';
 
 export class CommandHandler {
 	public static spawnChildProcess(commandString: string): Promise<string> {
-		console.log(`Running ${commandString}...`);
+		Logger.log(`Running ${commandString}...`);
 		return new Promise((resolve, reject) => {
 			exec(commandString, (error, stdout, stderr) => {
-				console.log('\n', stdout);
+				Logger.log(`\n ${stdout}`);
 				if (error) {
-					console.error('\n', stderr);
+					Logger.error(`\n ${stderr}`);
 					// error.stderr = stderr;
 					return reject(error);
 				}

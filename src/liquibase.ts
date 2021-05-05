@@ -31,6 +31,7 @@ import {
 	DiffChangelogCommandAttributes,
 	DiffCommandAttributes,
 } from './models';
+import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
 
 
 export class Liquibase {
@@ -669,15 +670,22 @@ export class Liquibase {
 		return this.run(LiquibaseCommands.DiffChangeLog, params);
 	}
 
-	private stringifyParams(params: { [key: string]: any }): string {
+	private stringifyParams(action: LiquibaseCommands, commandParameters: { [key: string]: any }): string {
+		const commandAcceptsPropertyAsPositionalArgument = Object.values(CommandsWithPositionalArguments).includes(action as any);
 		let commandString = '';
+		let positionalArguments = '';
 
-		for (const property in params) {
-			const targetValue = params[property];
-			commandString += `--${property}=${JSON.stringify(targetValue)} `
+		for (const property in commandParameters) {
+			const targetValue = commandParameters[property];
+
+			if (commandAcceptsPropertyAsPositionalArgument) {
+				positionalArguments += `${JSON.stringify(targetValue)} `;
+			} else {
+				commandString += `--${property}=${JSON.stringify(targetValue)} `;
+			}
 		}
 
-		return commandString;
+		return `${positionalArguments} ${commandString}`;
 	}
 
 	private loadParamsFromLiquibasePropertiesFileOnDemands(liquibasePropertyPath?: string): LiquibaseConfig | undefined {
@@ -715,7 +723,7 @@ export class Liquibase {
 	private run(action: LiquibaseCommands, params: { [key: string]: any } = {}) {
 		const paramsFromLiquibasePropertyFile = this.loadParamsFromLiquibasePropertiesFileOnDemands(this.params.liquibasePropertiesFile);
 		const mergedParams = { ...paramsFromLiquibasePropertyFile, ...this.params }
-		const commandParamsString = this.stringifyParams(params);
+		const commandParamsString = this.stringifyParams(action, params);
 		return this.spawnChildProcess(`${this.liquibasePathAndGlobalAttributes(mergedParams)} ${action} ${commandParamsString}`);
 	}
 

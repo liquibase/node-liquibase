@@ -47,16 +47,28 @@ var LiquibaseCommands;
   LiquibaseCommands2["Validate"] = "validate";
 })(LiquibaseCommands || (LiquibaseCommands = {}));
 
+// src/enums/liquibase-log-levels.enum.ts
+var LiquibaseLogLevels;
+(function(LiquibaseLogLevels2) {
+  LiquibaseLogLevels2["Off"] = "off";
+  LiquibaseLogLevels2["Severe"] = "severe";
+  LiquibaseLogLevels2["Warning"] = "warning";
+  LiquibaseLogLevels2["Info"] = "info";
+  LiquibaseLogLevels2["Debug"] = "debug";
+})(LiquibaseLogLevels || (LiquibaseLogLevels = {}));
+
 // src/util/command-handler.ts
 var _child_process = require('child_process');
 var CommandHandler = class {
   static spawnChildProcess(commandString2) {
-    console.log(`Running ${commandString2}...`);
+    Logger.log(`Running ${commandString2}...`);
     return new Promise((resolve, reject) => {
       _child_process.exec.call(void 0, commandString2, (error, stdout, stderr) => {
-        console.log("\n", stdout);
+        Logger.log(`
+ ${stdout}`);
         if (error) {
-          console.error("\n", stderr);
+          Logger.error(`
+ ${stderr}`);
           return reject(error);
         }
         resolve(stdout);
@@ -75,6 +87,9 @@ var FileHelper = class {
     }
     return this.bundledLiquibasePathForExternalConsumers;
   }
+  static readFileContent(absolutePathToPropertyFile) {
+    return _fs.readFileSync.call(void 0, absolutePathToPropertyFile, {encoding: "utf-8"});
+  }
   static get bundledLiquibasePathForExternalConsumers() {
     const liquibaseExecutablePath = _path.join.call(void 0, __dirname, "liquibase/liquibase");
     return liquibaseExecutablePath;
@@ -82,9 +97,6 @@ var FileHelper = class {
   static get bundledLiquibasePathForInternalConsumers() {
     const liquibaseExecutablePath = _path.join.call(void 0, __dirname, "../../bin/liquibase/liquibase");
     return liquibaseExecutablePath;
-  }
-  static readFileContent(absolutePathToPropertyFile) {
-    return _fs.readFileSync.call(void 0, absolutePathToPropertyFile, {encoding: "utf-8"});
   }
 };
 
@@ -108,20 +120,68 @@ var POSTGRESQL_DEFAULT_CONFIG = {
   classpath: _path.join.call(void 0, __dirname, "drivers/postgresql-42.2.8.jar")
 };
 
+// src/constants/tokens/liquibase-label.ts
+var LIQUIBASE_LABEL = "[NODE-LIQUIBASE]";
+
+// src/util/logger.ts
+var Logger = class {
+  constructor() {
+  }
+  static log(message) {
+    return this._log(message);
+  }
+  static warn(message) {
+    return this._warn(message);
+  }
+  static error(message) {
+    return this._error(message);
+  }
+  static _log(message) {
+    const levels = [LiquibaseLogLevels.Debug, LiquibaseLogLevels.Info, LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+    return console.log(`${LIQUIBASE_LABEL} ${message}`);
+  }
+  static _warn(message) {
+    const levels = [LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+    return console.warn("[33m%s[0m", `${LIQUIBASE_LABEL} ${message}`);
+  }
+  static _error(message) {
+    const levels = [LiquibaseLogLevels.Severe];
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+    return console.error("[31m%s[0m", `${LIQUIBASE_LABEL} ${message}`);
+  }
+  static shouldOperate(acceptableLogLevels) {
+    return acceptableLogLevels.indexOf(this.logLevel) > -1;
+  }
+  static get logLevel() {
+    if (process.env.NODE_ENV === "test") {
+      return LiquibaseLogLevels.Off;
+    }
+    return LiquibaseLogLevels.Severe;
+  }
+};
+
 // src/cli.ts
-var args = process.argv.slice(2);
-var commandString = getCommandString(args);
+var commandString = getCommandString();
 CommandHandler.spawnChildProcess(commandString);
-function getCommandString(args2) {
-  const argsWereProvided = (args2 == null ? void 0 : args2.length) > 0;
+function getCommandString() {
+  const args = process.argv.slice(2);
+  const argsWereProvided = (args == null ? void 0 : args.length) > 0;
   if (!argsWereProvided) {
     throw new Error("CLI call signature does not match the expected format. Please verify you have passed required arguments and parameters.");
   }
-  const firstArg = args2[0];
+  const firstArg = args[0];
   const firstArgWasAKnownCommand = Object.values(LiquibaseCommands).includes(firstArg);
   const firstArgWasAFlag = firstArg.substr(0, 2) === "--";
   if (firstArgWasAKnownCommand || firstArgWasAFlag) {
-    args2.unshift(FileHelper.bundledLiquibasePath);
+    args.unshift(FileHelper.bundledLiquibasePath);
   }
-  return args2.join(" ");
+  return args.join(" ");
 }

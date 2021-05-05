@@ -44,13 +44,13 @@ var CommandHandler = /*#__PURE__*/function () {
   function CommandHandler() {}
 
   CommandHandler.spawnChildProcess = function spawnChildProcess(commandString) {
-    console.log("Running " + commandString + "...");
+    Logger.log("Running " + commandString + "...");
     return new Promise(function (resolve, reject) {
       child_process.exec(commandString, function (error, stdout, stderr) {
-        console.log('\n', stdout);
+        Logger.log("\n " + stdout);
 
         if (error) {
-          console.error('\n', stderr); // error.stderr = stderr;
+          Logger.error("\n " + stderr); // error.stderr = stderr;
 
           return reject(error);
         }
@@ -93,42 +93,6 @@ var FileHelper = /*#__PURE__*/function () {
   }]);
 
   return FileHelper;
-}();
-
-var MSSQL_DEFAULT_CONFIG = {
-  url: 'jdbc:sqlserver://<IP_OR_HOSTNAME>:;database=sqlserver;',
-  changeLogFile: '/examples/change-log-examples/mssql/changelog.xml',
-  username: 'sa',
-  password: '',
-  classpath: /*#__PURE__*/path.join(__dirname, '../../../drivers/mssql-jdbc-7.4.1.jre8.jar')
-};
-
-var POSTGRESQL_DEFAULT_CONFIG = {
-  changeLogFile: '/node_modules/examples/change-log-examples/postgreSQL/changelog.xml',
-  url: 'jdbc:postgresql://localhost:5432/postgres',
-  username: 'postgres',
-  password: '',
-  classpath: /*#__PURE__*/path.join(__dirname, 'drivers/postgresql-42.2.8.jar')
-};
-
-var LIQUIBASE_LABEL = '[NODE-LIQUIBASE]';
-
-var Logger = /*#__PURE__*/function () {
-  function Logger() {}
-
-  Logger.log = function log(message) {
-    console.log(LIQUIBASE_LABEL + " " + message);
-  };
-
-  Logger.warn = function warn(message) {
-    console.warn('\x1b[33m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
-  };
-
-  Logger.error = function error(message) {
-    console.error('\x1b[31m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
-  };
-
-  return Logger;
 }();
 
 (function (LiquibaseCommands) {
@@ -175,6 +139,108 @@ var Logger = /*#__PURE__*/function () {
   LiquibaseCommands["UpdateToTagSql"] = "updateToTagSQL";
   LiquibaseCommands["Validate"] = "validate";
 })(exports.LiquibaseCommands || (exports.LiquibaseCommands = {}));
+
+(function (LiquibaseLogLevels) {
+  LiquibaseLogLevels["Off"] = "off";
+  LiquibaseLogLevels["Severe"] = "severe";
+  LiquibaseLogLevels["Warning"] = "warning";
+  LiquibaseLogLevels["Info"] = "info";
+  LiquibaseLogLevels["Debug"] = "debug";
+})(exports.LiquibaseLogLevels || (exports.LiquibaseLogLevels = {}));
+
+var MSSQL_DEFAULT_CONFIG = {
+  url: 'jdbc:sqlserver://<IP_OR_HOSTNAME>:;database=sqlserver;',
+  changeLogFile: '/examples/change-log-examples/mssql/changelog.xml',
+  username: 'sa',
+  password: '',
+  classpath: /*#__PURE__*/path.join(__dirname, '../../../drivers/mssql-jdbc-7.4.1.jre8.jar')
+};
+
+var POSTGRESQL_DEFAULT_CONFIG = {
+  changeLogFile: '/node_modules/examples/change-log-examples/postgreSQL/changelog.xml',
+  url: 'jdbc:postgresql://localhost:5432/postgres',
+  username: 'postgres',
+  password: '',
+  classpath: /*#__PURE__*/path.join(__dirname, 'drivers/postgresql-42.2.8.jar')
+};
+
+var LIQUIBASE_LABEL = '[NODE-LIQUIBASE]';
+
+var Logger = /*#__PURE__*/function () {
+  function Logger() {}
+
+  Logger.log = function log(message) {
+    return this._log(message);
+  };
+
+  Logger.warn = function warn(message) {
+    return this._warn(message);
+  };
+
+  Logger.error = function error(message) {
+    return this._error(message);
+  };
+
+  Logger._log = function _log(message) {
+    var levels = [exports.LiquibaseLogLevels.Debug, exports.LiquibaseLogLevels.Info, exports.LiquibaseLogLevels.Severe, exports.LiquibaseLogLevels.Warning];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.log(LIQUIBASE_LABEL + " " + message);
+  };
+
+  Logger._warn = function _warn(message) {
+    var levels = [exports.LiquibaseLogLevels.Severe, exports.LiquibaseLogLevels.Warning];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.warn('\x1b[33m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
+  };
+
+  Logger._error = function _error(message) {
+    var levels = [exports.LiquibaseLogLevels.Severe];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.error('\x1b[31m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
+  };
+
+  Logger.shouldOperate = function shouldOperate(acceptableLogLevels) {
+    return acceptableLogLevels.indexOf(this.logLevel) > -1;
+  };
+
+  _createClass(Logger, null, [{
+    key: "logLevel",
+    get: function get() {
+
+      return exports.LiquibaseLogLevels.Severe;
+    }
+  }]);
+
+  return Logger;
+}();
+
+var CommandsWithPositionalArguments;
+
+(function (CommandsWithPositionalArguments) {
+  CommandsWithPositionalArguments["futureRollbackCount"] = "futureRollbackCount";
+  CommandsWithPositionalArguments["futureRollbackFromTag"] = "futureRollbackFromTag";
+  CommandsWithPositionalArguments["futureRollbackSQl"] = "futureRollbackSQl";
+  CommandsWithPositionalArguments["rollback"] = "rollback";
+  CommandsWithPositionalArguments["rollbackCount"] = "rollbackCount";
+  CommandsWithPositionalArguments["rollbackCountSQL"] = "rollbackCountSQL";
+  CommandsWithPositionalArguments["rollbackDate"] = "rollbackDate";
+  CommandsWithPositionalArguments["rollbackSql"] = "rollbackSql";
+  CommandsWithPositionalArguments["rollbackToDate"] = "rollbackToDate";
+  CommandsWithPositionalArguments["rollbackToDateSQL"] = "rollbackToDateSQL";
+  CommandsWithPositionalArguments["tag"] = "tag";
+})(CommandsWithPositionalArguments || (CommandsWithPositionalArguments = {}));
 
 var Liquibase = /*#__PURE__*/function () {
   /**
@@ -855,15 +921,22 @@ var Liquibase = /*#__PURE__*/function () {
     return this.run(exports.LiquibaseCommands.DiffChangeLog, params);
   };
 
-  _proto.stringifyParams = function stringifyParams(params) {
+  _proto.stringifyParams = function stringifyParams(action, commandParameters) {
+    var commandAcceptsPropertyAsPositionalArgument = Object.values(CommandsWithPositionalArguments).includes(action);
     var commandString = '';
+    var positionalArguments = '';
 
-    for (var property in params) {
-      var targetValue = params[property];
-      commandString += "--" + property + "=" + JSON.stringify(targetValue) + " ";
+    for (var property in commandParameters) {
+      var targetValue = commandParameters[property];
+
+      if (commandAcceptsPropertyAsPositionalArgument) {
+        positionalArguments += JSON.stringify(targetValue) + " ";
+      } else {
+        commandString += "--" + property + "=" + JSON.stringify(targetValue) + " ";
+      }
     }
 
-    return commandString;
+    return positionalArguments + " " + commandString;
   };
 
   _proto.loadParamsFromLiquibasePropertiesFileOnDemands = function loadParamsFromLiquibasePropertiesFileOnDemands(liquibasePropertyPath) {
@@ -907,7 +980,7 @@ var Liquibase = /*#__PURE__*/function () {
 
     var mergedParams = _extends({}, paramsFromLiquibasePropertyFile, this.params);
 
-    var commandParamsString = this.stringifyParams(params);
+    var commandParamsString = this.stringifyParams(action, params);
     return this.spawnChildProcess(this.liquibasePathAndGlobalAttributes(mergedParams) + " " + action + " " + commandParamsString);
   }
   /**
