@@ -47,6 +47,7 @@ var LiquibaseCommands;
   LiquibaseCommands2["Validate"] = "validate";
 })(LiquibaseCommands || (LiquibaseCommands = {}));
 
+<<<<<<< HEAD
 // src/enums/liquibase-log-levels.enum.ts
 var LiquibaseLogLevels;
 (function(LiquibaseLogLevels2) {
@@ -57,10 +58,13 @@ var LiquibaseLogLevels;
   LiquibaseLogLevels2["Debug"] = "debug";
 })(LiquibaseLogLevels || (LiquibaseLogLevels = {}));
 
+=======
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
 // src/util/command-handler.ts
 var _child_process = require('child_process');
 var CommandHandler = class {
   static spawnChildProcess(commandString2) {
+<<<<<<< HEAD
     Logger.log(`Running ${commandString2}...`);
     return new Promise((resolve, reject) => {
       _child_process.exec.call(void 0, commandString2, (error, stdout, stderr) => {
@@ -69,6 +73,14 @@ var CommandHandler = class {
         if (error) {
           Logger.error(`
  ${stderr}`);
+=======
+    console.log(`Running ${commandString2}...`);
+    return new Promise((resolve, reject) => {
+      _child_process.exec.call(void 0, commandString2, (error, stdout, stderr) => {
+        console.log("\n", stdout);
+        if (error) {
+          console.error("\n", stderr);
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
           return reject(error);
         }
         resolve(stdout);
@@ -87,9 +99,12 @@ var FileHelper = class {
     }
     return this.bundledLiquibasePathForExternalConsumers;
   }
+<<<<<<< HEAD
   static readFileContent(absolutePathToPropertyFile) {
     return _fs.readFileSync.call(void 0, absolutePathToPropertyFile, {encoding: "utf-8"});
   }
+=======
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
   static get bundledLiquibasePathForExternalConsumers() {
     const liquibaseExecutablePath = _path.join.call(void 0, __dirname, "liquibase/liquibase");
     return liquibaseExecutablePath;
@@ -98,6 +113,12 @@ var FileHelper = class {
     const liquibaseExecutablePath = _path.join.call(void 0, __dirname, "../../bin/liquibase/liquibase");
     return liquibaseExecutablePath;
   }
+<<<<<<< HEAD
+=======
+  static readFileContent(absolutePathToPropertyFile) {
+    return _fs.readFileSync.call(void 0, absolutePathToPropertyFile, {encoding: "utf-8"});
+  }
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
 };
 
 // src/constants/defaults/mssql-default.config.ts
@@ -120,6 +141,7 @@ var POSTGRESQL_DEFAULT_CONFIG = {
   classpath: _path.join.call(void 0, __dirname, "drivers/postgresql-42.2.8.jar")
 };
 
+<<<<<<< HEAD
 // src/constants/tokens/liquibase-label.ts
 var LIQUIBASE_LABEL = "[NODE-LIQUIBASE]";
 
@@ -184,4 +206,22 @@ function getCommandString() {
     args.unshift(FileHelper.bundledLiquibasePath);
   }
   return args.join(" ");
+=======
+// src/cli.ts
+var args = process.argv.slice(2);
+var commandString = getCommandString(args);
+CommandHandler.spawnChildProcess(commandString);
+function getCommandString(args2) {
+  const argsWereProvided = (args2 == null ? void 0 : args2.length) > 0;
+  if (!argsWereProvided) {
+    throw new Error("CLI call signature does not match the expected format. Please verify you have passed required arguments and parameters.");
+  }
+  const firstArg = args2[0];
+  const firstArgWasAKnownCommand = Object.values(LiquibaseCommands).includes(firstArg);
+  const firstArgWasAFlag = firstArg.substr(0, 2) === "--";
+  if (firstArgWasAKnownCommand || firstArgWasAFlag) {
+    args2.unshift(FileHelper.bundledLiquibasePath);
+  }
+  return args2.join(" ");
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
 }

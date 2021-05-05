@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { LiquibaseLogLevels } from "../enums";
 export interface LiquibaseConfig {
     /**
@@ -31,6 +32,40 @@ export interface LiquibaseConfig {
     /**
      * Absolute path to your JDBC driver jar file
      */
+=======
+export interface LiquibaseConfig {
+    /**
+   * Absolute path to your Liquibase executable.
+   */
+    liquibase?: string;
+    /**
+   * Absolute path to your Liquibase executable.
+   */
+    liquibasePropertiesFile?: string;
+    /**
+   * Absolute path to your Change Log File
+   */
+    changeLogFile: string;
+    /**
+   * JDBC connection string
+   */
+    url: string;
+    /**
+   * username
+   */
+    username: string;
+    /**
+   * password
+   */
+    password: string;
+    /**
+   * Your Liquibase Pro License key
+   */
+    liquibaseProLicenseKey?: string;
+    /**
+   * Absolute path to your JDBC driver jar file
+   */
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
     classpath: string;
     /**
      * JDBC connection string for ref database
@@ -44,6 +79,7 @@ export interface LiquibaseConfig {
      * password for ref database
      */
     referencePassword?: string;
+<<<<<<< HEAD
     /**
      * The `logLevel parameter controls the amount of messages that are generated when running Liquibase commands
      */
@@ -56,4 +92,6 @@ export interface LiquibaseConfig {
      * For MSSQL only: Specifies in what Catalog the Liquibase DATABASECHANGELOG and DATABASECHANGELOGLOCK tables will be managed
      */
     liquibaseCatalogName?: string;
+=======
+>>>>>>> 9a30a6c0331722a4bd54a1749a85aafb9e3baa64
 }
