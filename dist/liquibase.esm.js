@@ -952,7 +952,6 @@ var Liquibase = /*#__PURE__*/function () {
 
   _proto.mergeParamsWithDefaults = function mergeParamsWithDefaults(params) {
     var defaults = _extends({}, POSTGRESQL_DEFAULT_CONFIG, {
-      // liquibase: join(__dirname, '../bin/liquibase/liquibase'), // NOTE: Changed this while debuggin.
       liquibase: FileHelper.bundledLiquibasePath
     });
 
