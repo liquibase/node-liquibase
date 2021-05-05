@@ -2,12 +2,12 @@
 import { LiquibaseCommands } from './enums';
 import { CommandHandler, FileHelper } from './util';
 
-const args = process.argv.slice(2);
-const commandString = getCommandString(args);
-
+const commandString = getCommandString();
 CommandHandler.spawnChildProcess(commandString);
 
-function getCommandString(args: Array<string>): string {
+
+function getCommandString(): string {
+	const args = process.argv.slice(2);
 	const argsWereProvided = args?.length > 0;
 	if (!argsWereProvided) {
 		throw new Error('CLI call signature does not match the expected format. Please verify you have passed required arguments and parameters.');

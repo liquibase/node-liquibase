@@ -30,6 +30,7 @@ import {
 import { LiquibaseConfig } from './models/index';
 import { POSTGRESQL_DEFAULT_CONFIG } from './constants/defaults/postgresql-default.config';
 import { join } from 'path';
+import { LiquibaseCommands } from './enums';
 
 describe('Liquibase', () => {
 
@@ -59,17 +60,12 @@ describe('Liquibase', () => {
 	});
 
 	describe('#status', () => {
-		it('should succeed', async (done) => {
-			const instance = new Liquibase(validPostgresConfig);
-			const test = await instance.status();
-			expect(test).toBeTruthy();
-			done();
-		});
+		it('should call run method', async () => {
+			const param = {} as UpdateCommandAttributes;
+			spyOn<any>(instance, 'run');
 
-		it('should fail', async (done) => {
-			expect(instance).toBeDefined();
-			await expect(instance.status()).rejects.toThrow();
-			done();
+			instance.update(param);
+			expect(instance['run']).toHaveBeenCalled();
 		});
 	});
 
@@ -473,6 +469,17 @@ describe('Liquibase', () => {
 
 			instance.unexpectedChangeSets();
 			expect(instance['run']).toHaveBeenCalled();
+		});
+	});
+
+	describe('#run', () => {
+		it('should delegate to #spawnChildProcess', async (done) => {
+			spyOn<any>(instance, 'spawnChildProcess');
+			const mockAction = LiquibaseCommands.Status;
+			const mockParams = undefined;
+			await instance['run'](mockAction, mockParams);
+			expect(instance['spawnChildProcess']).toHaveBeenCalledWith(expect.stringContaining('status'));
+			done();
 		});
 	});
 });

@@ -21,6 +21,9 @@
 Use Node and databases? Want to do smart architecture decisions? Do not invent wheel, use Liquibase.
 Liquibase is an open-source database-independent library for tracking, managing and applying database schema changes.
 
+### Concerned About Install Size?
+For a drastically smaller version of this package, be sure to check out our [Zero-Dependency Peer-Dependency version](https://www.npmjs.com/package/liquibase/v/0.0.0). You can access this version under the tag `@pd` for `Peer Dependency`. This version of the package boasts an unpacked size of `359 kB`. Just be sure to [correctly configure your project](#peer-dependency-@pd)!
+
 ## Table of Contents
 * [Installation](#installation)
 * [Sandbox](#sandbox)
