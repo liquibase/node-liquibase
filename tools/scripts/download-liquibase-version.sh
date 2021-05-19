@@ -18,9 +18,6 @@ echo $PWD
 mkdir -p tmp
 cd ./tmp
 
-# Prepare a new branch for this update.
-git checkout -b versioned-release/liquibase-${1//\./\-} || git checkout versioned-release/liquibase-${1//\./\-}
-
 # Download the requested tagged release.
 echo "Downloading Liquibase Release Version $1..."
 
