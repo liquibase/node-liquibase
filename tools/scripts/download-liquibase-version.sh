@@ -45,7 +45,7 @@ if [ -f "$TARBALL_FILE_NAME" ]; then
 
 	# Commit with a standardized message.
 	git add -A
-	git commit -m "(release): updated bundled Liquibase to match release v$LIQUIBASE_VERSION"
+	git commit -m "(release): downloaded and unzipped Liquibase v$LIQUIBASE_VERSION"
 
 	echo "Done!"
 else
