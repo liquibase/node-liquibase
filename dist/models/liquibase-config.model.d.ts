@@ -1,4 +1,4 @@
-import { LiquibaseLogLevels } from "../enums";
+import { LiquibaseLogLevels } from '../enums';
 export interface LiquibaseConfig {
     /**
      * Absolute path to your Liquibase executable.

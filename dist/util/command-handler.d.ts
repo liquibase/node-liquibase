@@ -1,3 +1,6 @@
+import { LiquibaseConfig } from '../models';
 export declare class CommandHandler {
-    static spawnChildProcess(commandString: string): Promise<string>;
+    private logger;
+    constructor(config: LiquibaseConfig);
+    spawnChildProcess(commandString: string): Promise<string>;
 }
