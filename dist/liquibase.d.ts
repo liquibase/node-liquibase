@@ -1,30 +1,38 @@
 import { LiquibaseConfig, CalculateCheckSumCommandAttributes, UpdateCommandAttributes, RollbackCommandAttributes, RollbackSQLCommandAttributes, RollbackCountCommandAttributes, RollbackCountSQLCommandAttributes, RollbackToDateCommandAttributes, RollbackToDateSQLCommandAttributes, SnapshotCommandAttributes, SnapshotReferenceCommandAttributes, SyncHubCommandAttributes, TagCommandAttributes, TagExistsCommandAttributes, FutureRollbackCountSQLCommandAttributes, GenerateChangeLogCommandAttributes, UpdateSQLCommandAttributes, UpdateCountCommandAttributes, UpdateCountSQLCommandAttributes, UpdateToTagCommandAttributes, UpdateToTagSQLCommandAttributes, ChangelogSyncToTagCommandAttributes, ChangelogSyncToTagSQLCommandAttributes, DbDocCommandAttributes, DiffChangelogCommandAttributes, DiffCommandAttributes } from './models';
 export declare class Liquibase {
-    private params;
+    private config;
+    private commandHandler;
     /**
-     * @description Returns an instance of a lightweight Liquibase Wrapper.
+     * @description Returns an instance of a lightweight Node wrapper for Liquibase.
      *
-     * @param params Configuration for an instance of `Liquibase`
+     * @param config Configuration for an instance of `Liquibase`
      *
      * * @example
-     * ```javascript
-     * const liquibase = require('node-liquibase');
+     * ```typescript
+     * import {
+     * 	LiquibaseConfig,
+     * 	Liquibase,
+     * 	POSTGRESQL_DEFAULT_CONFIG,
+     * } from 'node-liquibase';
      *
-     * const config = {
-     *   contexts: 'TEST,DEV',
-     *   labels: 'staging,Jira-1200',
-     *   logLevel: 'debug',
-     *   overwriteOutputFile: 'true',
-     *   logFile: 'myLog.log'
+     * const myConfig: LiquibaseConfig = {
+     * 	...POSTGRESQL_DEFAULT_CONFIG,
+     * 	url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
+     * 	username: 'yourusername',
+     * 	password: 'yoursecurepassword',
      * };
+     * const instance = new Liquibase(myConfig);
      *
-     * liquibase(config)
-     *   .run('status', '--verbose')
-     *   .then(() => console.log('success'))
-     *   .catch((err) => console.error('fail', err));
+     * async function doEet() {
+     * 	await instance.status();
+     * 	// await instance.update();
+     * 	// await instance.dropAll();
+     * }
+     *
+     * doEet();
      * ```
      */
-    constructor(params: LiquibaseConfig);
+    constructor(config: LiquibaseConfig);
     /**
      * The `update` command deploys any changes that are in the changelog file and that have not been deployed to your database yet.
      *
@@ -506,7 +514,7 @@ export declare class Liquibase {
      */
     diffChangelog(params: DiffChangelogCommandAttributes): Promise<string>;
     private stringifyParams;
-    private loadParamsFromLiquibasePropertiesFileOnDemands;
+    private loadParamsFromLiquibasePropertiesFileOnDemand;
     /**
      * LEGACY CODE START
      */
@@ -533,7 +541,7 @@ export declare class Liquibase {
      * For now, we will assume Postgres is the 'default' database type.
      * In the future we can be smarter about how we merge these configs.
      *
-     * @param params User Provided `LiquibaseConfig`
+     * @param config User Provided `LiquibaseConfig`
      */
-    private mergeParamsWithDefaults;
+    private mergeConfigWithDefaults;
 }
