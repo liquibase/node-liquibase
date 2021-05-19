@@ -1,6 +1,6 @@
 {
   "name": "liquibase",
-  "version": "100.0.1",
+  "version": "100.0.2",
   "description": "Node.js wrapper for Liquibase",
   "bin": {
     "node-liquibase": "dist/cli.js"
