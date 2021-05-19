@@ -131,7 +131,7 @@ doEet();
 #### JavaScript
 
 ```js
-const LiquibaseTS = require('node-liquibase').Liquibase;
+const Liquibase = require('node-liquibase').Liquibase;
 const POSTGRESQL_DEFAULT_CONFIG = require('node-liquibase').POSTGRESQL_DEFAULT_CONFIG;
 
 const myConfig = {
@@ -141,7 +141,7 @@ const myConfig = {
   username: 'yourusername',
   password: 'yoursecurepassword',
 }
-const instTs = new LiquibaseTS(myConfig);
+const instTs = new Liquibase(myConfig);
 
 instTs.status();
 ```

@@ -1,107 +1,111 @@
-import { LiquibaseLogLevels } from "../enums";
-import { Logger } from "./logger";
+import { LiquibaseConfig } from '../models';
+import { LiquibaseLogLevels } from '../enums';
+import { Logger } from './logger';
 
 describe('Logger', () => {
-	let oldNodeEnv: string | undefined;
+  let oldNodeEnv: string | undefined;
+  let instance: Logger;
+  const mockConfig = {} as LiquibaseConfig;
 
-	beforeEach(() => {
-		oldNodeEnv = process.env.NODE_ENV;
-		const nonTestNodeEnv = 'not-test';
-		process.env.NODE_ENV = nonTestNodeEnv;
-	});
+  beforeEach(() => {
+    instance = new Logger(mockConfig);
 
-	afterEach(() => {
-		process.env.NODE_ENV = oldNodeEnv;
-	});
+    oldNodeEnv = process.env.NODE_ENV;
+    const nonTestNodeEnv = 'not-test';
+    process.env.NODE_ENV = nonTestNodeEnv;
+  });
 
-	describe('#log', () => {
-		it('should delegate to #_log', () => {
-			spyOn<any>(Logger, '_log');
-			const mockMessage = 'test';
-			Logger.log(mockMessage);
+  afterEach(() => {
+    process.env.NODE_ENV = oldNodeEnv;
+  });
 
-			expect(Logger['_log']).toHaveBeenCalledWith(mockMessage);
-		});
-	});
+  describe('#log', () => {
+    it('should delegate to #_log', () => {
+      spyOn<any>(instance, '_log');
+      const mockMessage = 'test';
+      instance.log(mockMessage);
 
-	describe('#warn', () => {
-		it('should delegate to #_warn', () => {
-			spyOn<any>(Logger, '_warn');
-			const mockMessage = 'test';
-			Logger.warn(mockMessage);
+      expect(instance['_log']).toHaveBeenCalledWith(mockMessage);
+    });
+  });
 
-			expect(Logger['_warn']).toHaveBeenCalledWith(mockMessage);
-		});
-	});
+  describe('#warn', () => {
+    it('should delegate to #_warn', () => {
+      spyOn<any>(instance, '_warn');
+      const mockMessage = 'test';
+      instance.warn(mockMessage);
 
-	describe('#error', () => {
-		it('should delegate to #_error', () => {
-			spyOn<any>(Logger, '_error');
-			const mockMessage = 'test';
-			Logger.error(mockMessage);
+      expect(instance['_warn']).toHaveBeenCalledWith(mockMessage);
+    });
+  });
 
-			expect(Logger['_error']).toHaveBeenCalledWith(mockMessage);
-		});
-	});
+  describe('#error', () => {
+    it('should delegate to #_error', () => {
+      spyOn<any>(instance, '_error');
+      const mockMessage = 'test';
+      instance.error(mockMessage);
 
-	describe('#_log', () => {
-		it('should delegate to console.log if #logLevel permits', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Info);
-			spyOn(console, 'log');
-			const mockMessage = 'test';
+      expect(instance['_error']).toHaveBeenCalledWith(mockMessage);
+    });
+  });
 
-			Logger['_log'](mockMessage);
-			expect(console.log).toHaveBeenCalled();
-		});
+  describe('#_log', () => {
+    it('should delegate to console.log if #logLevel permits', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Info);
+      spyOn(console, 'log');
+      const mockMessage = 'test';
 
-		it('should not delegate if LiquibaseLogLevel is off', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
-			spyOn(console, 'log');
-			const mockMessage = 'test';
+      instance['_log'](mockMessage);
+      expect(console.log).toHaveBeenCalled();
+    });
 
-			Logger['_log'](mockMessage);
-			expect(console.log).not.toHaveBeenCalled();
-		});
-	});
+    it('should not delegate if LiquibaseLogLevel is off', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
+      spyOn(console, 'log');
+      const mockMessage = 'test';
 
-	describe('#_warn', () => {
-		it('should delegate to console.warn if #logLevel permits', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Warning);
-			spyOn(console, 'warn');
-			const mockMessage = 'test';
+      instance['_log'](mockMessage);
+      expect(console.log).not.toHaveBeenCalled();
+    });
+  });
 
-			Logger['_warn'](mockMessage);
-			expect(console.warn).toHaveBeenCalled();
-		});
+  describe('#_warn', () => {
+    it('should delegate to console.warn if #logLevel permits', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Warning);
+      spyOn(console, 'warn');
+      const mockMessage = 'test';
 
-		it('should not delegate if LiquibaseLogLevel is off', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
-			spyOn(console, 'warn');
-			const mockMessage = 'test';
+      instance['_warn'](mockMessage);
+      expect(console.warn).toHaveBeenCalled();
+    });
 
-			Logger['_warn'](mockMessage);
-			expect(console.warn).not.toHaveBeenCalled();
-		});
-	});
+    it('should not delegate if LiquibaseLogLevel is off', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
+      spyOn(console, 'warn');
+      const mockMessage = 'test';
 
-	describe('#_error', () => {
-		it('should delegate to console.error if #logLevel permits', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Severe);
-			spyOn(console, 'error');
-			const mockMessage = 'test';
+      instance['_warn'](mockMessage);
+      expect(console.warn).not.toHaveBeenCalled();
+    });
+  });
 
-			Logger['_error'](mockMessage);
-			expect(console.error).toHaveBeenCalled();
-		});
+  describe('#_error', () => {
+    it('should delegate to console.error if #logLevel permits', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Severe);
+      spyOn(console, 'error');
+      const mockMessage = 'test';
 
-		it('should not delegate if LiquibaseLogLevel is off', () => {
-			jest.spyOn<any, any>(Logger, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
-			spyOn(console, 'error');
-			const mockMessage = 'test';
+      instance['_error'](mockMessage);
+      expect(console.error).toHaveBeenCalled();
+    });
 
-			Logger['_error'](mockMessage);
-			expect(console.error).not.toHaveBeenCalled();
-		});
-	});
+    it('should not delegate if LiquibaseLogLevel is off', () => {
+      jest.spyOn<any, any>(instance, 'logLevel', 'get').mockReturnValue(LiquibaseLogLevels.Off);
+      spyOn(console, 'error');
+      const mockMessage = 'test';
 
+      instance['_error'](mockMessage);
+      expect(console.error).not.toHaveBeenCalled();
+    });
+  });
 });
