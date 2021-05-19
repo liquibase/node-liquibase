@@ -37,16 +37,23 @@ function _extends() {
 }
 
 var CommandHandler = /*#__PURE__*/function () {
-  function CommandHandler() {}
+  function CommandHandler(config) {
+    this.logger = new Logger(config);
+  }
 
-  CommandHandler.spawnChildProcess = function spawnChildProcess(commandString) {
-    console.log("Running " + commandString + "...");
+  var _proto = CommandHandler.prototype;
+
+  _proto.spawnChildProcess = function spawnChildProcess(commandString) {
+    var _this = this;
+
+    this.logger.log("Running " + commandString + "...");
     return new Promise(function (resolve, reject) {
       exec(commandString, function (error, stdout, stderr) {
-        console.log('\n', stdout);
+        _this.logger.log("\n " + stdout);
 
         if (error) {
-          console.error('\n', stderr); // error.stderr = stderr;
+          _this.logger.error("\n " + stderr); // error.stderr = stderr;
+
 
           return reject(error);
         }
@@ -92,42 +99,6 @@ var FileHelper = /*#__PURE__*/function () {
   }]);
 
   return FileHelper;
-}();
-
-var MSSQL_DEFAULT_CONFIG = {
-  url: 'jdbc:sqlserver://<IP_OR_HOSTNAME>:;database=sqlserver;',
-  changeLogFile: '/examples/change-log-examples/mssql/changelog.xml',
-  username: 'sa',
-  password: '',
-  classpath: /*#__PURE__*/join(__dirname, '../../../drivers/mssql-jdbc-7.4.1.jre8.jar')
-};
-
-var POSTGRESQL_DEFAULT_CONFIG = {
-  changeLogFile: '/node_modules/examples/change-log-examples/postgreSQL/changelog.xml',
-  url: 'jdbc:postgresql://localhost:5432/postgres',
-  username: 'postgres',
-  password: '',
-  classpath: /*#__PURE__*/join(__dirname, 'drivers/postgresql-42.2.8.jar')
-};
-
-var LIQUIBASE_LABEL = '[NODE-LIQUIBASE]';
-
-var Logger = /*#__PURE__*/function () {
-  function Logger() {}
-
-  Logger.log = function log(message) {
-    console.log(LIQUIBASE_LABEL + " " + message);
-  };
-
-  Logger.warn = function warn(message) {
-    console.warn('\x1b[33m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
-  };
-
-  Logger.error = function error(message) {
-    console.error('\x1b[31m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
-  };
-
-  return Logger;
 }();
 
 var LiquibaseCommands;
@@ -177,33 +148,154 @@ var LiquibaseCommands;
   LiquibaseCommands["Validate"] = "validate";
 })(LiquibaseCommands || (LiquibaseCommands = {}));
 
+var LiquibaseLogLevels;
+
+(function (LiquibaseLogLevels) {
+  LiquibaseLogLevels["Off"] = "off";
+  LiquibaseLogLevels["Severe"] = "severe";
+  LiquibaseLogLevels["Warning"] = "warning";
+  LiquibaseLogLevels["Info"] = "info";
+  LiquibaseLogLevels["Debug"] = "debug";
+})(LiquibaseLogLevels || (LiquibaseLogLevels = {}));
+
+var MSSQL_DEFAULT_CONFIG = {
+  url: 'jdbc:sqlserver://<IP_OR_HOSTNAME>:;database=sqlserver;',
+  changeLogFile: '/examples/change-log-examples/mssql/changelog.xml',
+  username: 'sa',
+  password: '',
+  classpath: /*#__PURE__*/join(__dirname, '../../../drivers/mssql-jdbc-7.4.1.jre8.jar')
+};
+
+var POSTGRESQL_DEFAULT_CONFIG = {
+  changeLogFile: '/node_modules/examples/change-log-examples/postgreSQL/changelog.xml',
+  url: 'jdbc:postgresql://localhost:5432/postgres',
+  username: 'postgres',
+  password: '',
+  classpath: /*#__PURE__*/join(__dirname, 'drivers/postgresql-42.2.8.jar')
+};
+
+var LIQUIBASE_LABEL = '[NODE-LIQUIBASE]';
+
+var Logger = /*#__PURE__*/function () {
+  function Logger(config) {
+    this.config = config;
+  }
+
+  var _proto = Logger.prototype;
+
+  _proto.log = function log(message) {
+    return this._log(message);
+  };
+
+  _proto.warn = function warn(message) {
+    return this._warn(message);
+  };
+
+  _proto.error = function error(message) {
+    return this._error(message);
+  };
+
+  _proto._log = function _log(message) {
+    var levels = [LiquibaseLogLevels.Debug, LiquibaseLogLevels.Info, LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.log(LIQUIBASE_LABEL + " " + message);
+  };
+
+  _proto._warn = function _warn(message) {
+    var levels = [LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.warn('\x1b[33m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
+  };
+
+  _proto._error = function _error(message) {
+    var levels = [LiquibaseLogLevels.Severe];
+
+    if (!this.shouldOperate(levels)) {
+      return;
+    }
+
+    return console.error('\x1b[31m%s\x1b[0m', LIQUIBASE_LABEL + " " + message);
+  };
+
+  _proto.shouldOperate = function shouldOperate(acceptableLogLevels) {
+    return acceptableLogLevels.indexOf(this.logLevel) > -1;
+  };
+
+  _createClass(Logger, [{
+    key: "logLevel",
+    get: function get() {
+      var _this$config;
+
+      if (process.env.NODE_ENV === 'test') {
+        return LiquibaseLogLevels.Off;
+      }
+
+      return ((_this$config = this.config) == null ? void 0 : _this$config.logLevel) || LiquibaseLogLevels.Severe;
+    }
+  }]);
+
+  return Logger;
+}();
+
+var CommandsWithPositionalArguments;
+
+(function (CommandsWithPositionalArguments) {
+  CommandsWithPositionalArguments["futureRollbackCount"] = "futureRollbackCount";
+  CommandsWithPositionalArguments["futureRollbackFromTag"] = "futureRollbackFromTag";
+  CommandsWithPositionalArguments["futureRollbackSQl"] = "futureRollbackSQl";
+  CommandsWithPositionalArguments["rollback"] = "rollback";
+  CommandsWithPositionalArguments["rollbackCount"] = "rollbackCount";
+  CommandsWithPositionalArguments["rollbackCountSQL"] = "rollbackCountSQL";
+  CommandsWithPositionalArguments["rollbackDate"] = "rollbackDate";
+  CommandsWithPositionalArguments["rollbackSql"] = "rollbackSql";
+  CommandsWithPositionalArguments["rollbackToDate"] = "rollbackToDate";
+  CommandsWithPositionalArguments["rollbackToDateSQL"] = "rollbackToDateSQL";
+  CommandsWithPositionalArguments["tag"] = "tag";
+})(CommandsWithPositionalArguments || (CommandsWithPositionalArguments = {}));
+
 var Liquibase = /*#__PURE__*/function () {
   /**
-   * @description Returns an instance of a lightweight Liquibase Wrapper.
+   * @description Returns an instance of a lightweight Node wrapper for Liquibase.
    *
-   * @param params Configuration for an instance of `Liquibase`
+   * @param config Configuration for an instance of `Liquibase`
    *
    * * @example
-   * ```javascript
-   * const liquibase = require('node-liquibase');
+   * ```typescript
+   * import {
+   * 	LiquibaseConfig,
+   * 	Liquibase,
+   * 	POSTGRESQL_DEFAULT_CONFIG,
+   * } from 'node-liquibase';
    *
-   * const config = {
-   *   contexts: 'TEST,DEV',
-   *   labels: 'staging,Jira-1200',
-   *   logLevel: 'debug',
-   *   overwriteOutputFile: 'true',
-   *   logFile: 'myLog.log'
+   * const myConfig: LiquibaseConfig = {
+   * 	...POSTGRESQL_DEFAULT_CONFIG,
+   * 	url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
+   * 	username: 'yourusername',
+   * 	password: 'yoursecurepassword',
    * };
+   * const instance = new Liquibase(myConfig);
    *
-   * liquibase(config)
-   *   .run('status', '--verbose')
-   *   .then(() => console.log('success'))
-   *   .catch((err) => console.error('fail', err));
+   * async function doEet() {
+   * 	await instance.status();
+   * 	// await instance.update();
+   * 	// await instance.dropAll();
+   * }
+   *
+   * doEet();
    * ```
    */
-  function Liquibase(params) {
-    this.params = params;
-    this.mergeParamsWithDefaults(params);
+  function Liquibase(config) {
+    this.config = config;
+    this.mergeConfigWithDefaults(config);
+    this.commandHandler = new CommandHandler(this.config);
   }
   /**
    * The `update` command deploys any changes that are in the changelog file and that have not been deployed to your database yet.
@@ -856,18 +948,25 @@ var Liquibase = /*#__PURE__*/function () {
     return this.run(LiquibaseCommands.DiffChangeLog, params);
   };
 
-  _proto.stringifyParams = function stringifyParams(params) {
+  _proto.stringifyParams = function stringifyParams(action, commandParameters) {
+    var commandAcceptsPropertyAsPositionalArgument = Object.values(CommandsWithPositionalArguments).includes(action);
     var commandString = '';
+    var positionalArguments = '';
 
-    for (var property in params) {
-      var targetValue = params[property];
-      commandString += "--" + property + "=" + JSON.stringify(targetValue) + " ";
+    for (var property in commandParameters) {
+      var targetValue = commandParameters[property];
+
+      if (commandAcceptsPropertyAsPositionalArgument) {
+        positionalArguments += JSON.stringify(targetValue) + " ";
+      } else {
+        commandString += "--" + property + "=" + JSON.stringify(targetValue) + " ";
+      }
     }
 
-    return commandString;
+    return positionalArguments + " " + commandString;
   };
 
-  _proto.loadParamsFromLiquibasePropertiesFileOnDemands = function loadParamsFromLiquibasePropertiesFileOnDemands(liquibasePropertyPath) {
+  _proto.loadParamsFromLiquibasePropertiesFileOnDemand = function loadParamsFromLiquibasePropertiesFileOnDemand(liquibasePropertyPath) {
     var paramsFromLiquibasePropertyFile = {};
 
     if (!liquibasePropertyPath) {
@@ -904,11 +1003,11 @@ var Liquibase = /*#__PURE__*/function () {
       params = {};
     }
 
-    var paramsFromLiquibasePropertyFile = this.loadParamsFromLiquibasePropertiesFileOnDemands(this.params.liquibasePropertiesFile);
+    var paramsFromLiquibasePropertyFile = this.loadParamsFromLiquibasePropertiesFileOnDemand(this.config.liquibasePropertiesFile);
 
-    var mergedParams = _extends({}, paramsFromLiquibasePropertyFile, this.params);
+    var mergedParams = _extends({}, paramsFromLiquibasePropertyFile, this.config);
 
-    var commandParamsString = this.stringifyParams(params);
+    var commandParamsString = this.stringifyParams(action, params);
     return this.spawnChildProcess(this.liquibasePathAndGlobalAttributes(mergedParams) + " " + action + " " + commandParamsString);
   }
   /**
@@ -923,11 +1022,11 @@ var Liquibase = /*#__PURE__*/function () {
 
     var liquibasePathAndGlobalAttributes = "" + params.liquibase;
     Object.keys(params).forEach(function (key) {
-      if (key === 'liquibase' || key == 'liquibasePropertiesFile') {
+      if (key === 'liquibase' || key === 'liquibasePropertiesFile') {
         return;
       }
 
-      var value = _this.params[key];
+      var value = _this.config[key];
       liquibasePathAndGlobalAttributes = liquibasePathAndGlobalAttributes + " --" + key + "=\"" + value + "\"";
     });
     return liquibasePathAndGlobalAttributes;
@@ -940,26 +1039,26 @@ var Liquibase = /*#__PURE__*/function () {
   ;
 
   _proto.spawnChildProcess = function spawnChildProcess(commandString) {
-    return CommandHandler.spawnChildProcess(commandString);
+    return this.commandHandler.spawnChildProcess(commandString);
   }
   /**
    * For now, we will assume Postgres is the 'default' database type.
    * In the future we can be smarter about how we merge these configs.
    *
-   * @param params User Provided `LiquibaseConfig`
+   * @param config User Provided `LiquibaseConfig`
    */
   ;
 
-  _proto.mergeParamsWithDefaults = function mergeParamsWithDefaults(params) {
+  _proto.mergeConfigWithDefaults = function mergeConfigWithDefaults(config) {
     var defaults = _extends({}, POSTGRESQL_DEFAULT_CONFIG, {
       liquibase: FileHelper.bundledLiquibasePath
     });
 
-    this.params = Object.assign({}, defaults, params);
+    this.config = Object.assign({}, defaults, config);
   };
 
   return Liquibase;
 }();
 
-export { CommandHandler, FileHelper, LIQUIBASE_LABEL, Liquibase, LiquibaseCommands, Logger, MSSQL_DEFAULT_CONFIG, POSTGRESQL_DEFAULT_CONFIG };
+export { CommandHandler, FileHelper, LIQUIBASE_LABEL, Liquibase, LiquibaseCommands, LiquibaseLogLevels, Logger, MSSQL_DEFAULT_CONFIG, POSTGRESQL_DEFAULT_CONFIG };
 //# sourceMappingURL=liquibase.esm.js.map
