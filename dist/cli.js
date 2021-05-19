@@ -60,14 +60,17 @@ var LiquibaseLogLevels;
 // src/util/command-handler.ts
 var _child_process = require('child_process');
 var CommandHandler = class {
-  static spawnChildProcess(commandString2) {
-    Logger.log(`Running ${commandString2}...`);
+  constructor(config) {
+    this.logger = new Logger(config);
+  }
+  spawnChildProcess(commandString2) {
+    this.logger.log(`Running ${commandString2}...`);
     return new Promise((resolve, reject) => {
       _child_process.exec.call(void 0, commandString2, (error, stdout, stderr) => {
-        Logger.log(`
+        this.logger.log(`
  ${stdout}`);
         if (error) {
-          Logger.error(`
+          this.logger.error(`
  ${stderr}`);
           return reject(error);
         }
@@ -125,57 +128,65 @@ var LIQUIBASE_LABEL = "[NODE-LIQUIBASE]";
 
 // src/util/logger.ts
 var Logger = class {
-  constructor() {
+  constructor(config) {
+    this.config = config;
   }
-  static log(message) {
+  log(message) {
     return this._log(message);
   }
-  static warn(message) {
+  warn(message) {
     return this._warn(message);
   }
-  static error(message) {
+  error(message) {
     return this._error(message);
   }
-  static _log(message) {
-    const levels = [LiquibaseLogLevels.Debug, LiquibaseLogLevels.Info, LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+  _log(message) {
+    const levels = [
+      LiquibaseLogLevels.Debug,
+      LiquibaseLogLevels.Info,
+      LiquibaseLogLevels.Severe,
+      LiquibaseLogLevels.Warning
+    ];
     if (!this.shouldOperate(levels)) {
       return;
     }
     return console.log(`${LIQUIBASE_LABEL} ${message}`);
   }
-  static _warn(message) {
+  _warn(message) {
     const levels = [LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
     if (!this.shouldOperate(levels)) {
       return;
     }
     return console.warn("[33m%s[0m", `${LIQUIBASE_LABEL} ${message}`);
   }
-  static _error(message) {
+  _error(message) {
     const levels = [LiquibaseLogLevels.Severe];
     if (!this.shouldOperate(levels)) {
       return;
     }
     return console.error("[31m%s[0m", `${LIQUIBASE_LABEL} ${message}`);
   }
-  static shouldOperate(acceptableLogLevels) {
+  shouldOperate(acceptableLogLevels) {
     return acceptableLogLevels.indexOf(this.logLevel) > -1;
   }
-  static get logLevel() {
+  get logLevel() {
+    var _a;
     if (process.env.NODE_ENV === "test") {
       return LiquibaseLogLevels.Off;
     }
-    return LiquibaseLogLevels.Severe;
+    return ((_a = this.config) == null ? void 0 : _a.logLevel) || LiquibaseLogLevels.Severe;
   }
 };
 
 // src/cli.ts
 var commandString = getCommandString();
-CommandHandler.spawnChildProcess(commandString);
+new CommandHandler({}).spawnChildProcess(commandString);
 function getCommandString() {
   const args = process.argv.slice(2);
   const argsWereProvided = (args == null ? void 0 : args.length) > 0;
+  const errorMessage = "CLI call signature does not match the expected format. Please verify you have passed required arguments and parameters.";
   if (!argsWereProvided) {
-    throw new Error("CLI call signature does not match the expected format. Please verify you have passed required arguments and parameters.");
+    throw new Error(errorMessage);
   }
   const firstArg = args[0];
   const firstArgWasAKnownCommand = Object.values(LiquibaseCommands).includes(firstArg);
