@@ -14,6 +14,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "yarn build:library && yarn build:cli && yarn copy:dependencies",
+    "build:pd": "yarn build:library && yarn build:cli",
     "build:library": "tsdx build",
     "build:cli": "yarn tsup ./src/cli.ts",
     "test": "tsdx test",
