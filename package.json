@@ -25,6 +25,7 @@
     "clean": "yarn clean:dist",
     "clean:dist": "yarn rimraf ./dist",
     "semantic-release": "semantic-release",
+    "patch": "npm version patch -m \"Bump version to %s\"",
     "tsup": "tsup",
     "rimraf": "rimraf"
   },
