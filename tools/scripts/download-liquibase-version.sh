@@ -43,6 +43,10 @@ if [ -f "$TARBALL_FILE_NAME" ]; then
 
 	rm -rf ./liquibase
 
+	# Commit with a standardized message.
+	git add -A
+	git commit -m "(release): updated bundled Liquibase to match release v$LIQUIBASE_VERSION"
+
 	echo "Done!"
 else
 	# If it was NOT downloaded...
