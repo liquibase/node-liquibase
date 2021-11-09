@@ -1,6 +1,6 @@
 {
-  "name": "liquibase",
-  "version": "2.0.5",
+  "name": "@rimac-automobili/liquibase",
+  "version": "1.0.1",
   "description": "Node.js wrapper for Liquibase",
   "bin": {
     "node-liquibase": "dist/cli.js"
@@ -54,7 +54,6 @@
     "url": "https://github.com/liquibase/node-liquibase/issues"
   },
   "homepage": "https://github.com/liquibase/node-liquibase#readme",
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -70,6 +69,7 @@
   "devDependencies": {
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^26.0.22",
+    "@types/node": "^16.11.7",
     "dotenv": "^8.2.0",
     "husky": "^6.0.0",
     "ncp": "^2.0.0",

@@ -696,7 +696,7 @@ export class Liquibase {
 
 	if (substitutionParams) {
 		for (const property of Object.keys(substitutionParams)) {
-			substitutionArguments += ` -D${property}=${substitutionParams[property]} `
+			substitutionArguments += ` -D${property}="${substitutionParams[property]}" `
 		}
 	}
 
