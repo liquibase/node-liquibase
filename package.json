@@ -1,6 +1,6 @@
 {
-  "name": "@rimac-automobili/liquibase",
-  "version": "1.0.2",
+  "name": "liquibase",
+  "version": "2.0.5",
   "description": "Node.js wrapper for Liquibase",
   "bin": {
     "node-liquibase": "dist/cli.js"
