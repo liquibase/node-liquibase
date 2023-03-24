@@ -32,6 +32,7 @@ import {
   DiffCommandAttributes,
 } from './models';
 import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
+import { ParamsModel, WithOptionalSubstitutionParams } from './models/commands/substitution-params.model';
 
 export class Liquibase {
   private commandHandler: CommandHandler;
@@ -83,8 +84,8 @@ export class Liquibase {
    *
    * {@link https://docs.liquibase.com/commands/community/update.html Documentation}
    */
-  public update(params: UpdateCommandAttributes, substitutionParams?: { [key: string]: any }): Promise<string> {
-    return this.run(LiquibaseCommands.Update, params, substitutionParams);
+  public update(params: WithOptionalSubstitutionParams<UpdateCommandAttributes>): Promise<string> {
+    return this.run(LiquibaseCommands.Update, params);
   }
 
   /**
@@ -676,13 +677,28 @@ export class Liquibase {
     return this.run(LiquibaseCommands.DiffChangeLog, params);
   }
 
-  private stringifyParams(action: LiquibaseCommands, commandParameters: { [key: string]: any }, substitutionParams?: { [key: string]: any }): string {
+  private stringifyParams(
+    action: LiquibaseCommands,
+    commandParameters: WithOptionalSubstitutionParams<ParamsModel>
+  ): string {
     const commandAcceptsPropertyAsPositionalArgument = Object.values(CommandsWithPositionalArguments).includes(
       action as any
     );
+    const { positionalArguments, commandString } = this.getPositionalArgumentsAndCommandString(
+      commandParameters,
+      commandAcceptsPropertyAsPositionalArgument
+    );
+    const substitutionArguments = this.getSubstitutionArguments(commandParameters);
+
+    return `${positionalArguments} ${commandString} ${substitutionArguments}`;
+  }
+
+  private getPositionalArgumentsAndCommandString(
+    commandParameters: WithOptionalSubstitutionParams<ParamsModel>,
+    commandAcceptsPropertyAsPositionalArgument: boolean
+  ) {
     let commandString = '';
     let positionalArguments = '';
-	let substitutionArguments = '';
 
     for (const property in commandParameters) {
       const targetValue = commandParameters[property];
@@ -694,13 +710,24 @@ export class Liquibase {
       }
     }
 
-	if (substitutionParams) {
-		for (const property of Object.keys(substitutionParams)) {
-			substitutionArguments += ` -D${property}="${substitutionParams[property]}" `
-		}
-	}
+    return {
+      commandString,
+      positionalArguments,
+    };
+  }
 
-    return `${positionalArguments} ${commandString} ${substitutionArguments}`;
+  private getSubstitutionArguments({ substitutionParams }: WithOptionalSubstitutionParams<ParamsModel>): string {
+    let substitutionArguments = '';
+
+    if (!substitutionParams) {
+      return substitutionArguments;
+    }
+
+    for (const property of Object.keys(substitutionParams)) {
+      substitutionArguments += ` -D${property}="${substitutionParams[property]}" `;
+    }
+
+    return substitutionArguments;
   }
 
   private loadParamsFromLiquibasePropertiesFileOnDemand(liquibasePropertyPath?: string): LiquibaseConfig | undefined {
@@ -735,12 +762,13 @@ export class Liquibase {
    * @param {*} params any parameters for the command
    * @returns {Promise} Promise of a node child process.
    */
-  private run(action: LiquibaseCommands, params: { [key: string]: any } = {}, substitutionParams?: { [key: string]: any }) {
+  private run(action: LiquibaseCommands, params: WithOptionalSubstitutionParams<ParamsModel> = {}) {
     const paramsFromLiquibasePropertyFile = this.loadParamsFromLiquibasePropertiesFileOnDemand(
       this.config.liquibasePropertiesFile
     );
     const mergedParams = { ...paramsFromLiquibasePropertyFile, ...this.config };
-    const commandParamsString = this.stringifyParams(action, params, substitutionParams);
+    const commandParamsString = this.stringifyParams(action, params);
+
     return this.spawnChildProcess(
       `${this.liquibasePathAndGlobalAttributes(mergedParams)} ${action} ${commandParamsString}`
     );
