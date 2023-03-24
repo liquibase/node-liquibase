@@ -17,7 +17,6 @@ export class CommandHandler {
         this.logger.log(`\n ${stdout}`);
 
         if (error) {
-			console.log(error, stdout, stderr)
           this.logger.error(`\n ${stderr}`);
           // error.stderr = stderr;
           return reject(error);
