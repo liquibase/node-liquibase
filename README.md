@@ -84,7 +84,7 @@ node-liquibase
 --url="jdbc:postgresql://localhost:5432/postgres"
 --username="yourusername"
 --password="yoursecurepassword"
---classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
+--classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar"
 status
 ```
 
@@ -96,7 +96,7 @@ node-liquibase /Users/me/path/to/my/executable/for/liquibase
  --url="jdbc:postgresql://localhost:5432/postgres"
  --username="yourusername"
  --password="yoursecurepassword"
- --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar"
+ --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar"
  status
 ```
 
@@ -109,7 +109,7 @@ import {
 	LiquibaseConfig,
 	Liquibase,
 	POSTGRESQL_DEFAULT_CONFIG,
-} from 'node-liquibase';
+} from 'liquibase';
 
 const myConfig: LiquibaseConfig = {
 	...POSTGRESQL_DEFAULT_CONFIG,
@@ -131,8 +131,8 @@ doEet();
 #### JavaScript
 
 ```js
-const Liquibase = require('node-liquibase').Liquibase;
-const POSTGRESQL_DEFAULT_CONFIG = require('node-liquibase').POSTGRESQL_DEFAULT_CONFIG;
+const Liquibase = require('liquibase').Liquibase;
+const POSTGRESQL_DEFAULT_CONFIG = require('liquibase').POSTGRESQL_DEFAULT_CONFIG;
 
 const myConfig = {
   ...POSTGRESQL_DEFAULT_CONFIG,
@@ -273,12 +273,12 @@ Using the `--liquibase` flag on your CLI command.
 
 #### Before
 ```bash
-yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
+yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar" status
 ```
 
 #### After
 ```bash
-yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.2.8.jar" status
+yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar" status
 ```
 
 ### Sandbox: @pd

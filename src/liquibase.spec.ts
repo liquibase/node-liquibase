@@ -39,7 +39,7 @@ describe('Liquibase', () => {
   const validPostgresConfig: LiquibaseConfig = {
     ...POSTGRESQL_DEFAULT_CONFIG,
     changeLogFile: './examples/change-log-examples/postgreSQL/changelog.xml',
-    classpath: join(__dirname, '../drivers/postgresql-42.2.8.jar'),
+    classpath: join(__dirname, '../drivers/postgresql-42.4.2.jar'),
     username: 'yourusername',
     password: 'yoursecurepassword',
   };
