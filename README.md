@@ -167,7 +167,7 @@ However, when importing the modules to use them in a JavaScript or TypeScript fi
 ### Liquibase CLI Command API Parity
 We were careful to ensure that all 'top level' Liquibase commands are implemented in this package. No more magic strings!
 
-[Here's a complete listing]('https://github.com/liquibase/node-liquibase/blob/master/src/enums/liquibase-commands.enum.ts') of commands that have been implemented.
+[Here's a complete listing](https://github.com/liquibase/node-liquibase/blob/master/src/enums/liquibase-commands.enum.ts) of commands that have been implemented.
 
 ### Liquibase CLI Peer Dependency (Optional)
 WIP
