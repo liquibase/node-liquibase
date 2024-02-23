@@ -3,6 +3,8 @@ node_modules
 .nyc_output
 coverage
 .npmrc
+dist
+package-lock.json
 
 # Mac OS
 .DS_Store
