@@ -10,6 +10,7 @@ export enum LiquibaseCommands {
   Diff = 'diff',
   DiffChangeLog = 'diffChangeLog',
   DropAll = 'dropAll',
+  ExecuteSql = 'executeSQL',
   FutureRollbackSql = 'futureRollbackSQL',
   FutureRollbackCountSql = 'futureRollbackCountSQL',
   GenerateChangeLog = 'generateChangeLog',
