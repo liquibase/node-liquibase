@@ -28,8 +28,22 @@ jobs:
           for command in $COMMANDS; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
           done
-          mkdir -p /proto/commands
-          mv *.proto /proto/commands
+          mkdir -p proto-commands
+          mv *.proto ./proto-commands
+
+      - name: Configure git user
+        run: |
+          git config --global init.defaultBranch main
+          git config --global user.name "liquibot"
+          git config --global user.email "liquibot@liquibase.org"
+
+      - name: Push changes
+        run: |
+          git add /proto/commands
+          git commit -m "Generated protobuf files for liquibase version ${{ inputs.liquibase-version }}"
+          git push
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
       - uses: actions/upload-artifact@v3
         with:
