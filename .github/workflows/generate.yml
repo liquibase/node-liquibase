@@ -28,8 +28,10 @@ jobs:
           for command in $COMMANDS; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
           done
+          mkdir -p /proto/commands
+          mv *.proto /proto/commands
 
       - uses: actions/upload-artifact@v3
         with:
           name: commands-${{ inputs.liquibase-version }}
-          path: '*.proto'
+          path: /proto/commands
