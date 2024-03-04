@@ -19,7 +19,7 @@ jobs:
         run: docker build -t liquibase-protobuf-generator:${{ inputs.liquibase-version }} . --build-arg VERSION=${{ inputs.liquibase-version }}
 
       - name: Generate liquibase commands
-        run: docker run --rm -v $(PWD):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }}  --output-file=commands.json list-commands
+        run: docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} --output-file=commands.json list-commands
 
       - uses: actions/upload-artifact@v3
         with:
