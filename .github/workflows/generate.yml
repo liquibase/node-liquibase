@@ -38,7 +38,9 @@ jobs:
           git config --global user.email "liquibot@liquibase.org"
 
       - name: Push changes
+        continue-on-error: true
         run: |
+          git pull
           git add proto-commands
           git commit -m "Generated protobuf files for liquibase version ${{ inputs.liquibase-version }}"
           git push
