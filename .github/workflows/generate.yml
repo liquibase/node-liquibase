@@ -46,7 +46,7 @@ jobs:
       - name: Update liquibase binaries
         run: |
           wget -q https://github.com/liquibase/liquibase/releases/download/v${{ inputs.liquibase-version }}/liquibase-${{ inputs.liquibase-version }}.zip
-          unzip liquibase-${{ inputs.version }}.zip -d liquibase
+          unzip liquibase-${{ inputs.liquibase-version }}.zip -d liquibase
           rm -rf ./bin/liquibase
           mv liquibase ./bin
 
