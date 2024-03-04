@@ -1,0 +1,52 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "DiffProto";
+
+package liquibase;
+
+service DiffService {
+  rpc execute(DiffRequest) returns (Response) {}
+}
+
+/* Outputs a description of differences.  If you have a Liquibase Pro key, you can output the differences as JSON using the --format=JSON option */
+message DiffRequest {
+  optional string default_catalog_name = 1; // The default catalog name to use for the database connection
+  optional string default_schema_name = 2; // The default schema name to use for the database connection
+  optional string diff_types = 3; // Types of objects to compare
+  optional int32 drift_severity = 4; // [PRO] Sets the return code for all drift types found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4
+  optional int32 drift_severity_changed = 5; // [PRO] Sets the return code for "changed" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4
+  optional int32 drift_severity_missing = 6; // [PRO] Sets the return code for "missing" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4
+  optional int32 drift_severity_unexpected = 7; // [PRO] Sets the return code for "unexpected" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4
+  optional string driver = 8; // The JDBC driver class
+  optional string driver_properties_file = 9; // The JDBC driver properties file
+  optional string exclude_objects = 10; // Objects to exclude from diff
+  optional string format = 11; // [PRO] Option to create JSON output
+  optional string include_objects = 12; // Objects to include in diff
+  optional string output_schemas = 13; // Output schemas names. This is a CSV list.
+  optional string password = 14; // Password to use to connect to the database
+  optional string reference_default_catalog_name = 15; // The default catalog name to use for the reference database connection
+  optional string reference_default_schema_name = 16; // The default schema name to use for the reference database connection
+  optional string reference_driver = 17; // The JDBC driver class for the reference database
+  optional string reference_driver_properties_file = 18; // The JDBC driver properties file for the reference database
+  optional string reference_liquibase_catalog_name = 19; // Reference catalog to use for Liquibase objects
+  optional string reference_liquibase_schema_name = 20; // Reference schema to use for Liquibase objects
+  optional string reference_password = 21; // The reference database password
+  optional string reference_schemas = 22; // Schemas names on reference database to use in diff. This is a CSV list.
+  string reference_url = 23; // *required* The JDBC reference database connection URL
+  optional string reference_username = 24; // The reference database username
+  optional bool report_enabled = 25; // [PRO] Enable or disable reporting.
+  optional string report_name = 26; // [PRO] The name of the report.
+  optional string report_path = 27; // [PRO] The path to the directory to generate the report.
+  optional string schemas = 28; // Schemas to include in diff
+  string url = 29; // *required* The JDBC database connection URL
+  optional string username = 30; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 31;
+}
+
+message Response {
+  string message = 1;
+}

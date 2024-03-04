@@ -1,0 +1,39 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "SetLabelsProto";
+
+package liquibase.pro;
+
+service SetLabelsService {
+  rpc execute(SetLabelsRequest) returns (Response) {}
+}
+
+/* [PRO]
+Bulk set labels in the changelog file */
+message SetLabelsRequest {
+  string changelog_file = 1; // *required* The root changelog file
+  optional string changeset_author = 2; // The author of the changeset to modify
+  optional string changeset_id = 3; // The id of the changeset to modify
+  optional string changeset_path = 4; // The changeset path
+  optional string context_filter = 5; // Changeset contexts to match
+  optional string dbms = 6; // The database to filter by
+  optional string default_catalog_name = 7; // The default catalog name to use for the database connection
+  optional string default_schema_name = 8; // The default schema name to use for the database connection
+  optional string driver = 9; // The JDBC driver class
+  optional string driver_properties_file = 10; // The JDBC driver properties file
+  optional bool force_replace = 11; // Replace the labels if true
+  optional string label_filter = 12; // Changeset labels to match
+  optional string password = 13; // Password to use to connect to the database
+  string set_as = 14; // *required* New label values
+  optional string url = 15; // The JDBC database connection URL
+  optional string username = 16; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 17;
+}
+
+message Response {
+  string message = 1;
+}

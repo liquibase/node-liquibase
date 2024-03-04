@@ -1,0 +1,33 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "InitProjectProto";
+
+package liquibase.pro;
+
+service InitProjectService {
+  rpc execute(Init.ProjectRequest) returns (Response) {}
+}
+
+/* Creates the directory and files needed to run Liquibase commands. Run without any flags on the CLI, or set via Environment variable, etc. will launch an interactive guide to walk users through setting up the necessary project's default and changelog files. This guide can be turned off by setting the 'liquibase.command.init.project.projectGuide=off' */
+message Init {
+  message ProjectRequest {
+    optional string changelog_file = 1; // Relative or fully qualified path to the changelog file
+    optional string format = 2; // Format of the project changelog sql|xml|json|yaml|yml
+    optional bool keep_temp_files = 3; // For remote project locations, do not delete temporary project files
+    optional string password = 4; // Password to use to connect to the database
+    optional string project_defaults_file = 5; // File with default Liquibase properties
+    optional string project_dir = 6; // Relative or fully qualified path to the directory where the project files will be created
+    optional string project_guide = 7; // Allow interactive prompts for init project
+    optional string url = 8; // The JDBC database connection URL
+    optional string username = 9; // Username to use to connect to the database
+    liquibase.GlobalOptions global_options = 10;
+  }
+}
+
+message Response {
+  string message = 1;
+}

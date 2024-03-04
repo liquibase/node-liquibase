@@ -1,0 +1,33 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ChangelogSyncToTagProto";
+
+package liquibase;
+
+service ChangelogSyncToTagService {
+  rpc execute(ChangelogSyncToTagRequest) returns (Response) {}
+}
+
+/* Marks all undeployed changesets as executed, up to a tag */
+message ChangelogSyncToTagRequest {
+  string changelog_file = 1; // *required* The root changelog file
+  optional string context_filter = 2; // Context string to use for filtering
+  optional string default_catalog_name = 3; // The default catalog name to use for the database connection
+  optional string default_schema_name = 4; // The default schema name to use for the database connection
+  optional string driver = 5; // The JDBC driver class
+  optional string driver_properties_file = 6; // The JDBC driver properties file
+  optional string label_filter = 7; // Label expression to use for filtering
+  optional string password = 8; // Password to use to connect to the database
+  string tag = 9; // *required* Tag ID to execute changelogSync to
+  string url = 10; // *required* The JDBC database connection URL
+  optional string username = 11; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 12;
+}
+
+message Response {
+  string message = 1;
+}

@@ -1,0 +1,37 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "UpdateToTagSqlProto";
+
+package liquibase;
+
+service UpdateToTagSqlService {
+  rpc execute(UpdateToTagSqlRequest) returns (Response) {}
+}
+
+/* Generate the SQL to deploy changes up to the tag */
+message UpdateToTagSqlRequest {
+  optional string change_exec_listener_class = 1; // Fully-qualified class which specifies a ChangeExecListener
+  optional string change_exec_listener_properties_file = 2; // Path to a properties file for the ChangeExecListenerClass
+  string changelog_file = 3; // *required* The root changelog
+  optional string context_filter = 4; // Changeset contexts to match
+  optional string default_catalog_name = 5; // The default catalog name to use for the database connection
+  optional string default_schema_name = 6; // The default schema name to use for the database connection
+  optional string driver = 7; // The JDBC driver class
+  optional string driver_properties_file = 8; // The JDBC driver properties file
+  optional string label_filter = 9; // Changeset labels to match
+  optional bool output_default_catalog = 10; // Control whether names of objects in the default catalog are fully qualified or not. If true they are. If false, only objects outside the default catalog are fully qualified
+  optional bool output_default_schema = 11; // Control whether names of objects in the default schema are fully qualified or not. If true they are. If false, only objects outside the default schema are fully qualified
+  optional string password = 12; // Password to use to connect to the database
+  string tag = 13; // *required* The tag to generate SQL up to
+  string url = 14; // *required* The JDBC database connection URL
+  optional string username = 15; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 16;
+}
+
+message Response {
+  string message = 1;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ConnectProto";
+
+package liquibase;
+
+service ConnectService {
+  rpc execute(ConnectRequest) returns (Response) {}
+}
+
+/* [PRO]
+Tests the connection properties (url, username, password). Returns database's response, if any, with success or failure. */
+message ConnectRequest {
+  optional string default_catalog_name = 1; // The default catalog name to use for the database connection
+  optional string default_schema_name = 2; // The default schema name to use for the database connection
+  optional string driver = 3; // The JDBC driver class
+  optional string driver_properties_file = 4; // The JDBC driver properties file
+  optional string password = 5; // Password to use to connect to the database
+  string url = 6; // *required* The JDBC database connection URL
+  optional string username = 7; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 8;
+}
+
+message Response {
+  string message = 1;
+}

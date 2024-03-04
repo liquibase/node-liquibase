@@ -1,0 +1,32 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ExecuteSqlProto";
+
+package liquibase;
+
+service ExecuteSqlService {
+  rpc execute(ExecuteSqlRequest) returns (Response) {}
+}
+
+/* Execute a SQL string or file */
+message ExecuteSqlRequest {
+  optional string default_catalog_name = 1; // The default catalog name to use for the database connection
+  optional string default_schema_name = 2; // The default schema name to use for the database connection
+  optional string delimiter = 3; // Delimiter to use when executing SQL script
+  optional string driver = 4; // The JDBC driver class
+  optional string driver_properties_file = 5; // The JDBC driver properties file
+  optional string password = 6; // Password to use to connect to the database
+  optional string sql = 7; // SQL string to execute
+  optional string sql_file = 8; // SQL script to execute
+  string url = 9; // *required* The JDBC database connection URL
+  optional string username = 10; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 11;
+}
+
+message Response {
+  string message = 1;
+}

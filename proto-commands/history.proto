@@ -1,0 +1,31 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "HistoryProto";
+
+package liquibase;
+
+service HistoryService {
+  rpc execute(HistoryRequest) returns (Response) {}
+}
+
+/* List all deployed changesets and their deployment ID */
+message HistoryRequest {
+  optional string changelog_file = 1; // The root changelog
+  optional string default_catalog_name = 2; // The default catalog name to use for the database connection
+  optional string default_schema_name = 3; // The default schema name to use for the database connection
+  optional string driver = 4; // The JDBC driver class
+  optional string driver_properties_file = 5; // The JDBC driver properties file
+  optional string format = 6; // History output format
+  optional string password = 7; // Password to use to connect to the database
+  string url = 8; // *required* The JDBC database connection URL
+  optional string username = 9; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 10;
+}
+
+message Response {
+  string message = 1;
+}

@@ -1,0 +1,39 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "RollbackSqlProto";
+
+package liquibase;
+
+service RollbackSqlService {
+  rpc execute(RollbackSqlRequest) returns (Response) {}
+}
+
+/* Generate the SQL to rollback changes made to the database based on the specific tag */
+message RollbackSqlRequest {
+  optional string change_exec_listener_class = 1; // Fully-qualified class which specifies a ChangeExecListener
+  optional string change_exec_listener_properties_file = 2; // Path to a properties file for the ChangeExecListenerClass
+  string changelog_file = 3; // *required* The root changelog file
+  optional string context_filter = 4; // Context string to use for filtering
+  optional string default_catalog_name = 5; // The default catalog name to use for the database connection
+  optional string default_schema_name = 6; // The default schema name to use for the database connection
+  optional string driver = 7; // The JDBC driver class
+  optional string driver_properties_file = 8; // The JDBC driver properties file
+  optional string label_filter = 9; // Label expression to use for filtering
+  optional bool output_default_catalog = 10; // Control whether names of objects in the default catalog are fully qualified or not. If true they are. If false, only objects outside the default catalog are fully qualified
+  optional bool output_default_schema = 11; // Control whether names of objects in the default schema are fully qualified or not. If true they are. If false, only objects outside the default schema are fully qualified
+  optional string password = 12; // Password to use to connect to the database
+  optional string rollback_script = 13; // Rollback script to execute
+  string tag = 14; // *required* Tag to rollback to
+  optional string tag_version = 15; // Tag version to use for multiple occurrences of a tag
+  string url = 16; // *required* The JDBC database connection URL
+  optional string username = 17; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 18;
+}
+
+message Response {
+  string message = 1;
+}

@@ -1,0 +1,34 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "DbDocProto";
+
+package liquibase;
+
+service DbDocService {
+  rpc execute(DbDocRequest) returns (Response) {}
+}
+
+/* Generates JavaDoc documentation for the existing database and changelogs */
+message DbDocRequest {
+  string changelog_file = 1; // *required* The root changelog file
+  optional string context_filter = 2; // Context string to use for filtering
+  optional string default_catalog_name = 3; // The default catalog name to use for the database connection
+  optional string default_schema_name = 4; // The default schema name to use for the database connection
+  optional string driver = 5; // The JDBC driver class
+  optional string driver_properties_file = 6; // The JDBC driver properties file
+  optional string label_filter = 7; // Label expression to use for filtering
+  string output_directory = 8; // *required* The directory where the documentation is generated
+  optional string password = 9; // Password to use to connect to the database
+  optional string schemas = 10; // Database schemas to include objects from in reporting
+  string url = 11; // *required* The JDBC database connection URL
+  optional string username = 12; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 13;
+}
+
+message Response {
+  string message = 1;
+}

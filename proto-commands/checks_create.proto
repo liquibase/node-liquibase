@@ -1,0 +1,27 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ChecksCreateProto";
+
+package liquibase.pro;
+
+service ChecksCreateService {
+  rpc execute(Checks.CreateRequest) returns (Response) {}
+}
+
+/* null */
+message Checks {
+  message CreateRequest {
+    string package_contents = 1; // *required* One or more comma-separated relative path(s) to the checks-settings files (or to a directory of files) to be bundled into the checks-package. If the value is a directory, all files will be added to the 'checks-package-name' object, but not recursively.
+    optional string package_file = 2; // Relative or fully qualified path and filename of the checks-package file to be created
+    string package_name = 3; // *required* The literal name of the checks-package object to be created inside the checks-package yaml file
+    liquibase.GlobalOptions global_options = 4;
+  }
+}
+
+message Response {
+  string message = 1;
+}

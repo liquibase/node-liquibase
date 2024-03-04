@@ -1,0 +1,30 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "InitStartH2Proto";
+
+package liquibase;
+
+service InitStartH2Service {
+  rpc execute(Init.StartH2Request) returns (Response) {}
+}
+
+/* Launches H2, an included open source in-memory database. This Java application is shipped with Liquibase, and is useful in the Getting Started experience and for testing out Liquibase commands. */
+message Init {
+  message StartH2Request {
+    optional string bind_address = 1; // Network address to bind to
+    optional int32 db_port = 2; // Port to run h2 database on
+    optional bool launch_browser = 3; // Whether to open a browser to the database's web interface
+    optional string password = 4; // Password to use for created h2 user
+    optional string username = 5; // Username to create in h2
+    optional int32 web_port = 6; // Port to run h2's web interface on
+    liquibase.GlobalOptions global_options = 7;
+  }
+}
+
+message Response {
+  string message = 1;
+}

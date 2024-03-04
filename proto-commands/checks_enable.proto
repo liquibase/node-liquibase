@@ -1,0 +1,27 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "ChecksEnableProto";
+
+package liquibase.pro;
+
+service ChecksEnableService {
+  rpc execute(Checks.EnableRequest) returns (Response) {}
+}
+
+/* Enable a disabled check for current configuration */
+message Checks {
+  message EnableRequest {
+    optional string auto_update = 1; // Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off]
+    string check_name = 2; // *required* Name of check to enable
+    optional string checks_settings_file = 3; // Relative or fully qualified path to a configuration file for checks execution
+    liquibase.GlobalOptions global_options = 4;
+  }
+}
+
+message Response {
+  string message = 1;
+}

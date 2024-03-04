@@ -1,0 +1,27 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "FlowProto";
+
+package liquibase.pro;
+
+service FlowService {
+  rpc execute(FlowRequest) returns (Response) {}
+}
+
+/* [PRO]
+Run a series of commands contained in one or more stages, as configured in a liquibase flow-file. */
+message FlowRequest {
+  optional string flow_file = 1; // The path to the configuration yaml file which contains one or more 'stages' of commands to be executed in a liquibase flow operation. Defaults to yaml file named "liquibase.flowfile.yaml" in the current working directory.
+  optional bool flow_file_strict_parsing = 2; // Parse flow-file YAML to allow only Liquibase flow-file specific properties, indentations, and structure.
+  optional string flow_shell_interpreter = 3; // The default interpreter used to execute shell commands. EXAMPLES: bash, sh, cmd.
+  optional bool flow_shell_keep_temp_files = 4; // Do not delete temporary files created by the shell command execution
+  liquibase.GlobalOptions global_options = 5;
+}
+
+message Response {
+  string message = 1;
+}
