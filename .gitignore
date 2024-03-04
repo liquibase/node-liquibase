@@ -4,6 +4,7 @@ node_modules
 coverage
 .npmrc
 commands.json
+*.proto
 
 
 # Mac OS

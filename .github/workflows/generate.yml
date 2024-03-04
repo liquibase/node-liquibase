@@ -32,11 +32,13 @@ jobs:
 
       - name: Iterate over commands and execute Docker command
         run: |
-          COMMANDS=$(cat commands.json | jq -r '.[]')
+          COMMANDS=$(cat commands.json | jq -r '.[]')#replace spaces with underscore
           IFS=$'\n'
           for command in $COMMANDS; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
-            protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=exportCommonSymbols=false $command.proto
+            COMMAND="${command//-/_}" #replace dashes with underscore
+            COMMAND="${COMMAND/ /_}" #replace spaces with underscore
+            protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=exportCommonSymbols=false $COMMAND.proto
           done
           mkdir -p proto-commands
           mv *.ts ./proto-commands
@@ -63,7 +65,7 @@ jobs:
         if: github.ref != 'refs/heads/master'
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: Auto Pull Request for protobuf files
+          commit-message: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           branch: ${{ github.ref }}
