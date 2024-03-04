@@ -45,6 +45,16 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          commit-message: Auto Pull Request for protobuf files
+          title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
+          body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
+          branch: ${{ github.ref }}
+          base: master
+
       - uses: actions/upload-artifact@v3
         with:
           name: commands-${{ inputs.liquibase-version }}
