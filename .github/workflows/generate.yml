@@ -22,7 +22,7 @@ jobs:
       - name: Install protoc and npm
         run: |
           sudo apt-get install -y protobuf-compiler npm
-          npm install proto
+          npm install proto ts-proto
 
       - name: Build liquibase-protobuf-generator
         run: docker build -t liquibase-protobuf-generator:${{ inputs.liquibase-version }} . --build-arg VERSION=${{ inputs.liquibase-version }}
