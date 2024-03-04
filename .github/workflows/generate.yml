@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install protoc and npm
+        run: |
+          sudo apt-get install -y protobuf-compiler npm
+          npm install proto
+
       - name: Build liquibase-protobuf-generator
         run: docker build -t liquibase-protobuf-generator:${{ inputs.liquibase-version }} . --build-arg VERSION=${{ inputs.liquibase-version }}
 
@@ -31,9 +36,10 @@ jobs:
           IFS=$'\n'
           for command in $COMMANDS; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
+            protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=exportCommonSymbols=false ./$command.proto
           done
           mkdir -p proto-commands
-          mv *.proto ./proto-commands
+          mv *.ts ./proto-commands
 
       - name: Configure git user
         if: github.ref != 'refs/heads/master'
