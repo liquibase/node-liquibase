@@ -8,6 +8,10 @@ on:
         required: true
         default: '4.26.0'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   create-command-list:
     runs-on: ubuntu-latest
@@ -53,7 +57,6 @@ jobs:
         if: github.ref != 'refs/heads/master'
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.BOT_TOKEN }}
           commit-message: Auto Pull Request for protobuf files
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
