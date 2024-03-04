@@ -5,6 +5,7 @@ coverage
 .npmrc
 commands.json
 *.proto
+dist
 
 
 # Mac OS
