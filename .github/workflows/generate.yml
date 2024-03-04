@@ -33,7 +33,7 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config --global init.defaultBranch main
+          git config --global init.defaultBranch master
           git config --global user.name "liquibot"
           git config --global user.email "liquibot@liquibase.org"
 
