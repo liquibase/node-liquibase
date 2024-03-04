@@ -32,12 +32,12 @@ jobs:
 
       - name: Iterate over commands and execute Docker command
         run: |
-          COMMANDS=$(cat commands.json | jq -r '.[]')#replace spaces with underscore
+          COMMANDS=$(cat commands.json | jq -r '.[]')
           IFS=$'\n'
           for command in $COMMANDS; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
-            COMMAND="${command//-/_}" #replace dashes with underscore
-            COMMAND="${COMMAND/ /_}" #replace spaces with underscore
+            COMMAND="${command//-/_}"
+            COMMAND="${COMMAND/ /_}"
             protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=exportCommonSymbols=false $COMMAND.proto
           done
           mkdir -p proto-commands
