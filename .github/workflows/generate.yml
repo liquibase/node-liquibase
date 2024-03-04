@@ -30,7 +30,7 @@ jobs:
       - name: Iterate over commands and execute Docker command
         run: |
           IFS=$'\n'
-          for command in $COMMANDS; do
+          for command in ${{ env.COMMANDS }}; do
             docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
           done
 
