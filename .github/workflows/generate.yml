@@ -50,7 +50,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.BOT_TOKEN }}
           commit-message: Auto Pull Request for protobuf files
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
