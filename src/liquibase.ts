@@ -26,7 +26,18 @@ import {
   UpdateToTagCommandAttributes,
   UpdateToTagSQLCommandAttributes,
   ChangelogSyncToTagCommandAttributes,
+  ChangelogSyncCommandAttributes,
   ChangelogSyncToTagSQLCommandAttributes,
+  ChecksBulkSetCommandAttributes,
+  ChecksCopyCommandAttributes,
+  ChecksCreateCommandAttributes,
+  ChecksCustomizeCommandAttributes,
+  ChecksDeleteCommandAttributes,
+  ChecksDisableCommandAttributes,
+  ChecksEnableCommandAttributes,
+  ChecksResetCommandAttributes,
+  ChecksRunCommandAttributes,
+  ChecksShowCommandAttributes,
   DbDocCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
@@ -555,8 +566,8 @@ export class Liquibase {
    *
    * {@link https://docs.liquibase.com/commands/community/changelogsync.html Documentation}
    */
-  public changelogSync(): Promise<string> {
-    return this.run(LiquibaseCommands.ChangelogSync);
+  public changelogSync(params: ChangelogSyncCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChangelogSync, params);
   }
 
   /**
@@ -601,6 +612,46 @@ export class Liquibase {
    */
   public changelogSyncToTagSQL(params: ChangelogSyncToTagSQLCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.ChangelogSyncToTagSql, params);
+  }
+
+  public checksBulkSet(params: ChecksBulkSetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksBulkSet, params);
+  }
+
+  public checksCopy(params: ChecksCopyCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCopy, params);
+  }
+
+  public checksCreate(params: ChecksCreateCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCreate, params);
+  }
+
+  public checksCustomize(params: ChecksCustomizeCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCustomize, params);
+  }
+
+  public checksDelete(params: ChecksDeleteCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksDelete, params);
+  }
+
+  public checksDisable(params: ChecksDisableCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksDisable, params);
+  }
+
+  public checksEnable(params: ChecksEnableCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksEnable, params);
+  }
+
+  public checksReset(params: ChecksResetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksReset, params);
+  }
+
+  public checksRun(params: ChecksRunCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksRun, params);
+  }
+
+  public checksShow(params: ChecksShowCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksShow, params);
   }
 
   /**
@@ -740,7 +791,7 @@ export class Liquibase {
     const fileContents = FileHelper.readFileContent(liquibasePropertyPath);
     const fileContentsLines = fileContents.split(/\r?\n/);
 
-    fileContentsLines.forEach(line => {
+    fileContentsLines.forEach((line) => {
       const keyValuePair = line.split(/=?:/, 2);
       const key = keyValuePair[0];
       const value = keyValuePair[1];
@@ -750,7 +801,7 @@ export class Liquibase {
       }
     });
 
-    return (paramsFromLiquibasePropertyFile as any) as LiquibaseConfig;
+    return paramsFromLiquibasePropertyFile as any as LiquibaseConfig;
   }
 
   /**
@@ -781,7 +832,7 @@ export class Liquibase {
    */
   private liquibasePathAndGlobalAttributes(params: LiquibaseConfig) {
     let liquibasePathAndGlobalAttributes = `${params.liquibase}`;
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
       if (key === 'liquibase' || key === 'liquibasePropertiesFile') {
         return;
       }

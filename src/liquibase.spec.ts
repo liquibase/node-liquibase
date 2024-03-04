@@ -1,7 +1,18 @@
 import {
   CalculateCheckSumCommandAttributes,
+  ChangelogSyncCommandAttributes,
   ChangelogSyncToTagCommandAttributes,
   ChangelogSyncToTagSQLCommandAttributes,
+  ChecksBulkSetCommandAttributes,
+  ChecksCopyCommandAttributes,
+  ChecksCreateCommandAttributes,
+  ChecksCustomizeCommandAttributes,
+  ChecksDeleteCommandAttributes,
+  ChecksDisableCommandAttributes,
+  ChecksEnableCommandAttributes,
+  ChecksResetCommandAttributes,
+  ChecksRunCommandAttributes,
+  ChecksShowCommandAttributes,
   DbDocCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
@@ -158,9 +169,10 @@ describe('Liquibase', () => {
 
   describe('#changelogSync', () => {
     it('should call run method', async () => {
+      const param = {} as ChangelogSyncCommandAttributes;
       spyOn<any>(instance, 'run');
 
-      instance.changelogSync();
+      instance.changelogSync(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -190,6 +202,116 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.changelogSyncToTagSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#changelogSync', () => {
+    it('should call run method', async () => {
+      const param = {} as ChangelogSyncCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.changelogSync(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksBulkSet', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksBulkSetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksBulkSet(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCopy', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCopyCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCopy(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCreate', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCreateCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCreate(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCustomize', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCustomizeCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCustomize(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksDelete', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksDeleteCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksDelete(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksDisable', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksDisableCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksDisable(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksEnable', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksEnableCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksEnable(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksReset', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksEnableCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksReset(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksRun', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksRunCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksRun(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksShow', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksShowCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksShow(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -472,7 +594,7 @@ describe('Liquibase', () => {
   });
 
   describe('#run', () => {
-    it('should delegate to #spawnChildProcess', async done => {
+    it('should delegate to #spawnChildProcess', async (done) => {
       spyOn<any>(instance, 'spawnChildProcess');
       const mockAction = LiquibaseCommands.Status;
       const mockParams = undefined;
