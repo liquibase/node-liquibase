@@ -18,10 +18,23 @@ jobs:
       - name: Build liquibase-protobuf-generator
         run: docker build -t liquibase-protobuf-generator:${{ inputs.liquibase-version }} . --build-arg VERSION=${{ inputs.liquibase-version }}
 
-      - name: Generate liquibase commands
+      - name: Generate liquibase command list
         run: docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} --output-file=commands.json list-commands
+
+      - name: Read commands from JSON file
+        id: read_commands
+        run: |
+          COMMANDS=$(cat commands.json | jq -r '.[]')
+          echo "COMMANDS=$COMMANDS" >> $GITHUB_ENV
+
+      - name: Iterate over commands and execute Docker command
+        run: |
+          IFS=$'\n'
+          for command in $COMMANDS; do
+            docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
+          done
 
       - uses: actions/upload-artifact@v3
         with:
-          name: commands-$LIQUIBASE_VERSION
-          path: commands.json
+          name: commands-${{ inputs.liquibase-version }}
+          path: '*.proto'

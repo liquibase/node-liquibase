@@ -4,6 +4,8 @@ node_modules
 coverage
 .npmrc
 commands.json
+*.proto
+
 
 # Mac OS
 .DS_Store
