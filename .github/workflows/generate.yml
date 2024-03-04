@@ -39,7 +39,7 @@ jobs:
 
       - name: Push changes
         run: |
-          git add /proto/commands
+          git add proto-commands
           git commit -m "Generated protobuf files for liquibase version ${{ inputs.liquibase-version }}"
           git push
         env:
