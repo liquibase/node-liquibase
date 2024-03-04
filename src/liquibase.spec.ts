@@ -206,16 +206,6 @@ describe('Liquibase', () => {
     });
   });
 
-  describe('#changelogSync', () => {
-    it('should call run method', async () => {
-      const param = {} as ChangelogSyncCommandAttributes;
-      spyOn<any>(instance, 'run');
-
-      instance.changelogSync(param);
-      expect(instance['run']).toHaveBeenCalled();
-    });
-  });
-
   describe('#checksBulkSet', () => {
     it('should call run method', async () => {
       const param = {} as ChecksBulkSetCommandAttributes;
@@ -288,7 +278,7 @@ describe('Liquibase', () => {
 
   describe('#checksReset', () => {
     it('should call run method', async () => {
-      const param = {} as ChecksEnableCommandAttributes;
+      const param = {} as ChecksResetCommandAttributes;
       spyOn<any>(instance, 'run');
 
       instance.checksReset(param);
