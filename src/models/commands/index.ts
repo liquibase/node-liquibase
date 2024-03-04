@@ -32,6 +32,8 @@ export * from './checks-enable-command-attributes.model';
 export * from './checks-reset-command-attributes.model';
 export * from './checks-run-command-attributes.model';
 export * from './checks-show-command-attributes.model';
+export * from './checks-show-command-attributes.model';
 export * from './db-doc-command-attributes.model';
+export * from './execute-sql-command-attributes.model';
 export * from './diff-changelog-command-attributes.model';
 export * from './diff-command-attributes.model';

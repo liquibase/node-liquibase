@@ -41,6 +41,7 @@ import {
   DbDocCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
+  ExecuteSqlCommandAttributes,
 } from './models';
 import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
 import { ParamsModel, WithOptionalSubstitutionParams } from './models/commands/substitution-params.model';
@@ -665,6 +666,10 @@ export class Liquibase {
     return this.run(LiquibaseCommands.ClearCheckSums);
   }
 
+  public connect(): Promise<string> {
+    return this.run(LiquibaseCommands.Connect);
+  }
+
   /**
    * The `dbDoc <outputDirectory>` command generates documentation in a Javadoc format based on the existing database and changelogs.
    *
@@ -726,6 +731,10 @@ export class Liquibase {
    */
   public diffChangelog(params: DiffChangelogCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.DiffChangeLog, params);
+  }
+
+  public executeSql(params: ExecuteSqlCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ExecuteSql, params);
   }
 
   private stringifyParams(

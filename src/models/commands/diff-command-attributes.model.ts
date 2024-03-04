@@ -15,4 +15,12 @@ export interface DiffCommandAttributes {
    * The diff --format=json command is a Liquibase Pro extension to the existing diff command.
    */
   format?: string;
+  /** [PRO] Sets the return code for all drift types found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
+  driftSeverity?: number | undefined;
+  /** [PRO] Sets the return code for "changed" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
+  driftSeverityChanged?: number | undefined;
+  /** [PRO] Sets the return code for "missing" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
+  driftSeverityMissing?: number | undefined;
+  /** [PRO] Sets the return code for "unexpected" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
+  driftSeverityUnexpected?: number | undefined;
 }

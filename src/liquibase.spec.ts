@@ -16,6 +16,7 @@ import {
   DbDocCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
+  ExecuteSqlCommandAttributes,
   FutureRollbackCountSQLCommandAttributes,
   GenerateChangeLogCommandAttributes,
   Liquibase,
@@ -315,6 +316,15 @@ describe('Liquibase', () => {
     });
   });
 
+  describe('#connect', () => {
+    it('should call run method', async () => {
+      spyOn<any>(instance, 'run');
+
+      instance.connect();
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
   describe('#dbDoc', () => {
     it('should call run method', async () => {
       const param = {} as DbDocCommandAttributes;
@@ -359,6 +369,16 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.dropAll();
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#executeSql', () => {
+    it('should call run method', async () => {
+      const param = {} as ExecuteSqlCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.executeSql(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
