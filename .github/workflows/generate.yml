@@ -30,6 +30,7 @@ jobs:
       - name: Create feature branch
         run: |
           git checkout -b "feature/protobuf-${{ inputs.liquibase-version }}"
+          git pull
           git push --set-upstream origin "feature/protobuf-${{ inputs.liquibase-version }}"
 
       - name: Install protoc and npm
