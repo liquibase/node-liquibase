@@ -6,25 +6,6 @@ import { LiquibaseCommands } from './enums/liquibase-commands.enum';
 import {
   LiquibaseConfig,
   CalculateCheckSumCommandAttributes,
-  UpdateCommandAttributes,
-  RollbackCommandAttributes,
-  RollbackSQLCommandAttributes,
-  RollbackCountCommandAttributes,
-  RollbackCountSQLCommandAttributes,
-  RollbackToDateCommandAttributes,
-  RollbackToDateSQLCommandAttributes,
-  SnapshotCommandAttributes,
-  SnapshotReferenceCommandAttributes,
-  SyncHubCommandAttributes,
-  TagCommandAttributes,
-  TagExistsCommandAttributes,
-  FutureRollbackCountSQLCommandAttributes,
-  GenerateChangeLogCommandAttributes,
-  UpdateSQLCommandAttributes,
-  UpdateCountCommandAttributes,
-  UpdateCountSQLCommandAttributes,
-  UpdateToTagCommandAttributes,
-  UpdateToTagSQLCommandAttributes,
   ChangelogSyncToTagCommandAttributes,
   ChangelogSyncCommandAttributes,
   ChangelogSyncToTagSQLCommandAttributes,
@@ -43,13 +24,34 @@ import {
   DiffCommandAttributes,
   ExecuteSqlCommandAttributes,
   FlowCommandAttributes,
-  InitCopyCommandAttributes,
-  InitProjectCommandAttributes,
-  InitStartH2CommandAttributes,
+  FutureRollbackCountSQLCommandAttributes,
+  GenerateChangeLogCommandAttributes,
+  InitCommandAttributes,
+  RollbackCommandAttributes,
+  RollbackSQLCommandAttributes,
+  RollbackCountCommandAttributes,
+  RollbackCountSQLCommandAttributes,
+  RollbackToDateCommandAttributes,
+  RollbackToDateSQLCommandAttributes,
   RollbackOneChangesetCommandAttributes,
   RollbackOneChangesetSQLCommandAttributes,
   RollbackOneUpdateCommandAttributes,
-  RollbackOneUpdateSQLCommandAttributes
+  RollbackOneUpdateSQLCommandAttributes,
+  SetContextsCommandAttributes,
+  SetLabelsCommandAttributes,
+  SnapshotCommandAttributes,
+  SnapshotReferenceCommandAttributes,
+  SyncHubCommandAttributes,
+  TagCommandAttributes,
+  TagExistsCommandAttributes,
+  UpdateCommandAttributes,
+  UpdateSQLCommandAttributes,
+  UpdateCountCommandAttributes,
+  UpdateCountSQLCommandAttributes,
+  UpdateToTagCommandAttributes,
+  UpdateToTagSQLCommandAttributes,
+  UpdateOneChangesetCommandAttributes,
+  UpdateOneChangesetSQLCommandAttributes,
 } from './models';
 import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
 import { ParamsModel, WithOptionalSubstitutionParams } from './models/commands/substitution-params.model';
@@ -188,6 +190,13 @@ export class Liquibase {
     return this.run(LiquibaseCommands.UpdateToTagSql, params);
   }
 
+  public updateOneChangeset(params: UpdateOneChangesetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.UpdateOneChangeset, params);
+  }
+
+  public updateOneChangesetSQL(params: UpdateOneChangesetSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.UpdateOneChangesetSql, params);
+  }
   /**
    * The `validate` command checks and identifies any possible errors in a changelog that can cause the `update` command to fail.
    *
@@ -322,6 +331,14 @@ export class Liquibase {
 
   public rollbackOneUpdateSQL(params: RollbackOneUpdateSQLCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.RollbackOneUpdateSql, params);
+  }
+
+  public setContexts(params: SetContextsCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.SetContexts, params);
+  }
+
+  public setLabels(params: SetLabelsCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.SetLabels, params);
   }
   /**
    * The `snapshot` command captures the current state of the URL database, which is the target database.
@@ -764,16 +781,8 @@ export class Liquibase {
     return this.run(LiquibaseCommands.Flow, params);
   }
 
-  public initCopy(params: InitCopyCommandAttributes): Promise<string> {
-    return this.run(LiquibaseCommands.InitCopy, params);
-  }
-
-  public initProject(params: InitProjectCommandAttributes): Promise<string> {
-    return this.run(LiquibaseCommands.InitProject, params);
-  }
-
-  public initStartH2(params: InitStartH2CommandAttributes): Promise<string> {
-    return this.run(LiquibaseCommands.InitStartH2, params);
+  public init(params: InitCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.Init, params);
   }
 
   private stringifyParams(
