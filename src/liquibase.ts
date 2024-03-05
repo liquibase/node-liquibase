@@ -42,6 +42,14 @@ import {
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
   ExecuteSqlCommandAttributes,
+  FlowCommandAttributes,
+  InitCopyCommandAttributes,
+  InitProjectCommandAttributes,
+  InitStartH2CommandAttributes,
+  RollbackOneChangesetCommandAttributes,
+  RollbackOneChangesetSQLCommandAttributes,
+  RollbackOneUpdateCommandAttributes,
+  RollbackOneUpdateSQLCommandAttributes
 } from './models';
 import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
 import { ParamsModel, WithOptionalSubstitutionParams } from './models/commands/substitution-params.model';
@@ -300,6 +308,21 @@ export class Liquibase {
     return this.run(LiquibaseCommands.RollbackToDateSql, params);
   }
 
+  public rollbackOneChangeset(params: RollbackOneChangesetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneChangeset, params);
+  }
+
+  public rollbackOneChangesetSQL(params: RollbackOneChangesetSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneChangesetSql, params);
+  }
+
+  public rollbackOneUpdate(params: RollbackOneUpdateCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneUpdate, params);
+  }
+
+  public rollbackOneUpdateSQL(params: RollbackOneUpdateSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneUpdateSql, params);
+  }
   /**
    * The `snapshot` command captures the current state of the URL database, which is the target database.
    *
@@ -735,6 +758,22 @@ export class Liquibase {
 
   public executeSql(params: ExecuteSqlCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.ExecuteSql, params);
+  }
+
+  public flow(params: FlowCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.Flow, params);
+  }
+
+  public initCopy(params: InitCopyCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.InitCopy, params);
+  }
+
+  public initProject(params: InitProjectCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.InitProject, params);
+  }
+
+  public initStartH2(params: InitStartH2CommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.InitStartH2, params);
   }
 
   private stringifyParams(

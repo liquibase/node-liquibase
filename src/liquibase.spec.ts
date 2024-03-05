@@ -17,8 +17,12 @@ import {
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
   ExecuteSqlCommandAttributes,
+  FlowCommandAttributes,
   FutureRollbackCountSQLCommandAttributes,
   GenerateChangeLogCommandAttributes,
+  InitCopyCommandAttributes,
+  InitProjectCommandAttributes,
+  InitStartH2CommandAttributes,
   Liquibase,
   RollbackCommandAttributes,
   RollbackCountCommandAttributes,
@@ -26,6 +30,10 @@ import {
   RollbackSQLCommandAttributes,
   RollbackToDateCommandAttributes,
   RollbackToDateSQLCommandAttributes,
+  RollbackOneChangesetCommandAttributes,
+  RollbackOneChangesetSQLCommandAttributes,
+  RollbackOneUpdateCommandAttributes,
+  RollbackOneUpdateSQLCommandAttributes,
   SnapshotCommandAttributes,
   SnapshotReferenceCommandAttributes,
   SyncHubCommandAttributes,
@@ -383,6 +391,16 @@ describe('Liquibase', () => {
     });
   });
 
+  describe('#flow', () => {
+    it('should call run method', async () => {
+      const param = {} as FlowCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.flow(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
   describe('#futureRollbackSQL', () => {
     it('should call run method', async () => {
       spyOn<any>(instance, 'run');
@@ -426,6 +444,36 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.history();
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#initCopy', () => {
+    it('should call run method', async () => {
+      const param = {} as InitCopyCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.initCopy(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#initProject', () => {
+    it('should call run method', async () => {
+      const param = {} as InitProjectCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.initProject(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#initStartH2', () => {
+    it('should call run method', async () => {
+      const param = {} as InitStartH2CommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.initStartH2(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -531,6 +579,46 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.rollbackToDateSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneChangeset', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneChangesetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneChangeset(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneChangesetSQL', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneChangesetSQLCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneChangesetSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneUpdate', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneUpdateCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneUpdate(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneUpdateSQL', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneUpdateSQLCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneUpdateSQL(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
