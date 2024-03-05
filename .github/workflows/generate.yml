@@ -43,13 +43,6 @@ jobs:
             git pull origin ${{ inputs.liquibase-version }}
           fi
 
-      - name: Create feature branch
-        run: |
-          git checkout -b "feature/protobuf-${{ inputs.liquibase-version }}"
-          git branch --set-upstream-to=feature/protobuf-${{ inputs.liquibase-version }}
-          git pull
-          git push --set-upstream origin "feature/protobuf-${{ inputs.liquibase-version }}"
-
       - name: Install protoc and npm
         run: |
           sudo apt-get install -y protobuf-compiler npm
@@ -104,7 +97,7 @@ jobs:
           commit-message: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
-          branch: feature/protobuf-${{ inputs.liquibase-version }}
+          branch: ${{ inputs.liquibase-version }}
           base: master
 
       - uses: actions/upload-artifact@v3
