@@ -39,8 +39,9 @@ jobs:
             git checkout -b ${{ inputs.liquibase-version }}
             git push origin ${{ inputs.liquibase-version }}
           else
+            git fetch origin ${{ inputs.liquibase-version }}
             git checkout ${{ inputs.liquibase-version }}
-            git pull origin ${{ inputs.liquibase-version }}
+            git reset --hard origin/${{ inputs.liquibase-version }}
           fi
 
       - name: Install protoc and npm
