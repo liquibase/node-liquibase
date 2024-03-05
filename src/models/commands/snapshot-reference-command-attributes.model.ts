@@ -1,38 +1,22 @@
 export interface SnapshotReferenceCommandAttributes {
   /** The default catalog name to use for the reference database connection */
-  referenceDefaultCatalogName?:
-  | string
-  | undefined;
+  referenceDefaultCatalogName?: string | undefined;
   /** The default schema name to use for the reference database connection */
-  referenceDefaultSchemaName?:
-  | string
-  | undefined;
+  referenceDefaultSchemaName?: string | undefined;
   /** The JDBC driver class for the reference database */
-  referenceDriver?:
-  | string
-  | undefined;
+  referenceDriver?: string | undefined;
   /** The JDBC driver properties file for the reference database */
-  referenceDriverPropertiesFile?:
-  | string
-  | undefined;
+  referenceDriverPropertiesFile?: string | undefined;
   /** Reference catalog to use for Liquibase objects */
-  referenceLiquibaseCatalogName?:
-  | string
-  | undefined;
+  referenceLiquibaseCatalogName?: string | undefined;
   /** Reference schema to use for Liquibase objects */
-  referenceLiquibaseSchemaName?:
-  | string
-  | undefined;
+  referenceLiquibaseSchemaName?: string | undefined;
   /** The reference database password */
-  referencePassword?:
-  | string
-  | undefined;
+  referencePassword?: string | undefined;
   /** required* The JDBC reference database connection URL */
   referenceUrl: string;
   /** The reference database username */
-  referenceUsername?:
-  | string
-  | undefined;
+  referenceUsername?: string | undefined;
   /** Output format to use (JSON or YAML) */
   snapshotFormat?: string | undefined;
 }
