@@ -46,29 +46,17 @@ export interface LiquibaseConfig {
    */
   referenceUsername?: string;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-  | string
-  | undefined;
+  defaultCatalogName?: string | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-  | string
-  | undefined;
+  defaultSchemaName?: string | undefined;
   /** Context string to use for filtering */
-  contextFilter?:
-  | string
-  | undefined;
+  contextFilter?: string | undefined;
   /** Label expression to use for filtering */
-  labelFilter?:
-  | string
-  | undefined;
+  labelFilter?: string | undefined;
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?:
-  | string
-  | undefined;
+  changeExecListenerClass?: string | undefined;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?:
-  | string
-  | undefined;
+  changeExecListenerPropertiesFile?: string | undefined;
   /**
    * password for ref database
    */
@@ -230,15 +218,9 @@ export interface LiquibaseConfig {
    */
   logLevel?: LiquibaseLogLevels;
   /** If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset. */
-  rollbackOnError?:
-  | boolean
-  | undefined;
+  rollbackOnError?: boolean | undefined;
   /** Control whether names of objects in the default catalog are fully qualified or not. If true they are. If false, only objects outside the default catalog are fully qualified */
-  outputDefaultCatalog?:
-  | boolean
-  | undefined;
+  outputDefaultCatalog?: boolean | undefined;
   /** Control whether names of objects in the default schema are fully qualified or not. If true they are. If false, only objects outside the default schema are fully qualified */
-  outputDefaultSchema?:
-  | boolean
-  | undefined;
+  outputDefaultSchema?: boolean | undefined;
 }
