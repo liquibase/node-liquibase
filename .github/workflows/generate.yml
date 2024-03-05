@@ -27,6 +27,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Check if feature branch for ${{ inputs.liquibase-version }} exists
+        id: branch_check
+        run: |
+          BRANCH_EXISTS=$(git ls-remote --heads origin feature/protobuf-${{ inputs.liquibase-version }} | wc -l)
+          echo "::set-output name=branch_exists::$BRANCH_EXISTS"
+
+      - name: Create or checkout branch for ${{ inputs.liquibase-version }} 
+        run: |
+          if [ ${{ steps.branch_check.outputs.branch_exists }} -eq 0 ]; then
+            git checkout -b feature/protobuf-${{ inputs.liquibase-version }}
+            git push origin feature/protobuf-${{ inputs.liquibase-version }}
+          else
+            git checkout feature/protobuf-${{ inputs.liquibase-version }}
+            git pull origin feature/protobuf-${{ inputs.liquibase-version }}
+          fi
+
       - name: Create feature branch
         run: |
           git checkout -b "feature/protobuf-${{ inputs.liquibase-version }}"
