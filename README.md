@@ -19,10 +19,10 @@
 Use Node and databases? Want to do smart architecture decisions? Do not invent wheel, use Liquibase.
 Liquibase is an open-source database-independent library for tracking, managing and applying database schema changes.
 
-### Concerned About Install Size?
+### :panda_face: Concerned About Install Size?
 For a drastically smaller version of this package, be sure to check out our [Zero-Dependency Peer-Dependency version](https://www.npmjs.com/package/liquibase/v/0.0.0). You can access this version under the tag `@pd` for `Peer Dependency`. This version of the package boasts an unpacked size of `359 kB`. Just be sure to [correctly configure your project](#peer-dependency-@pd)!
 
-## Table of Contents
+## :clipboard: Table of Contents
 * [Installation](#installation)
 * [Sandbox](#sandbox)
 * [Usage](#usage)
@@ -41,11 +41,13 @@ For a drastically smaller version of this package, be sure to check out our [Zer
   * [Build](#build)
   * [Tests](#tests)
   * [Env Vars](#env-vars)
+  * [Extending Liquibase Node Package: Step-by-Step Guide](#extending-liquibase-node-package-step-by-step-guide)
+* [CI: Generate Action](#ci-generate-action)
 * [Getting More Knowledge About Liquibase](#getting-more-knowledge-about-liquibase)
 * [Liquibase CLI](#liquibase-cli)
 
 
-## Installation
+## :nut_and_bolt: Installation
 
 There is an easy way to integrate Liquibase power to Node application. All you need
 is NPM package.
@@ -59,24 +61,24 @@ or:
 $ NPM install --save liquibase
 ```
 
-### Sandbox
+### :diamond_shape_with_a_dot_inside: Sandbox
 > "If this isn't making sense, it doesn't make it lies." (Cornell, 1994).
 
 We have also provided a [Small Sandbox Project](https://github.com/tabuckner/node-liquibase-sandbox) where you can easily evaluate [Liquibase](https://github.com/liquibase/liquibase) and `node-liquibase` against a Postgres Database.
 
 The Sandbox project includes startup scripts, and examples to demonstrate how to use `node-liquibase` in TypeScript, JavaScript, and as a CLI tool.
 
-## Usage
+## :loudspeaker: Usage
 
 Liquibase support rich pool of commands to keep your database up-to-date, like update, rollback, diff check out full list here: https://docs.liquibase.com/commands/home.html.
 
 This package exposes both a CLI tool and a Library to help you in your Database Migration efforts!
 
-### CLI
+### :computer: CLI
 
 You can use this NPM package as a CLI tool under the namespace `node-liquibase` if you wish.
 
-#### Bundled Liquibase Executable
+#### :floppy_disk: Bundled Liquibase Executable
 
 ```bash
 node-liquibase
@@ -88,7 +90,7 @@ node-liquibase
 status
 ```
 
-#### Liquibase Executable "Peer Dependency"
+#### :floppy_disk: Liquibase Executable "Peer Dependency"
 
 ```bash
 node-liquibase /Users/me/path/to/my/executable/for/liquibase
@@ -100,7 +102,7 @@ node-liquibase /Users/me/path/to/my/executable/for/liquibase
  status
 ```
 
-### In Your Project Files
+### :file_folder: In Your Project Files
 
 #### TypeScript
 
@@ -309,6 +311,66 @@ yarn test
 ### Env Vars
 
 To substitute your own user/pass for a given environment, make a copy of `.env.example` in root directory as `.env` and update accordingly.
+
+### :rocket: Extending Liquibase Node Package: Step-by-Step Guide
+
+This guide outlines the process for adding or modifying Liquibase commands in the Liquibase Node package. It's designed for developers who want to extend the functionality of the package.
+
+Files to be Changed:
+
+* `src/commands-with-positional-arguments.ts`
+* `src/liquibase-commands.enum`
+* `node-liquibase/src/models/commands` (corresponding command file)
+* `node-liquibase/src/liquibase.spec.ts`
+* `node-liquibase/src/liquibase.ts`
+
+Follow these steps carefully to extend the functionality of the Liquibase Node package according to your requirements.
+
+Note: Ensure you follow proper coding conventions and thoroughly test your changes before deploying them.
+
+This guide assumes familiarity with TypeScript and the Liquibase Node package structure. If you encounter any issues, refer to the Liquibase Node package documentation or seek assistance from the community.
+
+#### Step 1: Update `commands-with-positional-arguments.ts` and `liquibase-commands.enum`
+
+1. Navigate to the `src` directory of the Liquibase Node package.
+2. Open `commands-with-positional-arguments.ts` and `liquibase-commands.enum files`.
+3. Add or modify the command with its positional (if needed) arguments in these files.
+
+#### Step 2: Modify Command and its Arguments in `node-liquibase/src/models/commands`
+
+1. Go to the `node-liquibase/src/models/commands` directory.
+2. Locate the corresponding command file based on the command you added or modified.
+3. Add or modify the command and its arguments in the respective file.
+
+#### Step 3: Define Commands in `node-liquibase/src/liquibase.spec.ts`
+
+1. Navigate to the `node-liquibase/src` directory.
+2. Open `liquibase.spec.ts` file.
+3. Define each command and indicate which run method it should invoke.
+
+#### Step 4: Implement Invoke Method in `node-liquibase/src/liquibase.ts`
+
+1. Go to the `node-liquibase/src` directory.
+2. Open `liquibase.ts` file.
+3. Implement the invoke method for each command specified in `liquibase.spec.ts`.
+
+## :construction: CI: Generate Action
+
+There is GitHub action executed on every Liquibase release. This GitHub Action automates the generation of Liquibase command list and protobuf files for a specified Liquibase version.
+
+### Workflow Steps
+
+1. **Install Dependencies**: Installs necessary dependencies including `protobuf-compiler` and npm packages.
+2. **Build Liquibase Protobuf Generator Docker Image**: Builds a Docker image named `liquibase-protobuf-generator` specific to the provided Liquibase version.
+3. **Generate Liquibase Command List**: Executes a Docker command to generate a `JSON` file containing a list of Liquibase commands supported by the specified version.
+4. **Iterate Over Commands and Generate Protobuf Files**: Loops through the commands retrieved from the `JSON` file, executes Docker commands to generate protobuf files for each command, and then moves the generated TypeScript files to a directory named `proto-commands`.
+5. **Update Liquibase Binaries**: Downloads and extracts the Liquibase binaries for the specified version, replacing the existing binaries.
+6. **Push Changes**: It commits the generated protobuf files and Liquibase binaries, then pushes the changes to the repository.
+7. **Create Pull Request**: It creates a pull request with the generated changes.
+
+This action streamlines the process of updating Liquibase-related files and creating pull requests for version updates.
+
+After the PR is created you can see potential new/modified liquibase commands and proced to update this module following the steps shown at [Extending Liquibase Node Package: Step-by-Step Guide](#extending-liquibase-node-package-step-by-step-guide)
 
 ## Getting More Knowledge About Liquibase
 
