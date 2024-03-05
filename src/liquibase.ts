@@ -848,7 +848,7 @@ export class Liquibase {
     const fileContents = FileHelper.readFileContent(liquibasePropertyPath);
     const fileContentsLines = fileContents.split(/\r?\n/);
 
-    fileContentsLines.forEach((line) => {
+    fileContentsLines.forEach(line => {
       const keyValuePair = line.split(/=?:/, 2);
       const key = keyValuePair[0];
       const value = keyValuePair[1];
@@ -858,7 +858,7 @@ export class Liquibase {
       }
     });
 
-    return paramsFromLiquibasePropertyFile as any as LiquibaseConfig;
+    return (paramsFromLiquibasePropertyFile as any) as LiquibaseConfig;
   }
 
   /**
@@ -889,7 +889,7 @@ export class Liquibase {
    */
   private liquibasePathAndGlobalAttributes(params: LiquibaseConfig) {
     let liquibasePathAndGlobalAttributes = `${params.liquibase}`;
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach(key => {
       if (key === 'liquibase' || key === 'liquibasePropertiesFile') {
         return;
       }

@@ -1,12 +1,8 @@
 export interface UpdateOneChangesetCommandAttributes {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?:
-    | string
-    | undefined;
+  changeExecListenerClass?: string | undefined;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?:
-    | string
-    | undefined;
+  changeExecListenerPropertiesFile?: string | undefined;
   /** required* The root changelog file */
   changelogFile: string;
   /** required* Author of the changeset to execute */
@@ -16,11 +12,7 @@ export interface UpdateOneChangesetCommandAttributes {
   /** required* Path to the changeset to execute */
   changesetPath: string;
   /** Context string to use for filtering */
-  contextFilter?:
-    | string
-    | undefined;
+  contextFilter?: string | undefined;
   /** Label expression to use for filtering */
-  labelFilter?:
-    | string
-    | undefined;
+  labelFilter?: string | undefined;
 }

@@ -46,7 +46,7 @@ import {
   UpdateToTagCommandAttributes,
   UpdateToTagSQLCommandAttributes,
   UpdateOneChangesetCommandAttributes,
-  UpdateOneChangesetSQLCommandAttributes
+  UpdateOneChangesetSQLCommandAttributes,
 } from './index';
 import { LiquibaseConfig } from './models/index';
 import { POSTGRESQL_DEFAULT_CONFIG } from './constants/defaults/postgresql-default.config';
@@ -714,7 +714,7 @@ describe('Liquibase', () => {
   });
 
   describe('#run', () => {
-    it('should delegate to #spawnChildProcess', async (done) => {
+    it('should delegate to #spawnChildProcess', async done => {
       spyOn<any>(instance, 'spawnChildProcess');
       const mockAction = LiquibaseCommands.Status;
       const mockParams = undefined;
