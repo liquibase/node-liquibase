@@ -62,6 +62,7 @@ jobs:
           unzip liquibase-${{ inputs.liquibase-version }}.zip -d liquibase
           rm -rf ./bin/liquibase
           mv liquibase ./bin
+          rm -rf liquibase-${{ inputs.liquibase-version }}.zip
 
       - name: Configure git user
         run: |
@@ -73,8 +74,7 @@ jobs:
         continue-on-error: true
         run: |
           git pull
-          git add proto-commands
-          git add bin
+          git add .
           git commit -m "Generated protobuf files for liquibase version ${{ inputs.liquibase-version }}"
           git push
         env:
