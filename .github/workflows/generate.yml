@@ -3,7 +3,7 @@ name: Generate Action
 on:
   workflow_call:
     inputs:
-      liquibase-version:
+      version:
         description: 'Liquibase version'
         required: true
         default: '4.26.0'
@@ -20,21 +20,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Check if feature branch for ${{ inputs.liquibase-version }} exists
+      - name: Check if feature branch for ${{ inputs.version }} exists
         id: branch_check
         run: |
-          BRANCH_EXISTS=$(git ls-remote --exit-code --heads origin ${{ inputs.liquibase-version }} &>/dev/null && echo "true" || echo "false")
+          BRANCH_EXISTS=$(git ls-remote --exit-code --heads origin ${{ inputs.version }} &>/dev/null && echo "true" || echo "false")
           echo "BRANCH_EXISTS=$BRANCH_EXISTS" >> $GITHUB_ENV
 
       - name: Create or checkout branch
         run: |
           if [ "${{ env.BRANCH_EXISTS }}" = "false" ]; then
-            git checkout -b ${{ inputs.liquibase-version }}
-            git push origin ${{ inputs.liquibase-version }}
+            git checkout -b ${{ inputs.version }}
+            git push origin ${{ inputs.version }}
           else
-            git fetch origin ${{ inputs.liquibase-version }}
-            git checkout ${{ inputs.liquibase-version }}
-            git reset --hard origin/${{ inputs.liquibase-version }}
+            git fetch origin ${{ inputs.version }}
+            git checkout ${{ inputs.version }}
+            git reset --hard origin/${{ inputs.version }}
           fi
 
       - name: Install protoc and npm
@@ -43,17 +43,17 @@ jobs:
           npm install proto ts-proto
 
       - name: Build liquibase-protobuf-generator
-        run: docker build -t liquibase-protobuf-generator:${{ inputs.liquibase-version }} . --build-arg VERSION=${{ inputs.liquibase-version }}
+        run: docker build -t liquibase-protobuf-generator:${{ inputs.version }} . --build-arg VERSION=${{ inputs.version }}
 
       - name: Generate liquibase command list
-        run: docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} --output-file=commands.json list-commands
+        run: docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.version }} --output-file=commands.json list-commands
 
       - name: Iterate over commands and execute Docker command
         run: |
           COMMANDS=$(cat commands.json | jq -r '.[]')
           IFS=$'\n'
           for command in $COMMANDS; do
-            docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.liquibase-version }} generate-protobuf --target-command="$command" --output-dir /proto
+            docker run --rm -v $(pwd):/proto liquibase-protobuf-generator:${{ inputs.version }} generate-protobuf --target-command="$command" --output-dir /proto
             COMMAND="${command//-/_}"
             COMMAND="${COMMAND/ /_}"
             protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=exportCommonSymbols=false --experimental_allow_proto3_optional $COMMAND.proto
@@ -63,11 +63,11 @@ jobs:
 
       - name: Update liquibase binaries
         run: |
-          wget -q https://github.com/liquibase/liquibase/releases/download/v${{ inputs.liquibase-version }}/liquibase-${{ inputs.liquibase-version }}.zip
-          unzip liquibase-${{ inputs.liquibase-version }}.zip -d liquibase
+          wget -q https://github.com/liquibase/liquibase/releases/download/v${{ inputs.version }}/liquibase-${{ inputs.version }}.zip
+          unzip liquibase-${{ inputs.version }}.zip -d liquibase
           rm -rf ./bin/liquibase
           mv liquibase ./bin
-          rm -rf liquibase-${{ inputs.liquibase-version }}.zip
+          rm -rf liquibase-${{ inputs.version }}.zip
 
       - name: Configure git user
         run: |
@@ -80,7 +80,7 @@ jobs:
         run: |
           git pull
           git add .
-          git commit -m "Generated protobuf files for liquibase version ${{ inputs.liquibase-version }}"
+          git commit -m "Generated protobuf files for liquibase version ${{ inputs.version }}"
           git push
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -88,13 +88,13 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
-          title: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
-          body: Auto Pull Request for protobuf files [liquibase ${{ inputs.liquibase-version }}]
-          branch: ${{ inputs.liquibase-version }}
+          commit-message: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
+          title: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
+          body: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
+          branch: ${{ inputs.version }}
           base: master
 
       - uses: actions/upload-artifact@v3
         with:
-          name: commands-${{ inputs.liquibase-version }}
+          name: commands-${{ inputs.version }}
           path: /proto/commands
