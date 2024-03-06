@@ -1,13 +1,6 @@
 name: Generate Action
 
 on:
-  workflow_dispatch:
-    inputs:
-      liquibase-version:
-        description: 'Liquibase version'
-        required: true
-        default: '4.26.0'
-        type: string
   workflow_call:
     inputs:
       liquibase-version:
