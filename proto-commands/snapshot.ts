@@ -5,41 +5,25 @@ import { GlobalOptions } from "./global_options";
 /** Capture the current state of the database */
 export interface SnapshotRequest {
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** The schemas to snapshot */
-  schemas?:
-    | string
-    | undefined;
+  schemas?: string;
   /** [PRO] Types of objects to snapshot: Catalog, CheckConstraint, Column, DatabasePackage, DatabasePackageBody, ForeignKey, Function, Index, PrimaryKey, Schema, Sequence, StoredProcedure, Synonym, Table, Trigger, UniqueConstraint, View */
-  snapshotFilters?:
-    | string
-    | undefined;
+  snapshotFilters?: string;
   /** Output format to use (JSON, YAML, or TXT) */
-  snapshotFormat?:
-    | string
-    | undefined;
+  snapshotFormat?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

@@ -8,39 +8,23 @@ export interface Init {
 
 export interface Init_ProjectRequest {
   /** Relative or fully qualified path to the changelog file */
-  changelogFile?:
-    | string
-    | undefined;
+  changelogFile?: string;
   /** Format of the project changelog sql|xml|json|yaml|yml */
-  format?:
-    | string
-    | undefined;
+  format?: string;
   /** For remote project locations, do not delete temporary project files */
-  keepTempFiles?:
-    | boolean
-    | undefined;
+  keepTempFiles?: boolean;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** File with default Liquibase properties */
-  projectDefaultsFile?:
-    | string
-    | undefined;
+  projectDefaultsFile?: string;
   /** Relative or fully qualified path to the directory where the project files will be created */
-  projectDir?:
-    | string
-    | undefined;
+  projectDir?: string;
   /** Allow interactive prompts for init project */
-  projectGuide?:
-    | string
-    | undefined;
+  projectGuide?: string;
   /** The JDBC database connection URL */
-  url?:
-    | string
-    | undefined;
+  url?: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

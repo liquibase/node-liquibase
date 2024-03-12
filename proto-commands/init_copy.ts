@@ -8,15 +8,11 @@ export interface Init {
 
 export interface Init_CopyRequest {
   /** Recursive copy files from the source directory */
-  recursive?:
-    | boolean
-    | undefined;
+  recursive?: boolean;
   /** Path to the directory where the project files will be created */
-  source?:
-    | string
-    | undefined;
+  source?: string;
   /** Source directory where the project files will be copied from */
-  target?: string | undefined;
+  target?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

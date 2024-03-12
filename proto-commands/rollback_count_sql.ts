@@ -5,61 +5,37 @@ import { GlobalOptions } from "./global_options";
 /** Generate the SQL to rollback the specified number of changes */
 export interface RollbackCountSqlRequest {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?:
-    | string
-    | undefined;
+  changeExecListenerClass?: string;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?:
-    | string
-    | undefined;
+  changeExecListenerPropertiesFile?: string;
   /** required* The root changelog file */
   changelogFile: string;
   /** Context string to use for filtering */
-  contextFilter?:
-    | string
-    | undefined;
+  contextFilter?: string;
   /** required* The number of changes to rollback */
   count: number;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Label expression to use for filtering */
-  labelFilter?:
-    | string
-    | undefined;
+  labelFilter?: string;
   /** Control whether names of objects in the default catalog are fully qualified or not. If true they are. If false, only objects outside the default catalog are fully qualified */
-  outputDefaultCatalog?:
-    | boolean
-    | undefined;
+  outputDefaultCatalog?: boolean;
   /** Control whether names of objects in the default schema are fully qualified or not. If true they are. If false, only objects outside the default schema are fully qualified */
-  outputDefaultSchema?:
-    | boolean
-    | undefined;
+  outputDefaultSchema?: boolean;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** Rollback script to execute */
-  rollbackScript?:
-    | string
-    | undefined;
+  rollbackScript?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

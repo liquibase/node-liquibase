@@ -5,35 +5,23 @@ import { GlobalOptions } from "./global_options";
 /** Mark the current database state with the specified tag */
 export interface TagRequest {
   /** [PRO] Add entry to Database Changelog table */
-  addRow?:
-    | boolean
-    | undefined;
+  addRow?: boolean;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** required* Tag to add to the database changelog table */
   tag: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

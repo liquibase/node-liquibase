@@ -1,8 +1,8 @@
 export interface ExecuteSqlCommandAttributes {
   /** Delimiter to use when executing SQL script */
-  delimiter?: string | undefined;
+  delimiter?: string;
   /** SQL string to execute */
-  sql?: string | undefined;
+  sql?: string;
   /** SQL script to execute */
-  sqlFile?: string | undefined;
+  sqlFile?: string;
 }

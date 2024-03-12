@@ -7,45 +7,27 @@ export interface CalculateChecksumRequest {
   /** required* The root changelog file */
   changelogFile: string;
   /** ChangeSet Author attribute */
-  changesetAuthor?:
-    | string
-    | undefined;
+  changesetAuthor?: string;
   /** ChangeSet ID attribute */
-  changesetId?:
-    | string
-    | undefined;
+  changesetId?: string;
   /** ChangeSet identifier of form filepath::id::author */
-  changesetIdentifier?:
-    | string
-    | undefined;
+  changesetIdentifier?: string;
   /** Changelog path in which the changeSet is included */
-  changesetPath?:
-    | string
-    | undefined;
+  changesetPath?: string;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

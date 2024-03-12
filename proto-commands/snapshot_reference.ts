@@ -5,41 +5,25 @@ import { GlobalOptions } from "./global_options";
 /** Capture the current state of the reference database */
 export interface SnapshotReferenceRequest {
   /** The default catalog name to use for the reference database connection */
-  referenceDefaultCatalogName?:
-    | string
-    | undefined;
+  referenceDefaultCatalogName?: string;
   /** The default schema name to use for the reference database connection */
-  referenceDefaultSchemaName?:
-    | string
-    | undefined;
+  referenceDefaultSchemaName?: string;
   /** The JDBC driver class for the reference database */
-  referenceDriver?:
-    | string
-    | undefined;
+  referenceDriver?: string;
   /** The JDBC driver properties file for the reference database */
-  referenceDriverPropertiesFile?:
-    | string
-    | undefined;
+  referenceDriverPropertiesFile?: string;
   /** Reference catalog to use for Liquibase objects */
-  referenceLiquibaseCatalogName?:
-    | string
-    | undefined;
+  referenceLiquibaseCatalogName?: string;
   /** Reference schema to use for Liquibase objects */
-  referenceLiquibaseSchemaName?:
-    | string
-    | undefined;
+  referenceLiquibaseSchemaName?: string;
   /** The reference database password */
-  referencePassword?:
-    | string
-    | undefined;
+  referencePassword?: string;
   /** required* The JDBC reference database connection URL */
   referenceUrl: string;
   /** The reference database username */
-  referenceUsername?:
-    | string
-    | undefined;
+  referenceUsername?: string;
   /** Output format to use (JSON or YAML) */
-  snapshotFormat?: string | undefined;
+  snapshotFormat?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

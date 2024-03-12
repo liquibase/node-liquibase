@@ -2,19 +2,19 @@ export interface SetContextsCommandAttributes {
   /** required* The root changelog file */
   changelogFile: string;
   /** The author of the changeset to modify */
-  changesetAuthor?: string | undefined;
+  changesetAuthor?: string;
   /** The id of the changeset to modify */
-  changesetId?: string | undefined;
+  changesetId?: string;
   /** The changeset path */
-  changesetPath?: string | undefined;
+  changesetPath?: string;
   /** Changeset contexts to match */
-  contextFilter?: string | undefined;
+  contextFilter?: string;
   /** The database to filter by */
-  dbms?: string | undefined;
+  dbms?: string;
   /** Replace the contexts if true */
-  forceReplace?: boolean | undefined;
+  forceReplace?: boolean;
   /** Changeset labels to match */
-  labelFilter?: string | undefined;
+  labelFilter?: string;
   /** required* New contexts values */
   setAs: string;
 }

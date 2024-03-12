@@ -5,41 +5,25 @@ import { GlobalOptions } from "./global_options";
 /** Execute a SQL string or file */
 export interface ExecuteSqlRequest {
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** Delimiter to use when executing SQL script */
-  delimiter?:
-    | string
-    | undefined;
+  delimiter?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** SQL string to execute */
-  sql?:
-    | string
-    | undefined;
+  sql?: string;
   /** SQL script to execute */
-  sqlFile?:
-    | string
-    | undefined;
+  sqlFile?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

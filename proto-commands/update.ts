@@ -5,71 +5,41 @@ import { GlobalOptions } from "./global_options";
 /** Deploy any changes in the changelog file that have not been deployed */
 export interface UpdateRequest {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?:
-    | string
-    | undefined;
+  changeExecListenerClass?: string;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?:
-    | string
-    | undefined;
+  changeExecListenerPropertiesFile?: string;
   /** required* The root changelog */
   changelogFile: string;
   /** Changeset contexts to match */
-  contextFilter?:
-    | string
-    | undefined;
+  contextFilter?: string;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Changeset labels to match */
-  labelFilter?:
-    | string
-    | undefined;
+  labelFilter?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** [PRO] Enable or disable reporting. */
-  reportEnabled?:
-    | boolean
-    | undefined;
+  reportEnabled?: boolean;
   /** [PRO] The name of the report. */
-  reportName?:
-    | string
-    | undefined;
+  reportName?: string;
   /** [PRO] The path to the directory to generate the report. */
-  reportPath?:
-    | string
-    | undefined;
+  reportPath?: string;
   /** If set to true and any changeset in a deployment fails, then the update operation stops, and liquibase attempts to rollback all changesets just deployed. A changeset marked "fail-on-error=false" does not trigger as an error, therefore rollback-on-error will not occur. Additionally, if a changeset is not auto-rollback compliant or does not have a rollback script, then no rollback-on-error will occur for any changeset. */
-  rollbackOnError?:
-    | boolean
-    | undefined;
+  rollbackOnError?: boolean;
   /** Type of update results summary to show.  Values can be 'off', 'summary', or 'verbose'. */
-  showSummary?:
-    | string
-    | undefined;
+  showSummary?: string;
   /** Summary output to report update summary results. Values can be 'log', 'console', or 'all'. */
-  showSummaryOutput?:
-    | string
-    | undefined;
+  showSummaryOutput?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string | undefined;
+  username?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

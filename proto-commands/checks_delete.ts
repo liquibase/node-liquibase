@@ -8,13 +8,11 @@ export interface Checks {
 
 export interface Checks_DeleteRequest {
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?:
-    | string
-    | undefined;
+  autoUpdate?: string;
   /** required* Name of check to delete */
   checkName: string;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?: string | undefined;
+  checksSettingsFile?: string;
   globalOptions: GlobalOptions | undefined;
 }
 

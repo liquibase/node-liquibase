@@ -7,41 +7,25 @@ export interface StatusRequest {
   /** required* The root changelog file */
   changelogFile: string;
   /** Context string to use for filtering */
-  contextFilter?:
-    | string
-    | undefined;
+  contextFilter?: string;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?:
-    | string
-    | undefined;
+  defaultCatalogName?: string;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?:
-    | string
-    | undefined;
+  defaultSchemaName?: string;
   /** The JDBC driver class */
-  driver?:
-    | string
-    | undefined;
+  driver?: string;
   /** The JDBC driver properties file */
-  driverPropertiesFile?:
-    | string
-    | undefined;
+  driverPropertiesFile?: string;
   /** Label expression to use for filtering */
-  labelFilter?:
-    | string
-    | undefined;
+  labelFilter?: string;
   /** Password to use to connect to the database */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?:
-    | string
-    | undefined;
+  username?: string;
   /** Verbose flag with optional values of 'True' or 'False'. The default is 'True'. */
-  verbose?: boolean | undefined;
+  verbose?: boolean;
   globalOptions: GlobalOptions | undefined;
 }
 

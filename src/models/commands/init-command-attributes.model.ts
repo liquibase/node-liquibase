@@ -1,30 +1,30 @@
 export interface InitCommandAttributes {
   /** Recursive copy files from the source directory */
-  recursive?: boolean | undefined;
+  recursive?: boolean;
   /** Path to the directory where the project files will be created */
-  source?: string | undefined;
+  source?: string;
   /** Source directory where the project files will be copied from */
-  target?: string | undefined;
+  target?: string;
   /** Format of the project changelog sql|xml|json|yaml|yml */
-  format?: string | undefined;
+  format?: string;
   /** For remote project locations, do not delete temporary project files */
-  keepTempFiles?: boolean | undefined;
+  keepTempFiles?: boolean;
   /** File with default Liquibase properties */
-  projectDefaultsFile?: string | undefined;
+  projectDefaultsFile?: string;
   /** Relative or fully qualified path to the directory where the project files will be created */
-  projectDir?: string | undefined;
+  projectDir?: string;
   /** Allow interactive prompts for init project */
   projectGuide?: string;
   /** Network address to bind to */
-  bindAddress?: string | undefined;
+  bindAddress?: string;
   /** Port to run h2 database on */
-  dbPort?: number | undefined;
+  dbPort?: number;
   /** Whether to open a browser to the database's web interface */
-  launchBrowser?: boolean | undefined;
+  launchBrowser?: boolean;
   /** Password to use for created h2 user */
-  password?: string | undefined;
+  password?: string;
   /** Username to create in h2 */
-  username?: string | undefined;
+  username?: string;
   /** Port to run h2's web interface on */
-  webPort?: number | undefined;
+  webPort?: number;
 }

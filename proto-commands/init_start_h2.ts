@@ -8,27 +8,17 @@ export interface Init {
 
 export interface Init_StartH2Request {
   /** Network address to bind to */
-  bindAddress?:
-    | string
-    | undefined;
+  bindAddress?: string;
   /** Port to run h2 database on */
-  dbPort?:
-    | number
-    | undefined;
+  dbPort?: number;
   /** Whether to open a browser to the database's web interface */
-  launchBrowser?:
-    | boolean
-    | undefined;
+  launchBrowser?: boolean;
   /** Password to use for created h2 user */
-  password?:
-    | string
-    | undefined;
+  password?: string;
   /** Username to create in h2 */
-  username?:
-    | string
-    | undefined;
+  username?: string;
   /** Port to run h2's web interface on */
-  webPort?: number | undefined;
+  webPort?: number;
   globalOptions: GlobalOptions | undefined;
 }
 

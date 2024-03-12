@@ -11,27 +11,17 @@ export interface Checks {
 
 export interface Checks_BulkSetRequest {
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?:
-    | string
-    | undefined;
+  autoUpdate?: string;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?:
-    | string
-    | undefined;
+  checksSettingsFile?: string;
   /** Disable all qualifying checks in the checks settings file */
-  disable?:
-    | boolean
-    | undefined;
+  disable?: boolean;
   /** Enable all qualifying checks in the checks settings file */
-  enable?:
-    | boolean
-    | undefined;
+  enable?: boolean;
   /** Do not ask for confirmation when running this command */
-  force?:
-    | boolean
-    | undefined;
+  force?: boolean;
   /** Set the severity of all checks to the value specified */
-  severity?: string | undefined;
+  severity?: string;
   globalOptions: GlobalOptions | undefined;
 }
 
