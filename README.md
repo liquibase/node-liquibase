@@ -297,7 +297,7 @@ There is an issue in path resolution within THIS application code in addition to
 To build all of the things:
 
 ```bash
-yarn build
+npm run build
 ```
 
 ### Tests
@@ -305,7 +305,7 @@ yarn build
 Run tests with:
 
 ```bash
-yarn test
+npm run test
 ```
 
 ### Env Vars
