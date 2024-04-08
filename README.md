@@ -365,8 +365,7 @@ There is GitHub action executed on every Liquibase release. This GitHub Action a
 3. **Generate Liquibase Command List**: Executes a Docker command to generate a `JSON` file containing a list of Liquibase commands supported by the specified version.
 4. **Iterate Over Commands and Generate Protobuf Files**: Loops through the commands retrieved from the `JSON` file, executes Docker commands to generate protobuf files for each command, and then moves the generated TypeScript files to a directory named `proto-commands`.
 5. **Update Liquibase Binaries**: Downloads and extracts the Liquibase binaries for the specified version, replacing the existing binaries.
-6. **Push Changes**: It commits the generated protobuf files and Liquibase binaries, then pushes the changes to the repository.
-7. **Create Pull Request**: It creates a pull request with the generated changes.
+6. **Create Pull Request**: It creates a pull request with the generated changes.
 
 This action streamlines the process of updating Liquibase-related files and creating pull requests for version updates.
 
