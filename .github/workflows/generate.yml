@@ -8,6 +8,13 @@ on:
         required: true
         default: '4.27.0'
         type: string
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Liquibase version'
+        required: true
+        default: '4.27.0'
+        type: string
 
 permissions:
   contents: write
