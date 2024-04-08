@@ -726,17 +726,17 @@ export class Liquibase {
   }
 
   /**
-   * The `dbclHistory <format>` command displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users..
+   * The `dbclHistory <format>` command displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users.
    *
    * @param params Arguments/Attribute for the command.
    *
-   * @description The `dbclHistory <format>` displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users..
+   * @description The `dbclHistory <format>` displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users.
    *
    * {@link https://docs.liquibase.com/commands/change-tracking/dbcl-history.html Documentation}
    */
-    public dbclHistory(params: DbclHistoryCommandAttributes): Promise<string> {
-      return this.run(LiquibaseCommands.DbclHistory, params);
-    }
+  public dbclHistory(params: DbclHistoryCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.DbclHistory, params);
+  }
 
   /**
    * The `deactivateChangeLog` command removes the changelogID from your changelog file so it stops sending reports to Liquibase Hub.
