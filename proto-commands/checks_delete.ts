@@ -7,12 +7,18 @@ export interface Checks {
 }
 
 export interface Checks_DeleteRequest {
+  /** Automatically enable new quality checks in liquibase.checks.conf file when they are available. Options: [true|false] */
+  autoEnableNewChecks?:
+    | boolean
+    | undefined;
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?: string;
+  autoUpdate?:
+    | string
+    | undefined;
   /** required* Name of check to delete */
   checkName: string;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?: string;
+  checksSettingsFile?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -64,22 +70,31 @@ export const Checks = {
 };
 
 function createBaseChecks_DeleteRequest(): Checks_DeleteRequest {
-  return { autoUpdate: undefined, checkName: "", checksSettingsFile: undefined, globalOptions: undefined };
+  return {
+    autoEnableNewChecks: undefined,
+    autoUpdate: undefined,
+    checkName: "",
+    checksSettingsFile: undefined,
+    globalOptions: undefined,
+  };
 }
 
 export const Checks_DeleteRequest = {
   encode(message: Checks_DeleteRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.autoEnableNewChecks !== undefined) {
+      writer.uint32(8).bool(message.autoEnableNewChecks);
+    }
     if (message.autoUpdate !== undefined) {
-      writer.uint32(10).string(message.autoUpdate);
+      writer.uint32(18).string(message.autoUpdate);
     }
     if (message.checkName !== "") {
-      writer.uint32(18).string(message.checkName);
+      writer.uint32(26).string(message.checkName);
     }
     if (message.checksSettingsFile !== undefined) {
-      writer.uint32(26).string(message.checksSettingsFile);
+      writer.uint32(34).string(message.checksSettingsFile);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(34).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -92,28 +107,35 @@ export const Checks_DeleteRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag !== 10) {
+          if (tag !== 8) {
             break;
           }
 
-          message.autoUpdate = reader.string();
+          message.autoEnableNewChecks = reader.bool();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.checkName = reader.string();
+          message.autoUpdate = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.checksSettingsFile = reader.string();
+          message.checkName = reader.string();
           continue;
         case 4:
           if (tag !== 34) {
+            break;
+          }
+
+          message.checksSettingsFile = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
             break;
           }
 
@@ -130,6 +152,9 @@ export const Checks_DeleteRequest = {
 
   fromJSON(object: any): Checks_DeleteRequest {
     return {
+      autoEnableNewChecks: isSet(object.autoEnableNewChecks)
+        ? globalThis.Boolean(object.autoEnableNewChecks)
+        : undefined,
       autoUpdate: isSet(object.autoUpdate) ? globalThis.String(object.autoUpdate) : undefined,
       checkName: isSet(object.checkName) ? globalThis.String(object.checkName) : "",
       checksSettingsFile: isSet(object.checksSettingsFile) ? globalThis.String(object.checksSettingsFile) : undefined,
@@ -139,6 +164,9 @@ export const Checks_DeleteRequest = {
 
   toJSON(message: Checks_DeleteRequest): unknown {
     const obj: any = {};
+    if (message.autoEnableNewChecks !== undefined) {
+      obj.autoEnableNewChecks = message.autoEnableNewChecks;
+    }
     if (message.autoUpdate !== undefined) {
       obj.autoUpdate = message.autoUpdate;
     }
@@ -159,6 +187,7 @@ export const Checks_DeleteRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<Checks_DeleteRequest>, I>>(object: I): Checks_DeleteRequest {
     const message = createBaseChecks_DeleteRequest();
+    message.autoEnableNewChecks = object.autoEnableNewChecks ?? undefined;
     message.autoUpdate = object.autoUpdate ?? undefined;
     message.checkName = object.checkName ?? "";
     message.checksSettingsFile = object.checksSettingsFile ?? undefined;

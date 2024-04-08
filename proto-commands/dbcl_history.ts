@@ -4,31 +4,9 @@ import { GlobalOptions } from "./global_options";
 
 /**
  * [PRO]
- * Bulk set labels in the changelog file
+ * List all rows from the Liquibase Pro 'DATABASECHANGELOGHISTORY' tracking table.
  */
-export interface SetLabelsRequest {
-  /** required* The root changelog file */
-  changelogFile: string;
-  /** The author of the changeset to modify */
-  changesetAuthor?:
-    | string
-    | undefined;
-  /** The id of the changeset to modify */
-  changesetId?:
-    | string
-    | undefined;
-  /** The changeset path */
-  changesetPath?:
-    | string
-    | undefined;
-  /** Changeset contexts to match */
-  contextFilter?:
-    | string
-    | undefined;
-  /** The database to filter by */
-  dbms?:
-    | string
-    | undefined;
+export interface DbclHistoryRequest {
   /** The default catalog name to use for the database connection */
   defaultCatalogName?:
     | string
@@ -45,26 +23,22 @@ export interface SetLabelsRequest {
   driverPropertiesFile?:
     | string
     | undefined;
-  /** Replace the labels if true */
-  forceReplace?:
-    | boolean
-    | undefined;
-  /** Changeset labels to match */
-  labelFilter?:
+  /** Sets the output method to 'JSON' or 'JSON_PRETTY' */
+  format?:
     | string
     | undefined;
   /** Password to use to connect to the database */
   password?:
     | string
     | undefined;
-  /** required* New label values */
-  setAs: string;
-  /** The JDBC database connection URL */
-  url?:
+  /** required* The JDBC database connection URL */
+  url: string;
+  /** Username to use to connect to the database */
+  username?:
     | string
     | undefined;
-  /** Username to use to connect to the database */
-  username?: string | undefined;
+  /** Set to 'true' to output all data from 'EXECUTEDSQL' and 'EXTENSIONS' columns */
+  verbose?: boolean | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -72,88 +46,60 @@ export interface Response {
   message: string;
 }
 
-function createBaseSetLabelsRequest(): SetLabelsRequest {
+function createBaseDbclHistoryRequest(): DbclHistoryRequest {
   return {
-    changelogFile: "",
-    changesetAuthor: undefined,
-    changesetId: undefined,
-    changesetPath: undefined,
-    contextFilter: undefined,
-    dbms: undefined,
     defaultCatalogName: undefined,
     defaultSchemaName: undefined,
     driver: undefined,
     driverPropertiesFile: undefined,
-    forceReplace: undefined,
-    labelFilter: undefined,
+    format: undefined,
     password: undefined,
-    setAs: "",
-    url: undefined,
+    url: "",
     username: undefined,
+    verbose: undefined,
     globalOptions: undefined,
   };
 }
 
-export const SetLabelsRequest = {
-  encode(message: SetLabelsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.changelogFile !== "") {
-      writer.uint32(10).string(message.changelogFile);
-    }
-    if (message.changesetAuthor !== undefined) {
-      writer.uint32(18).string(message.changesetAuthor);
-    }
-    if (message.changesetId !== undefined) {
-      writer.uint32(26).string(message.changesetId);
-    }
-    if (message.changesetPath !== undefined) {
-      writer.uint32(34).string(message.changesetPath);
-    }
-    if (message.contextFilter !== undefined) {
-      writer.uint32(42).string(message.contextFilter);
-    }
-    if (message.dbms !== undefined) {
-      writer.uint32(50).string(message.dbms);
-    }
+export const DbclHistoryRequest = {
+  encode(message: DbclHistoryRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.defaultCatalogName !== undefined) {
-      writer.uint32(58).string(message.defaultCatalogName);
+      writer.uint32(10).string(message.defaultCatalogName);
     }
     if (message.defaultSchemaName !== undefined) {
-      writer.uint32(66).string(message.defaultSchemaName);
+      writer.uint32(18).string(message.defaultSchemaName);
     }
     if (message.driver !== undefined) {
-      writer.uint32(74).string(message.driver);
+      writer.uint32(26).string(message.driver);
     }
     if (message.driverPropertiesFile !== undefined) {
-      writer.uint32(82).string(message.driverPropertiesFile);
+      writer.uint32(34).string(message.driverPropertiesFile);
     }
-    if (message.forceReplace !== undefined) {
-      writer.uint32(88).bool(message.forceReplace);
-    }
-    if (message.labelFilter !== undefined) {
-      writer.uint32(98).string(message.labelFilter);
+    if (message.format !== undefined) {
+      writer.uint32(42).string(message.format);
     }
     if (message.password !== undefined) {
-      writer.uint32(106).string(message.password);
+      writer.uint32(50).string(message.password);
     }
-    if (message.setAs !== "") {
-      writer.uint32(114).string(message.setAs);
-    }
-    if (message.url !== undefined) {
-      writer.uint32(122).string(message.url);
+    if (message.url !== "") {
+      writer.uint32(58).string(message.url);
     }
     if (message.username !== undefined) {
-      writer.uint32(130).string(message.username);
+      writer.uint32(66).string(message.username);
+    }
+    if (message.verbose !== undefined) {
+      writer.uint32(72).bool(message.verbose);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(138).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(82).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): SetLabelsRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): DbclHistoryRequest {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseSetLabelsRequest();
+    const message = createBaseDbclHistoryRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -162,115 +108,66 @@ export const SetLabelsRequest = {
             break;
           }
 
-          message.changelogFile = reader.string();
+          message.defaultCatalogName = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.changesetAuthor = reader.string();
+          message.defaultSchemaName = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.changesetId = reader.string();
+          message.driver = reader.string();
           continue;
         case 4:
           if (tag !== 34) {
             break;
           }
 
-          message.changesetPath = reader.string();
+          message.driverPropertiesFile = reader.string();
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.contextFilter = reader.string();
+          message.format = reader.string();
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
 
-          message.dbms = reader.string();
+          message.password = reader.string();
           continue;
         case 7:
           if (tag !== 58) {
             break;
           }
 
-          message.defaultCatalogName = reader.string();
+          message.url = reader.string();
           continue;
         case 8:
           if (tag !== 66) {
             break;
           }
 
-          message.defaultSchemaName = reader.string();
+          message.username = reader.string();
           continue;
         case 9:
-          if (tag !== 74) {
+          if (tag !== 72) {
             break;
           }
 
-          message.driver = reader.string();
+          message.verbose = reader.bool();
           continue;
         case 10:
           if (tag !== 82) {
-            break;
-          }
-
-          message.driverPropertiesFile = reader.string();
-          continue;
-        case 11:
-          if (tag !== 88) {
-            break;
-          }
-
-          message.forceReplace = reader.bool();
-          continue;
-        case 12:
-          if (tag !== 98) {
-            break;
-          }
-
-          message.labelFilter = reader.string();
-          continue;
-        case 13:
-          if (tag !== 106) {
-            break;
-          }
-
-          message.password = reader.string();
-          continue;
-        case 14:
-          if (tag !== 114) {
-            break;
-          }
-
-          message.setAs = reader.string();
-          continue;
-        case 15:
-          if (tag !== 122) {
-            break;
-          }
-
-          message.url = reader.string();
-          continue;
-        case 16:
-          if (tag !== 130) {
-            break;
-          }
-
-          message.username = reader.string();
-          continue;
-        case 17:
-          if (tag !== 138) {
             break;
           }
 
@@ -285,50 +182,25 @@ export const SetLabelsRequest = {
     return message;
   },
 
-  fromJSON(object: any): SetLabelsRequest {
+  fromJSON(object: any): DbclHistoryRequest {
     return {
-      changelogFile: isSet(object.changelogFile) ? globalThis.String(object.changelogFile) : "",
-      changesetAuthor: isSet(object.changesetAuthor) ? globalThis.String(object.changesetAuthor) : undefined,
-      changesetId: isSet(object.changesetId) ? globalThis.String(object.changesetId) : undefined,
-      changesetPath: isSet(object.changesetPath) ? globalThis.String(object.changesetPath) : undefined,
-      contextFilter: isSet(object.contextFilter) ? globalThis.String(object.contextFilter) : undefined,
-      dbms: isSet(object.dbms) ? globalThis.String(object.dbms) : undefined,
       defaultCatalogName: isSet(object.defaultCatalogName) ? globalThis.String(object.defaultCatalogName) : undefined,
       defaultSchemaName: isSet(object.defaultSchemaName) ? globalThis.String(object.defaultSchemaName) : undefined,
       driver: isSet(object.driver) ? globalThis.String(object.driver) : undefined,
       driverPropertiesFile: isSet(object.driverPropertiesFile)
         ? globalThis.String(object.driverPropertiesFile)
         : undefined,
-      forceReplace: isSet(object.forceReplace) ? globalThis.Boolean(object.forceReplace) : undefined,
-      labelFilter: isSet(object.labelFilter) ? globalThis.String(object.labelFilter) : undefined,
+      format: isSet(object.format) ? globalThis.String(object.format) : undefined,
       password: isSet(object.password) ? globalThis.String(object.password) : undefined,
-      setAs: isSet(object.setAs) ? globalThis.String(object.setAs) : "",
-      url: isSet(object.url) ? globalThis.String(object.url) : undefined,
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
       username: isSet(object.username) ? globalThis.String(object.username) : undefined,
+      verbose: isSet(object.verbose) ? globalThis.Boolean(object.verbose) : undefined,
       globalOptions: isSet(object.globalOptions) ? GlobalOptions.fromJSON(object.globalOptions) : undefined,
     };
   },
 
-  toJSON(message: SetLabelsRequest): unknown {
+  toJSON(message: DbclHistoryRequest): unknown {
     const obj: any = {};
-    if (message.changelogFile !== "") {
-      obj.changelogFile = message.changelogFile;
-    }
-    if (message.changesetAuthor !== undefined) {
-      obj.changesetAuthor = message.changesetAuthor;
-    }
-    if (message.changesetId !== undefined) {
-      obj.changesetId = message.changesetId;
-    }
-    if (message.changesetPath !== undefined) {
-      obj.changesetPath = message.changesetPath;
-    }
-    if (message.contextFilter !== undefined) {
-      obj.contextFilter = message.contextFilter;
-    }
-    if (message.dbms !== undefined) {
-      obj.dbms = message.dbms;
-    }
     if (message.defaultCatalogName !== undefined) {
       obj.defaultCatalogName = message.defaultCatalogName;
     }
@@ -341,23 +213,20 @@ export const SetLabelsRequest = {
     if (message.driverPropertiesFile !== undefined) {
       obj.driverPropertiesFile = message.driverPropertiesFile;
     }
-    if (message.forceReplace !== undefined) {
-      obj.forceReplace = message.forceReplace;
-    }
-    if (message.labelFilter !== undefined) {
-      obj.labelFilter = message.labelFilter;
+    if (message.format !== undefined) {
+      obj.format = message.format;
     }
     if (message.password !== undefined) {
       obj.password = message.password;
     }
-    if (message.setAs !== "") {
-      obj.setAs = message.setAs;
-    }
-    if (message.url !== undefined) {
+    if (message.url !== "") {
       obj.url = message.url;
     }
     if (message.username !== undefined) {
       obj.username = message.username;
+    }
+    if (message.verbose !== undefined) {
+      obj.verbose = message.verbose;
     }
     if (message.globalOptions !== undefined) {
       obj.globalOptions = GlobalOptions.toJSON(message.globalOptions);
@@ -365,27 +234,20 @@ export const SetLabelsRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<SetLabelsRequest>, I>>(base?: I): SetLabelsRequest {
-    return SetLabelsRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<DbclHistoryRequest>, I>>(base?: I): DbclHistoryRequest {
+    return DbclHistoryRequest.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<SetLabelsRequest>, I>>(object: I): SetLabelsRequest {
-    const message = createBaseSetLabelsRequest();
-    message.changelogFile = object.changelogFile ?? "";
-    message.changesetAuthor = object.changesetAuthor ?? undefined;
-    message.changesetId = object.changesetId ?? undefined;
-    message.changesetPath = object.changesetPath ?? undefined;
-    message.contextFilter = object.contextFilter ?? undefined;
-    message.dbms = object.dbms ?? undefined;
+  fromPartial<I extends Exact<DeepPartial<DbclHistoryRequest>, I>>(object: I): DbclHistoryRequest {
+    const message = createBaseDbclHistoryRequest();
     message.defaultCatalogName = object.defaultCatalogName ?? undefined;
     message.defaultSchemaName = object.defaultSchemaName ?? undefined;
     message.driver = object.driver ?? undefined;
     message.driverPropertiesFile = object.driverPropertiesFile ?? undefined;
-    message.forceReplace = object.forceReplace ?? undefined;
-    message.labelFilter = object.labelFilter ?? undefined;
+    message.format = object.format ?? undefined;
     message.password = object.password ?? undefined;
-    message.setAs = object.setAs ?? "";
-    message.url = object.url ?? undefined;
+    message.url = object.url ?? "";
     message.username = object.username ?? undefined;
+    message.verbose = object.verbose ?? undefined;
     message.globalOptions = (object.globalOptions !== undefined && object.globalOptions !== null)
       ? GlobalOptions.fromPartial(object.globalOptions)
       : undefined;
@@ -450,21 +312,21 @@ export const Response = {
   },
 };
 
-export interface SetLabelsService {
-  execute(request: SetLabelsRequest): Promise<Response>;
+export interface DbclHistoryService {
+  execute(request: DbclHistoryRequest): Promise<Response>;
 }
 
-export const SetLabelsServiceServiceName = "liquibase.pro.SetLabelsService";
-export class SetLabelsServiceClientImpl implements SetLabelsService {
+export const DbclHistoryServiceServiceName = "liquibase.DbclHistoryService";
+export class DbclHistoryServiceClientImpl implements DbclHistoryService {
   private readonly rpc: Rpc;
   private readonly service: string;
   constructor(rpc: Rpc, opts?: { service?: string }) {
-    this.service = opts?.service || SetLabelsServiceServiceName;
+    this.service = opts?.service || DbclHistoryServiceServiceName;
     this.rpc = rpc;
     this.execute = this.execute.bind(this);
   }
-  execute(request: SetLabelsRequest): Promise<Response> {
-    const data = SetLabelsRequest.encode(request).finish();
+  execute(request: DbclHistoryRequest): Promise<Response> {
+    const data = DbclHistoryRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "execute", data);
     return promise.then((data) => Response.decode(_m0.Reader.create(data)));
   }

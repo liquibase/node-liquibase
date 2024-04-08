@@ -10,18 +10,32 @@ export interface Checks {
 }
 
 export interface Checks_BulkSetRequest {
+  /** Automatically enable new quality checks in liquibase.checks.conf file when they are available. Options: [true|false] */
+  autoEnableNewChecks?:
+    | boolean
+    | undefined;
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?: string;
+  autoUpdate?:
+    | string
+    | undefined;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?: string;
+  checksSettingsFile?:
+    | string
+    | undefined;
   /** Disable all qualifying checks in the checks settings file */
-  disable?: boolean;
+  disable?:
+    | boolean
+    | undefined;
   /** Enable all qualifying checks in the checks settings file */
-  enable?: boolean;
+  enable?:
+    | boolean
+    | undefined;
   /** Do not ask for confirmation when running this command */
-  force?: boolean;
+  force?:
+    | boolean
+    | undefined;
   /** Set the severity of all checks to the value specified */
-  severity?: string;
+  severity?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -74,6 +88,7 @@ export const Checks = {
 
 function createBaseChecks_BulkSetRequest(): Checks_BulkSetRequest {
   return {
+    autoEnableNewChecks: undefined,
     autoUpdate: undefined,
     checksSettingsFile: undefined,
     disable: undefined,
@@ -86,26 +101,29 @@ function createBaseChecks_BulkSetRequest(): Checks_BulkSetRequest {
 
 export const Checks_BulkSetRequest = {
   encode(message: Checks_BulkSetRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.autoEnableNewChecks !== undefined) {
+      writer.uint32(8).bool(message.autoEnableNewChecks);
+    }
     if (message.autoUpdate !== undefined) {
-      writer.uint32(10).string(message.autoUpdate);
+      writer.uint32(18).string(message.autoUpdate);
     }
     if (message.checksSettingsFile !== undefined) {
-      writer.uint32(18).string(message.checksSettingsFile);
+      writer.uint32(26).string(message.checksSettingsFile);
     }
     if (message.disable !== undefined) {
-      writer.uint32(24).bool(message.disable);
+      writer.uint32(32).bool(message.disable);
     }
     if (message.enable !== undefined) {
-      writer.uint32(32).bool(message.enable);
+      writer.uint32(40).bool(message.enable);
     }
     if (message.force !== undefined) {
-      writer.uint32(40).bool(message.force);
+      writer.uint32(48).bool(message.force);
     }
     if (message.severity !== undefined) {
-      writer.uint32(50).string(message.severity);
+      writer.uint32(58).string(message.severity);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(58).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -118,49 +136,56 @@ export const Checks_BulkSetRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag !== 10) {
+          if (tag !== 8) {
             break;
           }
 
-          message.autoUpdate = reader.string();
+          message.autoEnableNewChecks = reader.bool();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.checksSettingsFile = reader.string();
+          message.autoUpdate = reader.string();
           continue;
         case 3:
-          if (tag !== 24) {
+          if (tag !== 26) {
             break;
           }
 
-          message.disable = reader.bool();
+          message.checksSettingsFile = reader.string();
           continue;
         case 4:
           if (tag !== 32) {
             break;
           }
 
-          message.enable = reader.bool();
+          message.disable = reader.bool();
           continue;
         case 5:
           if (tag !== 40) {
             break;
           }
 
-          message.force = reader.bool();
+          message.enable = reader.bool();
           continue;
         case 6:
-          if (tag !== 50) {
+          if (tag !== 48) {
+            break;
+          }
+
+          message.force = reader.bool();
+          continue;
+        case 7:
+          if (tag !== 58) {
             break;
           }
 
           message.severity = reader.string();
           continue;
-        case 7:
-          if (tag !== 58) {
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
@@ -177,6 +202,9 @@ export const Checks_BulkSetRequest = {
 
   fromJSON(object: any): Checks_BulkSetRequest {
     return {
+      autoEnableNewChecks: isSet(object.autoEnableNewChecks)
+        ? globalThis.Boolean(object.autoEnableNewChecks)
+        : undefined,
       autoUpdate: isSet(object.autoUpdate) ? globalThis.String(object.autoUpdate) : undefined,
       checksSettingsFile: isSet(object.checksSettingsFile) ? globalThis.String(object.checksSettingsFile) : undefined,
       disable: isSet(object.disable) ? globalThis.Boolean(object.disable) : undefined,
@@ -189,6 +217,9 @@ export const Checks_BulkSetRequest = {
 
   toJSON(message: Checks_BulkSetRequest): unknown {
     const obj: any = {};
+    if (message.autoEnableNewChecks !== undefined) {
+      obj.autoEnableNewChecks = message.autoEnableNewChecks;
+    }
     if (message.autoUpdate !== undefined) {
       obj.autoUpdate = message.autoUpdate;
     }
@@ -218,6 +249,7 @@ export const Checks_BulkSetRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<Checks_BulkSetRequest>, I>>(object: I): Checks_BulkSetRequest {
     const message = createBaseChecks_BulkSetRequest();
+    message.autoEnableNewChecks = object.autoEnableNewChecks ?? undefined;
     message.autoUpdate = object.autoUpdate ?? undefined;
     message.checksSettingsFile = object.checksSettingsFile ?? undefined;
     message.disable = object.disable ?? undefined;

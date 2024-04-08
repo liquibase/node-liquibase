@@ -8,9 +8,13 @@ import { GlobalOptions } from "./global_options";
  */
 export interface RollbackOneChangesetRequest {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?: string;
+  changeExecListenerClass?:
+    | string
+    | undefined;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?: string;
+  changeExecListenerPropertiesFile?:
+    | string
+    | undefined;
   /** required* The root changelog file */
   changelogFile: string;
   /** required* The author of the changeset to rollback */
@@ -20,27 +24,57 @@ export interface RollbackOneChangesetRequest {
   /** required* The target database password */
   changesetPath: string;
   /** Context string to use for filtering */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** A required safety flag to indicate you intend to use this feature */
-  force?: boolean;
+  force?:
+    | boolean
+    | undefined;
   /** Label expression to use for filtering */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
+  /** [PRO] Enable or disable reporting. */
+  reportEnabled?:
+    | boolean
+    | undefined;
+  /** [PRO] The name of the report. */
+  reportName?:
+    | string
+    | undefined;
+  /** [PRO] The path to the directory to generate the report. */
+  reportPath?:
+    | string
+    | undefined;
   /** The path to the script to use to perform the rollback */
-  rollbackScript?: string;
+  rollbackScript?:
+    | string
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -64,6 +98,9 @@ function createBaseRollbackOneChangesetRequest(): RollbackOneChangesetRequest {
     force: undefined,
     labelFilter: undefined,
     password: undefined,
+    reportEnabled: undefined,
+    reportName: undefined,
+    reportPath: undefined,
     rollbackScript: undefined,
     url: "",
     username: undefined,
@@ -115,17 +152,26 @@ export const RollbackOneChangesetRequest = {
     if (message.password !== undefined) {
       writer.uint32(114).string(message.password);
     }
+    if (message.reportEnabled !== undefined) {
+      writer.uint32(120).bool(message.reportEnabled);
+    }
+    if (message.reportName !== undefined) {
+      writer.uint32(130).string(message.reportName);
+    }
+    if (message.reportPath !== undefined) {
+      writer.uint32(138).string(message.reportPath);
+    }
     if (message.rollbackScript !== undefined) {
-      writer.uint32(122).string(message.rollbackScript);
+      writer.uint32(146).string(message.rollbackScript);
     }
     if (message.url !== "") {
-      writer.uint32(130).string(message.url);
+      writer.uint32(154).string(message.url);
     }
     if (message.username !== undefined) {
-      writer.uint32(138).string(message.username);
+      writer.uint32(162).string(message.username);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(146).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(170).fork()).ldelim();
     }
     return writer;
   },
@@ -236,28 +282,49 @@ export const RollbackOneChangesetRequest = {
           message.password = reader.string();
           continue;
         case 15:
-          if (tag !== 122) {
+          if (tag !== 120) {
             break;
           }
 
-          message.rollbackScript = reader.string();
+          message.reportEnabled = reader.bool();
           continue;
         case 16:
           if (tag !== 130) {
             break;
           }
 
-          message.url = reader.string();
+          message.reportName = reader.string();
           continue;
         case 17:
           if (tag !== 138) {
             break;
           }
 
-          message.username = reader.string();
+          message.reportPath = reader.string();
           continue;
         case 18:
           if (tag !== 146) {
+            break;
+          }
+
+          message.rollbackScript = reader.string();
+          continue;
+        case 19:
+          if (tag !== 154) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        case 20:
+          if (tag !== 162) {
+            break;
+          }
+
+          message.username = reader.string();
+          continue;
+        case 21:
+          if (tag !== 170) {
             break;
           }
 
@@ -294,6 +361,9 @@ export const RollbackOneChangesetRequest = {
       force: isSet(object.force) ? globalThis.Boolean(object.force) : undefined,
       labelFilter: isSet(object.labelFilter) ? globalThis.String(object.labelFilter) : undefined,
       password: isSet(object.password) ? globalThis.String(object.password) : undefined,
+      reportEnabled: isSet(object.reportEnabled) ? globalThis.Boolean(object.reportEnabled) : undefined,
+      reportName: isSet(object.reportName) ? globalThis.String(object.reportName) : undefined,
+      reportPath: isSet(object.reportPath) ? globalThis.String(object.reportPath) : undefined,
       rollbackScript: isSet(object.rollbackScript) ? globalThis.String(object.rollbackScript) : undefined,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       username: isSet(object.username) ? globalThis.String(object.username) : undefined,
@@ -345,6 +415,15 @@ export const RollbackOneChangesetRequest = {
     if (message.password !== undefined) {
       obj.password = message.password;
     }
+    if (message.reportEnabled !== undefined) {
+      obj.reportEnabled = message.reportEnabled;
+    }
+    if (message.reportName !== undefined) {
+      obj.reportName = message.reportName;
+    }
+    if (message.reportPath !== undefined) {
+      obj.reportPath = message.reportPath;
+    }
     if (message.rollbackScript !== undefined) {
       obj.rollbackScript = message.rollbackScript;
     }
@@ -379,6 +458,9 @@ export const RollbackOneChangesetRequest = {
     message.force = object.force ?? undefined;
     message.labelFilter = object.labelFilter ?? undefined;
     message.password = object.password ?? undefined;
+    message.reportEnabled = object.reportEnabled ?? undefined;
+    message.reportName = object.reportName ?? undefined;
+    message.reportPath = object.reportPath ?? undefined;
     message.rollbackScript = object.rollbackScript ?? undefined;
     message.url = object.url ?? "";
     message.username = object.username ?? undefined;

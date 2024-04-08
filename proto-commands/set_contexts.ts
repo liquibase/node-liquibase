@@ -10,35 +10,61 @@ export interface SetContextsRequest {
   /** required* The root changelog file */
   changelogFile: string;
   /** The author of the changeset to modify */
-  changesetAuthor?: string;
+  changesetAuthor?:
+    | string
+    | undefined;
   /** The id of the changeset to modify */
-  changesetId?: string;
+  changesetId?:
+    | string
+    | undefined;
   /** The changeset path */
-  changesetPath?: string;
+  changesetPath?:
+    | string
+    | undefined;
   /** Changeset contexts to match */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** The database to filter by */
-  dbms?: string;
+  dbms?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Replace the contexts if true */
-  forceReplace?: boolean;
+  forceReplace?:
+    | boolean
+    | undefined;
   /** Changeset labels to match */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
   /** required* New contexts values */
   setAs: string;
   /** The JDBC database connection URL */
-  url?: string;
+  url?:
+    | string
+    | undefined;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 

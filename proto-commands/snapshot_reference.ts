@@ -5,25 +5,45 @@ import { GlobalOptions } from "./global_options";
 /** Capture the current state of the reference database */
 export interface SnapshotReferenceRequest {
   /** The default catalog name to use for the reference database connection */
-  referenceDefaultCatalogName?: string;
+  referenceDefaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the reference database connection */
-  referenceDefaultSchemaName?: string;
+  referenceDefaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class for the reference database */
-  referenceDriver?: string;
+  referenceDriver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file for the reference database */
-  referenceDriverPropertiesFile?: string;
+  referenceDriverPropertiesFile?:
+    | string
+    | undefined;
   /** Reference catalog to use for Liquibase objects */
-  referenceLiquibaseCatalogName?: string;
+  referenceLiquibaseCatalogName?:
+    | string
+    | undefined;
   /** Reference schema to use for Liquibase objects */
-  referenceLiquibaseSchemaName?: string;
+  referenceLiquibaseSchemaName?:
+    | string
+    | undefined;
   /** The reference database password */
-  referencePassword?: string;
+  referencePassword?:
+    | string
+    | undefined;
   /** required* The JDBC reference database connection URL */
   referenceUrl: string;
   /** The reference database username */
-  referenceUsername?: string;
+  referenceUsername?:
+    | string
+    | undefined;
+  /** [PRO] Types of objects to snapshot: Catalog, CheckConstraint, Column, DatabasePackage, DatabasePackageBody, ForeignKey, Function, Index, PrimaryKey, Schema, Sequence, StoredProcedure, Synonym, Table, Trigger, UniqueConstraint, View */
+  snapshotFilters?:
+    | string
+    | undefined;
   /** Output format to use (JSON or YAML) */
-  snapshotFormat?: string;
+  snapshotFormat?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -42,6 +62,7 @@ function createBaseSnapshotReferenceRequest(): SnapshotReferenceRequest {
     referencePassword: undefined,
     referenceUrl: "",
     referenceUsername: undefined,
+    snapshotFilters: undefined,
     snapshotFormat: undefined,
     globalOptions: undefined,
   };
@@ -76,11 +97,14 @@ export const SnapshotReferenceRequest = {
     if (message.referenceUsername !== undefined) {
       writer.uint32(74).string(message.referenceUsername);
     }
+    if (message.snapshotFilters !== undefined) {
+      writer.uint32(82).string(message.snapshotFilters);
+    }
     if (message.snapshotFormat !== undefined) {
-      writer.uint32(82).string(message.snapshotFormat);
+      writer.uint32(90).string(message.snapshotFormat);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(90).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(98).fork()).ldelim();
     }
     return writer;
   },
@@ -160,10 +184,17 @@ export const SnapshotReferenceRequest = {
             break;
           }
 
-          message.snapshotFormat = reader.string();
+          message.snapshotFilters = reader.string();
           continue;
         case 11:
           if (tag !== 90) {
+            break;
+          }
+
+          message.snapshotFormat = reader.string();
+          continue;
+        case 12:
+          if (tag !== 98) {
             break;
           }
 
@@ -199,6 +230,7 @@ export const SnapshotReferenceRequest = {
       referencePassword: isSet(object.referencePassword) ? globalThis.String(object.referencePassword) : undefined,
       referenceUrl: isSet(object.referenceUrl) ? globalThis.String(object.referenceUrl) : "",
       referenceUsername: isSet(object.referenceUsername) ? globalThis.String(object.referenceUsername) : undefined,
+      snapshotFilters: isSet(object.snapshotFilters) ? globalThis.String(object.snapshotFilters) : undefined,
       snapshotFormat: isSet(object.snapshotFormat) ? globalThis.String(object.snapshotFormat) : undefined,
       globalOptions: isSet(object.globalOptions) ? GlobalOptions.fromJSON(object.globalOptions) : undefined,
     };
@@ -233,6 +265,9 @@ export const SnapshotReferenceRequest = {
     if (message.referenceUsername !== undefined) {
       obj.referenceUsername = message.referenceUsername;
     }
+    if (message.snapshotFilters !== undefined) {
+      obj.snapshotFilters = message.snapshotFilters;
+    }
     if (message.snapshotFormat !== undefined) {
       obj.snapshotFormat = message.snapshotFormat;
     }
@@ -256,6 +291,7 @@ export const SnapshotReferenceRequest = {
     message.referencePassword = object.referencePassword ?? undefined;
     message.referenceUrl = object.referenceUrl ?? "";
     message.referenceUsername = object.referenceUsername ?? undefined;
+    message.snapshotFilters = object.snapshotFilters ?? undefined;
     message.snapshotFormat = object.snapshotFormat ?? undefined;
     message.globalOptions = (object.globalOptions !== undefined && object.globalOptions !== null)
       ? GlobalOptions.fromPartial(object.globalOptions)
