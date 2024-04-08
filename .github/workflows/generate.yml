@@ -90,4 +90,3 @@ jobs:
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
           branch: ${{ inputs.version }}
           base: master
-
