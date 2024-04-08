@@ -7,16 +7,32 @@ export interface Checks {
 }
 
 export interface Checks_ShowRequest {
+  /** Automatically enable new quality checks in liquibase.checks.conf file when they are available. Options: [true|false] */
+  autoEnableNewChecks?:
+    | boolean
+    | undefined;
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?: string;
+  autoUpdate?:
+    | string
+    | undefined;
   /** Only show the listed rules. Use rule shortnames separated with commas to list all required rules. Checks to exclude can be prefixed with the ! character. Use 'all', to select all the rules (used by default, if the parameter isn't set). */
-  checkName?: string;
+  checkName?:
+    | string
+    | undefined;
+  /** Only show the rules that are in the requested status. Valid options are 'enabled','disabled', or 'all' */
+  checkStatus?:
+    | string
+    | undefined;
   /** If using a checks packages file, optionally specify which packages should be run from the file as a comma separated list. */
-  checksPackages?: string;
+  checksPackages?:
+    | string
+    | undefined;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?: string;
-  /** Only show the listed columns. Column options: id,checkname,type,priority,shortname,scope,enabled,severity,customization,description,file. Use commas to separate column names. Use 'all' to select all the columns. */
-  showCols?: string;
+  checksSettingsFile?:
+    | string
+    | undefined;
+  /** Only show the listed columns. Column options: id,checkname,type,priority,shortname,scope,status,severity,customization,description,file. Use commas to separate column names. Use 'all' to select all the columns. */
+  showCols?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -69,8 +85,10 @@ export const Checks = {
 
 function createBaseChecks_ShowRequest(): Checks_ShowRequest {
   return {
+    autoEnableNewChecks: undefined,
     autoUpdate: undefined,
     checkName: undefined,
+    checkStatus: undefined,
     checksPackages: undefined,
     checksSettingsFile: undefined,
     showCols: undefined,
@@ -80,23 +98,29 @@ function createBaseChecks_ShowRequest(): Checks_ShowRequest {
 
 export const Checks_ShowRequest = {
   encode(message: Checks_ShowRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.autoEnableNewChecks !== undefined) {
+      writer.uint32(8).bool(message.autoEnableNewChecks);
+    }
     if (message.autoUpdate !== undefined) {
-      writer.uint32(10).string(message.autoUpdate);
+      writer.uint32(18).string(message.autoUpdate);
     }
     if (message.checkName !== undefined) {
-      writer.uint32(18).string(message.checkName);
+      writer.uint32(26).string(message.checkName);
+    }
+    if (message.checkStatus !== undefined) {
+      writer.uint32(34).string(message.checkStatus);
     }
     if (message.checksPackages !== undefined) {
-      writer.uint32(26).string(message.checksPackages);
+      writer.uint32(42).string(message.checksPackages);
     }
     if (message.checksSettingsFile !== undefined) {
-      writer.uint32(34).string(message.checksSettingsFile);
+      writer.uint32(50).string(message.checksSettingsFile);
     }
     if (message.showCols !== undefined) {
-      writer.uint32(42).string(message.showCols);
+      writer.uint32(58).string(message.showCols);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(50).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -109,42 +133,56 @@ export const Checks_ShowRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag !== 10) {
+          if (tag !== 8) {
             break;
           }
 
-          message.autoUpdate = reader.string();
+          message.autoEnableNewChecks = reader.bool();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.checkName = reader.string();
+          message.autoUpdate = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.checksPackages = reader.string();
+          message.checkName = reader.string();
           continue;
         case 4:
           if (tag !== 34) {
             break;
           }
 
-          message.checksSettingsFile = reader.string();
+          message.checkStatus = reader.string();
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.showCols = reader.string();
+          message.checksPackages = reader.string();
           continue;
         case 6:
           if (tag !== 50) {
+            break;
+          }
+
+          message.checksSettingsFile = reader.string();
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.showCols = reader.string();
+          continue;
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
@@ -161,8 +199,12 @@ export const Checks_ShowRequest = {
 
   fromJSON(object: any): Checks_ShowRequest {
     return {
+      autoEnableNewChecks: isSet(object.autoEnableNewChecks)
+        ? globalThis.Boolean(object.autoEnableNewChecks)
+        : undefined,
       autoUpdate: isSet(object.autoUpdate) ? globalThis.String(object.autoUpdate) : undefined,
       checkName: isSet(object.checkName) ? globalThis.String(object.checkName) : undefined,
+      checkStatus: isSet(object.checkStatus) ? globalThis.String(object.checkStatus) : undefined,
       checksPackages: isSet(object.checksPackages) ? globalThis.String(object.checksPackages) : undefined,
       checksSettingsFile: isSet(object.checksSettingsFile) ? globalThis.String(object.checksSettingsFile) : undefined,
       showCols: isSet(object.showCols) ? globalThis.String(object.showCols) : undefined,
@@ -172,11 +214,17 @@ export const Checks_ShowRequest = {
 
   toJSON(message: Checks_ShowRequest): unknown {
     const obj: any = {};
+    if (message.autoEnableNewChecks !== undefined) {
+      obj.autoEnableNewChecks = message.autoEnableNewChecks;
+    }
     if (message.autoUpdate !== undefined) {
       obj.autoUpdate = message.autoUpdate;
     }
     if (message.checkName !== undefined) {
       obj.checkName = message.checkName;
+    }
+    if (message.checkStatus !== undefined) {
+      obj.checkStatus = message.checkStatus;
     }
     if (message.checksPackages !== undefined) {
       obj.checksPackages = message.checksPackages;
@@ -198,8 +246,10 @@ export const Checks_ShowRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<Checks_ShowRequest>, I>>(object: I): Checks_ShowRequest {
     const message = createBaseChecks_ShowRequest();
+    message.autoEnableNewChecks = object.autoEnableNewChecks ?? undefined;
     message.autoUpdate = object.autoUpdate ?? undefined;
     message.checkName = object.checkName ?? undefined;
+    message.checkStatus = object.checkStatus ?? undefined;
     message.checksPackages = object.checksPackages ?? undefined;
     message.checksSettingsFile = object.checksSettingsFile ?? undefined;
     message.showCols = object.showCols ?? undefined;

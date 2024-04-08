@@ -7,58 +7,116 @@ export interface Checks {
 }
 
 export interface Checks_RunRequest {
+  /** Automatically enable new quality checks in liquibase.checks.conf file when they are available. Options: [true|false] */
+  autoEnableNewChecks?:
+    | boolean
+    | undefined;
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
-  autoUpdate?: string;
+  autoUpdate?:
+    | string
+    | undefined;
   /** If true, sqlFile change type contents will be cached in memory to improve performance, at the cost of higher memory usage. To reduce memory usage, set this to false. */
-  cacheChangelogFileContents?: boolean;
+  cacheChangelogFileContents?:
+    | boolean
+    | undefined;
   /** Relative or fully qualified path to a Liquibase changelog file.  One of --changelog-file or --url is required. */
-  changelogFile?: string;
+  changelogFile?:
+    | string
+    | undefined;
   /** The changeset filter to use when determining which changesets to run checks against, which can be a comma separated list of the following options: 'all', 'pending' */
-  changesetFilter?: string;
+  changesetFilter?:
+    | string
+    | undefined;
   /** Comma-separated list of one or more enabled checks to run. Checks to exclude can be prefixed with the ! character. If no checks are specified, all enabled checks will run. Example: --check-name=shortname1,shortname2,!shortname3 */
-  checkName?: string;
+  checkName?:
+    | string
+    | undefined;
   /** Allow changeset's rollback code to be analyzed for compliance with currently enabled quality checks. */
-  checkRollbacks?: boolean;
-  /** Specify which parts of the checks run output should be shown; options: all, issues, issues0, issues1, issues2, issues3, issues4, validated, checksrun, sqlparserfails, skippedchecks */
-  checksOutput?: string;
+  checkRollbacks?:
+    | boolean
+    | undefined;
+  /** Specify which parts of the checks run output should be shown; options: all, issues, issues0, issues1, issues2, issues3, issues4, validated, checksrun, sqlparserfails, skippedchecks, nonApplicableChecks */
+  checksOutput?:
+    | string
+    | undefined;
   /** If using a checks packages file, optionally specify which packages should be run from the file as a comma separated list. */
-  checksPackages?: string;
+  checksPackages?:
+    | string
+    | undefined;
   /** The Liquibase component to run checks against, which can be a comma separated list of the following options: 'changelog', 'database' */
-  checksScope?: string;
+  checksScope?:
+    | string
+    | undefined;
   /** Relative or fully qualified path to a configuration file for checks execution */
-  checksSettingsFile?: string;
+  checksSettingsFile?:
+    | string
+    | undefined;
   /** Changeset contexts to match */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** [PRO] Option to create JSON output */
-  format?: string;
+  format?:
+    | string
+    | undefined;
   /** Changeset labels to match */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
+  /** If set to 'true' changesets are evaluated by checks after property substitution. If set to 'false' changesets are evaluated by checks before property substitution, meaning the names of the "property substitution tokens" are evaluated. */
+  propertySubstitutionEnabled?:
+    | boolean
+    | undefined;
   /** [PRO] Enable or disable reporting. */
-  reportEnabled?: boolean;
+  reportEnabled?:
+    | boolean
+    | undefined;
   /** [PRO] The name of the report. */
-  reportName?: string;
+  reportName?:
+    | string
+    | undefined;
   /** [PRO] The path to the directory to generate the report. */
-  reportPath?: string;
+  reportPath?:
+    | string
+    | undefined;
   /** The schemas to check when checks-scope contains 'database' */
-  schemas?: string;
+  schemas?:
+    | string
+    | undefined;
   /** The severity that a check which fails due to a SQL parse error will exit with. If not set, use the severity of the configured check. Available values are: 0, 1, 2, 3, 4 */
-  sqlParserFailSeverity?: number;
+  sqlParserFailSeverity?:
+    | number
+    | undefined;
   /** The JDBC database connection URL.  One of --changelog-file or --url is required. */
-  url?: string;
+  url?:
+    | string
+    | undefined;
   /** Username to use to connect to the database */
-  username?: string;
+  username?:
+    | string
+    | undefined;
   /** Verbose flag with optional values of 'True' or 'False'. The default is 'False'. */
-  verbose?: boolean;
+  verbose?: boolean | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -111,6 +169,7 @@ export const Checks = {
 
 function createBaseChecks_RunRequest(): Checks_RunRequest {
   return {
+    autoEnableNewChecks: undefined,
     autoUpdate: undefined,
     cacheChangelogFileContents: undefined,
     changelogFile: undefined,
@@ -129,6 +188,7 @@ function createBaseChecks_RunRequest(): Checks_RunRequest {
     format: undefined,
     labelFilter: undefined,
     password: undefined,
+    propertySubstitutionEnabled: undefined,
     reportEnabled: undefined,
     reportName: undefined,
     reportPath: undefined,
@@ -143,86 +203,92 @@ function createBaseChecks_RunRequest(): Checks_RunRequest {
 
 export const Checks_RunRequest = {
   encode(message: Checks_RunRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.autoEnableNewChecks !== undefined) {
+      writer.uint32(8).bool(message.autoEnableNewChecks);
+    }
     if (message.autoUpdate !== undefined) {
-      writer.uint32(10).string(message.autoUpdate);
+      writer.uint32(18).string(message.autoUpdate);
     }
     if (message.cacheChangelogFileContents !== undefined) {
-      writer.uint32(16).bool(message.cacheChangelogFileContents);
+      writer.uint32(24).bool(message.cacheChangelogFileContents);
     }
     if (message.changelogFile !== undefined) {
-      writer.uint32(26).string(message.changelogFile);
+      writer.uint32(34).string(message.changelogFile);
     }
     if (message.changesetFilter !== undefined) {
-      writer.uint32(34).string(message.changesetFilter);
+      writer.uint32(42).string(message.changesetFilter);
     }
     if (message.checkName !== undefined) {
-      writer.uint32(42).string(message.checkName);
+      writer.uint32(50).string(message.checkName);
     }
     if (message.checkRollbacks !== undefined) {
-      writer.uint32(48).bool(message.checkRollbacks);
+      writer.uint32(56).bool(message.checkRollbacks);
     }
     if (message.checksOutput !== undefined) {
-      writer.uint32(58).string(message.checksOutput);
+      writer.uint32(66).string(message.checksOutput);
     }
     if (message.checksPackages !== undefined) {
-      writer.uint32(66).string(message.checksPackages);
+      writer.uint32(74).string(message.checksPackages);
     }
     if (message.checksScope !== undefined) {
-      writer.uint32(74).string(message.checksScope);
+      writer.uint32(82).string(message.checksScope);
     }
     if (message.checksSettingsFile !== undefined) {
-      writer.uint32(82).string(message.checksSettingsFile);
+      writer.uint32(90).string(message.checksSettingsFile);
     }
     if (message.contextFilter !== undefined) {
-      writer.uint32(90).string(message.contextFilter);
+      writer.uint32(98).string(message.contextFilter);
     }
     if (message.defaultCatalogName !== undefined) {
-      writer.uint32(98).string(message.defaultCatalogName);
+      writer.uint32(106).string(message.defaultCatalogName);
     }
     if (message.defaultSchemaName !== undefined) {
-      writer.uint32(106).string(message.defaultSchemaName);
+      writer.uint32(114).string(message.defaultSchemaName);
     }
     if (message.driver !== undefined) {
-      writer.uint32(114).string(message.driver);
+      writer.uint32(122).string(message.driver);
     }
     if (message.driverPropertiesFile !== undefined) {
-      writer.uint32(122).string(message.driverPropertiesFile);
+      writer.uint32(130).string(message.driverPropertiesFile);
     }
     if (message.format !== undefined) {
-      writer.uint32(130).string(message.format);
+      writer.uint32(138).string(message.format);
     }
     if (message.labelFilter !== undefined) {
-      writer.uint32(138).string(message.labelFilter);
+      writer.uint32(146).string(message.labelFilter);
     }
     if (message.password !== undefined) {
-      writer.uint32(146).string(message.password);
+      writer.uint32(154).string(message.password);
+    }
+    if (message.propertySubstitutionEnabled !== undefined) {
+      writer.uint32(160).bool(message.propertySubstitutionEnabled);
     }
     if (message.reportEnabled !== undefined) {
-      writer.uint32(152).bool(message.reportEnabled);
+      writer.uint32(168).bool(message.reportEnabled);
     }
     if (message.reportName !== undefined) {
-      writer.uint32(162).string(message.reportName);
+      writer.uint32(178).string(message.reportName);
     }
     if (message.reportPath !== undefined) {
-      writer.uint32(170).string(message.reportPath);
+      writer.uint32(186).string(message.reportPath);
     }
     if (message.schemas !== undefined) {
-      writer.uint32(178).string(message.schemas);
+      writer.uint32(194).string(message.schemas);
     }
     if (message.sqlParserFailSeverity !== undefined) {
-      writer.uint32(184).int32(message.sqlParserFailSeverity);
+      writer.uint32(200).int32(message.sqlParserFailSeverity);
     }
     if (message.url !== undefined) {
-      writer.uint32(194).string(message.url);
+      writer.uint32(210).string(message.url);
     }
     if (message.username !== undefined) {
-      writer.uint32(202).string(message.username);
+      writer.uint32(218).string(message.username);
     }
     if (message.verbose !== undefined) {
-      writer.uint32(208).bool(message.verbose);
+      writer.uint32(224).bool(message.verbose);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(218).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(234).fork()).ldelim();
     }
     return writer;
   },
@@ -235,189 +301,203 @@ export const Checks_RunRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag !== 10) {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.autoEnableNewChecks = reader.bool();
+          continue;
+        case 2:
+          if (tag !== 18) {
             break;
           }
 
           message.autoUpdate = reader.string();
           continue;
-        case 2:
-          if (tag !== 16) {
+        case 3:
+          if (tag !== 24) {
             break;
           }
 
           message.cacheChangelogFileContents = reader.bool();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.changelogFile = reader.string();
           continue;
         case 4:
           if (tag !== 34) {
             break;
           }
 
-          message.changesetFilter = reader.string();
+          message.changelogFile = reader.string();
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.checkName = reader.string();
+          message.changesetFilter = reader.string();
           continue;
         case 6:
-          if (tag !== 48) {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.checkName = reader.string();
+          continue;
+        case 7:
+          if (tag !== 56) {
             break;
           }
 
           message.checkRollbacks = reader.bool();
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.checksOutput = reader.string();
           continue;
         case 8:
           if (tag !== 66) {
             break;
           }
 
-          message.checksPackages = reader.string();
+          message.checksOutput = reader.string();
           continue;
         case 9:
           if (tag !== 74) {
             break;
           }
 
-          message.checksScope = reader.string();
+          message.checksPackages = reader.string();
           continue;
         case 10:
           if (tag !== 82) {
             break;
           }
 
-          message.checksSettingsFile = reader.string();
+          message.checksScope = reader.string();
           continue;
         case 11:
           if (tag !== 90) {
             break;
           }
 
-          message.contextFilter = reader.string();
+          message.checksSettingsFile = reader.string();
           continue;
         case 12:
           if (tag !== 98) {
             break;
           }
 
-          message.defaultCatalogName = reader.string();
+          message.contextFilter = reader.string();
           continue;
         case 13:
           if (tag !== 106) {
             break;
           }
 
-          message.defaultSchemaName = reader.string();
+          message.defaultCatalogName = reader.string();
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.driver = reader.string();
+          message.defaultSchemaName = reader.string();
           continue;
         case 15:
           if (tag !== 122) {
             break;
           }
 
-          message.driverPropertiesFile = reader.string();
+          message.driver = reader.string();
           continue;
         case 16:
           if (tag !== 130) {
             break;
           }
 
-          message.format = reader.string();
+          message.driverPropertiesFile = reader.string();
           continue;
         case 17:
           if (tag !== 138) {
             break;
           }
 
-          message.labelFilter = reader.string();
+          message.format = reader.string();
           continue;
         case 18:
           if (tag !== 146) {
             break;
           }
 
-          message.password = reader.string();
+          message.labelFilter = reader.string();
           continue;
         case 19:
-          if (tag !== 152) {
+          if (tag !== 154) {
+            break;
+          }
+
+          message.password = reader.string();
+          continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.propertySubstitutionEnabled = reader.bool();
+          continue;
+        case 21:
+          if (tag !== 168) {
             break;
           }
 
           message.reportEnabled = reader.bool();
-          continue;
-        case 20:
-          if (tag !== 162) {
-            break;
-          }
-
-          message.reportName = reader.string();
-          continue;
-        case 21:
-          if (tag !== 170) {
-            break;
-          }
-
-          message.reportPath = reader.string();
           continue;
         case 22:
           if (tag !== 178) {
             break;
           }
 
-          message.schemas = reader.string();
+          message.reportName = reader.string();
           continue;
         case 23:
-          if (tag !== 184) {
+          if (tag !== 186) {
             break;
           }
 
-          message.sqlParserFailSeverity = reader.int32();
+          message.reportPath = reader.string();
           continue;
         case 24:
           if (tag !== 194) {
             break;
           }
 
-          message.url = reader.string();
+          message.schemas = reader.string();
           continue;
         case 25:
-          if (tag !== 202) {
+          if (tag !== 200) {
+            break;
+          }
+
+          message.sqlParserFailSeverity = reader.int32();
+          continue;
+        case 26:
+          if (tag !== 210) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        case 27:
+          if (tag !== 218) {
             break;
           }
 
           message.username = reader.string();
           continue;
-        case 26:
-          if (tag !== 208) {
+        case 28:
+          if (tag !== 224) {
             break;
           }
 
           message.verbose = reader.bool();
           continue;
-        case 27:
-          if (tag !== 218) {
+        case 29:
+          if (tag !== 234) {
             break;
           }
 
@@ -434,6 +514,9 @@ export const Checks_RunRequest = {
 
   fromJSON(object: any): Checks_RunRequest {
     return {
+      autoEnableNewChecks: isSet(object.autoEnableNewChecks)
+        ? globalThis.Boolean(object.autoEnableNewChecks)
+        : undefined,
       autoUpdate: isSet(object.autoUpdate) ? globalThis.String(object.autoUpdate) : undefined,
       cacheChangelogFileContents: isSet(object.cacheChangelogFileContents)
         ? globalThis.Boolean(object.cacheChangelogFileContents)
@@ -456,6 +539,9 @@ export const Checks_RunRequest = {
       format: isSet(object.format) ? globalThis.String(object.format) : undefined,
       labelFilter: isSet(object.labelFilter) ? globalThis.String(object.labelFilter) : undefined,
       password: isSet(object.password) ? globalThis.String(object.password) : undefined,
+      propertySubstitutionEnabled: isSet(object.propertySubstitutionEnabled)
+        ? globalThis.Boolean(object.propertySubstitutionEnabled)
+        : undefined,
       reportEnabled: isSet(object.reportEnabled) ? globalThis.Boolean(object.reportEnabled) : undefined,
       reportName: isSet(object.reportName) ? globalThis.String(object.reportName) : undefined,
       reportPath: isSet(object.reportPath) ? globalThis.String(object.reportPath) : undefined,
@@ -472,6 +558,9 @@ export const Checks_RunRequest = {
 
   toJSON(message: Checks_RunRequest): unknown {
     const obj: any = {};
+    if (message.autoEnableNewChecks !== undefined) {
+      obj.autoEnableNewChecks = message.autoEnableNewChecks;
+    }
     if (message.autoUpdate !== undefined) {
       obj.autoUpdate = message.autoUpdate;
     }
@@ -526,6 +615,9 @@ export const Checks_RunRequest = {
     if (message.password !== undefined) {
       obj.password = message.password;
     }
+    if (message.propertySubstitutionEnabled !== undefined) {
+      obj.propertySubstitutionEnabled = message.propertySubstitutionEnabled;
+    }
     if (message.reportEnabled !== undefined) {
       obj.reportEnabled = message.reportEnabled;
     }
@@ -561,6 +653,7 @@ export const Checks_RunRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<Checks_RunRequest>, I>>(object: I): Checks_RunRequest {
     const message = createBaseChecks_RunRequest();
+    message.autoEnableNewChecks = object.autoEnableNewChecks ?? undefined;
     message.autoUpdate = object.autoUpdate ?? undefined;
     message.cacheChangelogFileContents = object.cacheChangelogFileContents ?? undefined;
     message.changelogFile = object.changelogFile ?? undefined;
@@ -579,6 +672,7 @@ export const Checks_RunRequest = {
     message.format = object.format ?? undefined;
     message.labelFilter = object.labelFilter ?? undefined;
     message.password = object.password ?? undefined;
+    message.propertySubstitutionEnabled = object.propertySubstitutionEnabled ?? undefined;
     message.reportEnabled = object.reportEnabled ?? undefined;
     message.reportName = object.reportName ?? undefined;
     message.reportPath = object.reportPath ?? undefined;

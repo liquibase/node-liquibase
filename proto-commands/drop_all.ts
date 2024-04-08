@@ -5,21 +5,41 @@ import { GlobalOptions } from "./global_options";
 /** Drop all database objects owned by the user */
 export interface DropAllRequest {
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
+  /** [PRO] If true, the database changelog history table will be dropped */
+  dropDbclhistory?:
+    | boolean
+    | undefined;
+  /** required* Argument to allow use of dropAll with values of 'true' or 'false'. The default is 'false'. */
+  force: boolean;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
+  /** required* Argument to require user of dropAll to supply a 'force' argument, with values of 'true' or 'false'. The default is 'false'. */
+  requireForce: boolean;
   /** Schemas to include in drop */
-  schemas?: string;
+  schemas?:
+    | string
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -33,7 +53,10 @@ function createBaseDropAllRequest(): DropAllRequest {
     defaultSchemaName: undefined,
     driver: undefined,
     driverPropertiesFile: undefined,
+    dropDbclhistory: undefined,
+    force: false,
     password: undefined,
+    requireForce: false,
     schemas: undefined,
     url: "",
     username: undefined,
@@ -55,20 +78,29 @@ export const DropAllRequest = {
     if (message.driverPropertiesFile !== undefined) {
       writer.uint32(34).string(message.driverPropertiesFile);
     }
+    if (message.dropDbclhistory !== undefined) {
+      writer.uint32(40).bool(message.dropDbclhistory);
+    }
+    if (message.force !== false) {
+      writer.uint32(48).bool(message.force);
+    }
     if (message.password !== undefined) {
-      writer.uint32(42).string(message.password);
+      writer.uint32(58).string(message.password);
+    }
+    if (message.requireForce !== false) {
+      writer.uint32(64).bool(message.requireForce);
     }
     if (message.schemas !== undefined) {
-      writer.uint32(50).string(message.schemas);
+      writer.uint32(74).string(message.schemas);
     }
     if (message.url !== "") {
-      writer.uint32(58).string(message.url);
+      writer.uint32(82).string(message.url);
     }
     if (message.username !== undefined) {
-      writer.uint32(66).string(message.username);
+      writer.uint32(90).string(message.username);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(74).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(98).fork()).ldelim();
     }
     return writer;
   },
@@ -109,35 +141,56 @@ export const DropAllRequest = {
           message.driverPropertiesFile = reader.string();
           continue;
         case 5:
-          if (tag !== 42) {
+          if (tag !== 40) {
             break;
           }
 
-          message.password = reader.string();
+          message.dropDbclhistory = reader.bool();
           continue;
         case 6:
-          if (tag !== 50) {
+          if (tag !== 48) {
             break;
           }
 
-          message.schemas = reader.string();
+          message.force = reader.bool();
           continue;
         case 7:
           if (tag !== 58) {
             break;
           }
 
-          message.url = reader.string();
+          message.password = reader.string();
           continue;
         case 8:
-          if (tag !== 66) {
+          if (tag !== 64) {
+            break;
+          }
+
+          message.requireForce = reader.bool();
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.schemas = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        case 11:
+          if (tag !== 90) {
             break;
           }
 
           message.username = reader.string();
           continue;
-        case 9:
-          if (tag !== 74) {
+        case 12:
+          if (tag !== 98) {
             break;
           }
 
@@ -160,7 +213,10 @@ export const DropAllRequest = {
       driverPropertiesFile: isSet(object.driverPropertiesFile)
         ? globalThis.String(object.driverPropertiesFile)
         : undefined,
+      dropDbclhistory: isSet(object.dropDbclhistory) ? globalThis.Boolean(object.dropDbclhistory) : undefined,
+      force: isSet(object.force) ? globalThis.Boolean(object.force) : false,
       password: isSet(object.password) ? globalThis.String(object.password) : undefined,
+      requireForce: isSet(object.requireForce) ? globalThis.Boolean(object.requireForce) : false,
       schemas: isSet(object.schemas) ? globalThis.String(object.schemas) : undefined,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       username: isSet(object.username) ? globalThis.String(object.username) : undefined,
@@ -182,8 +238,17 @@ export const DropAllRequest = {
     if (message.driverPropertiesFile !== undefined) {
       obj.driverPropertiesFile = message.driverPropertiesFile;
     }
+    if (message.dropDbclhistory !== undefined) {
+      obj.dropDbclhistory = message.dropDbclhistory;
+    }
+    if (message.force !== false) {
+      obj.force = message.force;
+    }
     if (message.password !== undefined) {
       obj.password = message.password;
+    }
+    if (message.requireForce !== false) {
+      obj.requireForce = message.requireForce;
     }
     if (message.schemas !== undefined) {
       obj.schemas = message.schemas;
@@ -209,7 +274,10 @@ export const DropAllRequest = {
     message.defaultSchemaName = object.defaultSchemaName ?? undefined;
     message.driver = object.driver ?? undefined;
     message.driverPropertiesFile = object.driverPropertiesFile ?? undefined;
+    message.dropDbclhistory = object.dropDbclhistory ?? undefined;
+    message.force = object.force ?? false;
     message.password = object.password ?? undefined;
+    message.requireForce = object.requireForce ?? false;
     message.schemas = object.schemas ?? undefined;
     message.url = object.url ?? "";
     message.username = object.username ?? undefined;

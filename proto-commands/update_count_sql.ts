@@ -5,35 +5,57 @@ import { GlobalOptions } from "./global_options";
 /** Generate the SQL to deploy the specified number of changes */
 export interface UpdateCountSqlRequest {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?: string;
+  changeExecListenerClass?:
+    | string
+    | undefined;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?: string;
+  changeExecListenerPropertiesFile?:
+    | string
+    | undefined;
   /** required* The root changelog */
   changelogFile: string;
   /** Changeset contexts to match */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** required* The number of changes to generate SQL for */
   count: number;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Changeset labels to match */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Control whether names of objects in the default catalog are fully qualified or not. If true they are. If false, only objects outside the default catalog are fully qualified */
-  outputDefaultCatalog?: boolean;
+  outputDefaultCatalog?:
+    | boolean
+    | undefined;
   /** Control whether names of objects in the default schema are fully qualified or not. If true they are. If false, only objects outside the default schema are fully qualified */
-  outputDefaultSchema?: boolean;
+  outputDefaultSchema?:
+    | boolean
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 

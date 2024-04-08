@@ -5,53 +5,101 @@ import { GlobalOptions } from "./global_options";
 /** Generate a changelog */
 export interface GenerateChangelogRequest {
   /** Specifies the author for changesets in the generated changelog */
-  author?: string;
+  author?:
+    | string
+    | undefined;
   /** Changelog file to write results */
-  changelogFile?: string;
+  changelogFile?:
+    | string
+    | undefined;
   /** Changeset contexts to generate */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** Directory to write table data to */
-  dataOutputDirectory?: string;
+  dataOutputDirectory?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** Types of objects to compare */
-  diffTypes?: string;
+  diffTypes?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Objects to exclude from diff */
-  excludeObjects?: string;
+  excludeObjects?:
+    | string
+    | undefined;
   /** If true, the catalog will be included in generated changeSets. Defaults to false. */
-  includeCatalog?: boolean;
+  includeCatalog?:
+    | boolean
+    | undefined;
   /** Objects to include in diff */
-  includeObjects?: string;
+  includeObjects?:
+    | string
+    | undefined;
   /** If true, the schema will be included in generated changeSets. Defaults to false. */
-  includeSchema?: boolean;
+  includeSchema?:
+    | boolean
+    | undefined;
   /** Include the tablespace attribute in the changelog. Defaults to false. */
-  includeTablespace?: boolean;
+  includeTablespace?:
+    | boolean
+    | undefined;
   /** Changeset labels to generate */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Output schemas names. This is a CSV list. */
-  outputSchemas?: string;
+  outputSchemas?:
+    | string
+    | undefined;
   /** Flag to allow overwriting of output changelog file. Default: false */
-  overwriteOutputFile?: boolean;
+  overwriteOutputFile?:
+    | boolean
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
   /** Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView) */
-  replaceIfExistsTypes?: string;
+  replaceIfExistsTypes?:
+    | string
+    | undefined;
   /** Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...). */
-  runOnChangeTypes?: string;
+  runOnChangeTypes?:
+    | string
+    | undefined;
   /** Schemas to include in diff */
-  schemas?: string;
+  schemas?:
+    | string
+    | undefined;
+  /** When true will skip object sorting. This can be useful on databases that have a lot of packages/procedures that are linked to each other */
+  skipObjectSorting?:
+    | boolean
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** If true, will add 'OR REPLACE' option to the create view change object */
-  useOrReplaceOption?: boolean;
+  useOrReplaceOption?:
+    | boolean
+    | undefined;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -82,6 +130,7 @@ function createBaseGenerateChangelogRequest(): GenerateChangelogRequest {
     replaceIfExistsTypes: undefined,
     runOnChangeTypes: undefined,
     schemas: undefined,
+    skipObjectSorting: undefined,
     url: "",
     useOrReplaceOption: undefined,
     username: undefined,
@@ -154,17 +203,20 @@ export const GenerateChangelogRequest = {
     if (message.schemas !== undefined) {
       writer.uint32(170).string(message.schemas);
     }
+    if (message.skipObjectSorting !== undefined) {
+      writer.uint32(176).bool(message.skipObjectSorting);
+    }
     if (message.url !== "") {
-      writer.uint32(178).string(message.url);
+      writer.uint32(186).string(message.url);
     }
     if (message.useOrReplaceOption !== undefined) {
-      writer.uint32(184).bool(message.useOrReplaceOption);
+      writer.uint32(192).bool(message.useOrReplaceOption);
     }
     if (message.username !== undefined) {
-      writer.uint32(194).string(message.username);
+      writer.uint32(202).string(message.username);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(202).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(210).fork()).ldelim();
     }
     return writer;
   },
@@ -324,28 +376,35 @@ export const GenerateChangelogRequest = {
           message.schemas = reader.string();
           continue;
         case 22:
-          if (tag !== 178) {
+          if (tag !== 176) {
+            break;
+          }
+
+          message.skipObjectSorting = reader.bool();
+          continue;
+        case 23:
+          if (tag !== 186) {
             break;
           }
 
           message.url = reader.string();
           continue;
-        case 23:
-          if (tag !== 184) {
+        case 24:
+          if (tag !== 192) {
             break;
           }
 
           message.useOrReplaceOption = reader.bool();
           continue;
-        case 24:
-          if (tag !== 194) {
+        case 25:
+          if (tag !== 202) {
             break;
           }
 
           message.username = reader.string();
           continue;
-        case 25:
-          if (tag !== 202) {
+        case 26:
+          if (tag !== 210) {
             break;
           }
 
@@ -391,6 +450,7 @@ export const GenerateChangelogRequest = {
         : undefined,
       runOnChangeTypes: isSet(object.runOnChangeTypes) ? globalThis.String(object.runOnChangeTypes) : undefined,
       schemas: isSet(object.schemas) ? globalThis.String(object.schemas) : undefined,
+      skipObjectSorting: isSet(object.skipObjectSorting) ? globalThis.Boolean(object.skipObjectSorting) : undefined,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       useOrReplaceOption: isSet(object.useOrReplaceOption) ? globalThis.Boolean(object.useOrReplaceOption) : undefined,
       username: isSet(object.username) ? globalThis.String(object.username) : undefined,
@@ -463,6 +523,9 @@ export const GenerateChangelogRequest = {
     if (message.schemas !== undefined) {
       obj.schemas = message.schemas;
     }
+    if (message.skipObjectSorting !== undefined) {
+      obj.skipObjectSorting = message.skipObjectSorting;
+    }
     if (message.url !== "") {
       obj.url = message.url;
     }
@@ -504,6 +567,7 @@ export const GenerateChangelogRequest = {
     message.replaceIfExistsTypes = object.replaceIfExistsTypes ?? undefined;
     message.runOnChangeTypes = object.runOnChangeTypes ?? undefined;
     message.schemas = object.schemas ?? undefined;
+    message.skipObjectSorting = object.skipObjectSorting ?? undefined;
     message.url = object.url ?? "";
     message.useOrReplaceOption = object.useOrReplaceOption ?? undefined;
     message.username = object.username ?? undefined;
