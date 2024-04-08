@@ -27,6 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    # Install Dependencies
+    - run: npm install
     # Run Linters
     - run: npm run lint
     # Run Tests
