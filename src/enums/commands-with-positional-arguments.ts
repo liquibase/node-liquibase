@@ -9,5 +9,9 @@ export enum CommandsWithPositionalArguments {
   rollbackSql = 'rollbackSql',
   rollbackToDate = 'rollbackToDate',
   rollbackToDateSQL = 'rollbackToDateSQL',
+  rollbackOneChangeset = 'rollbackOneChangeset',
+  rollbackOneChangesetSQL = 'rollbackOneChangesetSQL',
+  rollbackOneUpdate = 'rollbackOneUpdate',
+  rollbackOneUpdateSQL = 'rollbackOneUpdateSQL',
   tag = 'tag',
 }

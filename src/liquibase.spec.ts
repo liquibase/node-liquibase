@@ -1,12 +1,26 @@
 import {
   CalculateCheckSumCommandAttributes,
+  ChangelogSyncCommandAttributes,
   ChangelogSyncToTagCommandAttributes,
   ChangelogSyncToTagSQLCommandAttributes,
+  ChecksBulkSetCommandAttributes,
+  ChecksCopyCommandAttributes,
+  ChecksCreateCommandAttributes,
+  ChecksCustomizeCommandAttributes,
+  ChecksDeleteCommandAttributes,
+  ChecksDisableCommandAttributes,
+  ChecksEnableCommandAttributes,
+  ChecksResetCommandAttributes,
+  ChecksRunCommandAttributes,
+  ChecksShowCommandAttributes,
   DbDocCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
+  ExecuteSqlCommandAttributes,
+  FlowCommandAttributes,
   FutureRollbackCountSQLCommandAttributes,
   GenerateChangeLogCommandAttributes,
+  InitCommandAttributes,
   Liquibase,
   RollbackCommandAttributes,
   RollbackCountCommandAttributes,
@@ -14,6 +28,12 @@ import {
   RollbackSQLCommandAttributes,
   RollbackToDateCommandAttributes,
   RollbackToDateSQLCommandAttributes,
+  RollbackOneChangesetCommandAttributes,
+  RollbackOneChangesetSQLCommandAttributes,
+  RollbackOneUpdateCommandAttributes,
+  RollbackOneUpdateSQLCommandAttributes,
+  SetContextsCommandAttributes,
+  SetLabelsCommandAttributes,
   SnapshotCommandAttributes,
   SnapshotReferenceCommandAttributes,
   SyncHubCommandAttributes,
@@ -25,6 +45,8 @@ import {
   UpdateSQLCommandAttributes,
   UpdateToTagCommandAttributes,
   UpdateToTagSQLCommandAttributes,
+  UpdateOneChangesetCommandAttributes,
+  UpdateOneChangesetSQLCommandAttributes,
 } from './index';
 import { LiquibaseConfig } from './models/index';
 import { POSTGRESQL_DEFAULT_CONFIG } from './constants/defaults/postgresql-default.config';
@@ -137,6 +159,26 @@ describe('Liquibase', () => {
     });
   });
 
+  describe('#updateOneChangeset', () => {
+    it('should call run method', async () => {
+      const param = {} as UpdateOneChangesetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.updateOneChangeset(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#updateOneChangesetSQL', () => {
+    it('should call run method', async () => {
+      const param = {} as UpdateOneChangesetSQLCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.updateOneChangesetSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
   describe('#validate', () => {
     it('should call run method', async () => {
       spyOn<any>(instance, 'run');
@@ -158,9 +200,10 @@ describe('Liquibase', () => {
 
   describe('#changelogSync', () => {
     it('should call run method', async () => {
+      const param = {} as ChangelogSyncCommandAttributes;
       spyOn<any>(instance, 'run');
 
-      instance.changelogSync();
+      instance.changelogSync(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -194,11 +237,120 @@ describe('Liquibase', () => {
     });
   });
 
+  describe('#checksBulkSet', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksBulkSetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksBulkSet(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCopy', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCopyCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCopy(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCreate', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCreateCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCreate(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksCustomize', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksCustomizeCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksCustomize(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksDelete', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksDeleteCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksDelete(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksDisable', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksDisableCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksDisable(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksEnable', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksEnableCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksEnable(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksReset', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksResetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksReset(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksRun', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksRunCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksRun(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#checksShow', () => {
+    it('should call run method', async () => {
+      const param = {} as ChecksShowCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.checksShow(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
   describe('#clearCheckSums', () => {
     it('should call run method', async () => {
       spyOn<any>(instance, 'run');
 
       instance.clearCheckSums();
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#connect', () => {
+    it('should call run method', async () => {
+      spyOn<any>(instance, 'run');
+
+      instance.connect();
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -251,6 +403,26 @@ describe('Liquibase', () => {
     });
   });
 
+  describe('#executeSql', () => {
+    it('should call run method', async () => {
+      const param = {} as ExecuteSqlCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.executeSql(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#flow', () => {
+    it('should call run method', async () => {
+      const param = {} as FlowCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.flow(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
   describe('#futureRollbackSQL', () => {
     it('should call run method', async () => {
       spyOn<any>(instance, 'run');
@@ -294,6 +466,16 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.history();
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#init', () => {
+    it('should call run method', async () => {
+      const param = {} as InitCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.init(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });
@@ -399,6 +581,66 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.rollbackToDateSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneChangeset', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneChangesetCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneChangeset(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneChangesetSQL', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneChangesetSQLCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneChangesetSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneUpdate', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneUpdateCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneUpdate(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#rollbackOneUpdateSQL', () => {
+    it('should call run method', async () => {
+      const param = {} as RollbackOneUpdateSQLCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.rollbackOneUpdateSQL(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#setContexts', () => {
+    it('should call run method', async () => {
+      const param = {} as SetContextsCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.setContexts(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#setLabels', () => {
+    it('should call run method', async () => {
+      const param = {} as SetLabelsCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.setLabels(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });

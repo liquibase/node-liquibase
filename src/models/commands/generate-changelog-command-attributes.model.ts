@@ -1,40 +1,40 @@
 export interface GenerateChangeLogCommandAttributes {
-  /**
-   * Specifies the default database catalog to use.
-   */
-  defaultCatalogName?: string;
-  /**
-   * Specifies the default database schema to use.
-   */
-  defaultSchemaName?: string;
-  /**
-   * Specifies database schemas you want to include.
-   */
-  schemas?: Array<string>;
-  /**
-   * Uses the names as schemaName instead of the real names on the generateChangeLog command.
-   */
-  outputSchemaAs?: Array<string>;
-  /**
-   * Includes the catalog in a generated changesets if the value is true. The default value is false.
-   */
-  includeCatalog: boolean;
-  /**
-   * Includes the schema in a generated changesets if the value is true. The default value is false.
-   */
-  includeSchema?: boolean;
-  /**
-   * Includes the tablespace of tables and indexes in a generated changesets if the value is true. The default value is false.
-   */
-  includeTablespace?: boolean;
-  /**
-   * Sends the data output as a CSV file in the given directory.
-   */
+  /** Specifies the author for changesets in the generated changelog */
+  author?: string;
+  /** Changelog file to write results */
+  changelogFile?: string;
+  /** Changeset contexts to generate */
+  contextFilter?: string;
+  /** Directory to write table data to */
   dataOutputDirectory?: string;
-  /**
-   * Includes a list of diff types in a changelog file expressed as a comma-separated list (without spaces)
-   * from: catalog, tables, functions, views, columns, indexes, foreignkeys, primarykeys,
-   * uniqueconstraints, data, storedprocedure, triggers, sequences.
-   */
+  /** The default catalog name to use for the database connection */
+  defaultCatalogName?: string;
+  /** The default schema name to use for the database connection */
+  defaultSchemaName?: string;
+  /** Types of objects to compare */
   diffTypes?: string;
+  /** Objects to exclude from diff */
+  excludeObjects?: string;
+  /** If true, the catalog will be included in generated changeSets. Defaults to false. */
+  includeCatalog?: boolean;
+  /** Objects to include in diff */
+  includeObjects?: string;
+  /** If true, the schema will be included in generated changeSets. Defaults to false. */
+  includeSchema?: boolean;
+  /** Include the tablespace attribute in the changelog. Defaults to false. */
+  includeTablespace?: boolean;
+  /** Changeset labels to generate */
+  labelFilter?: string;
+  /** Output schemas names. This is a CSV list. */
+  outputSchemas?: string;
+  /** Flag to allow overwriting of output changelog file. Default: false */
+  overwriteOutputFile?: boolean;
+  /** Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView) */
+  replaceIfExistsTypes?: string;
+  /** Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...). */
+  runOnChangeTypes?: string;
+  /** Schemas to include in diff */
+  schemas?: string;
+  /** If true, will add 'OR REPLACE' option to the create view change object */
+  useOrReplaceOption?: boolean;
 }

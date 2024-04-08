@@ -6,30 +6,52 @@ import { LiquibaseCommands } from './enums/liquibase-commands.enum';
 import {
   LiquibaseConfig,
   CalculateCheckSumCommandAttributes,
-  UpdateCommandAttributes,
+  ChangelogSyncToTagCommandAttributes,
+  ChangelogSyncCommandAttributes,
+  ChangelogSyncToTagSQLCommandAttributes,
+  ChecksBulkSetCommandAttributes,
+  ChecksCopyCommandAttributes,
+  ChecksCreateCommandAttributes,
+  ChecksCustomizeCommandAttributes,
+  ChecksDeleteCommandAttributes,
+  ChecksDisableCommandAttributes,
+  ChecksEnableCommandAttributes,
+  ChecksResetCommandAttributes,
+  ChecksRunCommandAttributes,
+  ChecksShowCommandAttributes,
+  DbDocCommandAttributes,
+  DiffChangelogCommandAttributes,
+  DiffCommandAttributes,
+  ExecuteSqlCommandAttributes,
+  FlowCommandAttributes,
+  FutureRollbackCountSQLCommandAttributes,
+  GenerateChangeLogCommandAttributes,
+  InitCommandAttributes,
   RollbackCommandAttributes,
   RollbackSQLCommandAttributes,
   RollbackCountCommandAttributes,
   RollbackCountSQLCommandAttributes,
   RollbackToDateCommandAttributes,
   RollbackToDateSQLCommandAttributes,
+  RollbackOneChangesetCommandAttributes,
+  RollbackOneChangesetSQLCommandAttributes,
+  RollbackOneUpdateCommandAttributes,
+  RollbackOneUpdateSQLCommandAttributes,
+  SetContextsCommandAttributes,
+  SetLabelsCommandAttributes,
   SnapshotCommandAttributes,
   SnapshotReferenceCommandAttributes,
   SyncHubCommandAttributes,
   TagCommandAttributes,
   TagExistsCommandAttributes,
-  FutureRollbackCountSQLCommandAttributes,
-  GenerateChangeLogCommandAttributes,
+  UpdateCommandAttributes,
   UpdateSQLCommandAttributes,
   UpdateCountCommandAttributes,
   UpdateCountSQLCommandAttributes,
   UpdateToTagCommandAttributes,
   UpdateToTagSQLCommandAttributes,
-  ChangelogSyncToTagCommandAttributes,
-  ChangelogSyncToTagSQLCommandAttributes,
-  DbDocCommandAttributes,
-  DiffChangelogCommandAttributes,
-  DiffCommandAttributes,
+  UpdateOneChangesetCommandAttributes,
+  UpdateOneChangesetSQLCommandAttributes,
 } from './models';
 import { CommandsWithPositionalArguments } from './enums/commands-with-positional-arguments';
 import { ParamsModel, WithOptionalSubstitutionParams } from './models/commands/substitution-params.model';
@@ -168,6 +190,13 @@ export class Liquibase {
     return this.run(LiquibaseCommands.UpdateToTagSql, params);
   }
 
+  public updateOneChangeset(params: UpdateOneChangesetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.UpdateOneChangeset, params);
+  }
+
+  public updateOneChangesetSQL(params: UpdateOneChangesetSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.UpdateOneChangesetSql, params);
+  }
   /**
    * The `validate` command checks and identifies any possible errors in a changelog that can cause the `update` command to fail.
    *
@@ -288,6 +317,29 @@ export class Liquibase {
     return this.run(LiquibaseCommands.RollbackToDateSql, params);
   }
 
+  public rollbackOneChangeset(params: RollbackOneChangesetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneChangeset, params);
+  }
+
+  public rollbackOneChangesetSQL(params: RollbackOneChangesetSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneChangesetSql, params);
+  }
+
+  public rollbackOneUpdate(params: RollbackOneUpdateCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneUpdate, params);
+  }
+
+  public rollbackOneUpdateSQL(params: RollbackOneUpdateSQLCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.RollbackOneUpdateSql, params);
+  }
+
+  public setContexts(params: SetContextsCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.SetContexts, params);
+  }
+
+  public setLabels(params: SetLabelsCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.SetLabels, params);
+  }
   /**
    * The `snapshot` command captures the current state of the URL database, which is the target database.
    *
@@ -555,8 +607,8 @@ export class Liquibase {
    *
    * {@link https://docs.liquibase.com/commands/community/changelogsync.html Documentation}
    */
-  public changelogSync(): Promise<string> {
-    return this.run(LiquibaseCommands.ChangelogSync);
+  public changelogSync(params: ChangelogSyncCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChangelogSync, params);
   }
 
   /**
@@ -603,6 +655,46 @@ export class Liquibase {
     return this.run(LiquibaseCommands.ChangelogSyncToTagSql, params);
   }
 
+  public checksBulkSet(params: ChecksBulkSetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksBulkSet, params);
+  }
+
+  public checksCopy(params: ChecksCopyCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCopy, params);
+  }
+
+  public checksCreate(params: ChecksCreateCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCreate, params);
+  }
+
+  public checksCustomize(params: ChecksCustomizeCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksCustomize, params);
+  }
+
+  public checksDelete(params: ChecksDeleteCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksDelete, params);
+  }
+
+  public checksDisable(params: ChecksDisableCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksDisable, params);
+  }
+
+  public checksEnable(params: ChecksEnableCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksEnable, params);
+  }
+
+  public checksReset(params: ChecksResetCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksReset, params);
+  }
+
+  public checksRun(params: ChecksRunCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksRun, params);
+  }
+
+  public checksShow(params: ChecksShowCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ChecksShow, params);
+  }
+
   /**
    * The `clearCheckSums` clears all checksums and nullifies the MD5SUM column of the DATABASECHANGELOG table so they will be re-computed on the next database update.
    *
@@ -612,6 +704,10 @@ export class Liquibase {
    */
   public clearCheckSums(): Promise<string> {
     return this.run(LiquibaseCommands.ClearCheckSums);
+  }
+
+  public connect(): Promise<string> {
+    return this.run(LiquibaseCommands.Connect);
   }
 
   /**
@@ -675,6 +771,18 @@ export class Liquibase {
    */
   public diffChangelog(params: DiffChangelogCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.DiffChangeLog, params);
+  }
+
+  public executeSql(params: ExecuteSqlCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.ExecuteSql, params);
+  }
+
+  public flow(params: FlowCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.Flow, params);
+  }
+
+  public init(params: InitCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.Init, params);
   }
 
   private stringifyParams(

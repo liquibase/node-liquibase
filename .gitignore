@@ -3,6 +3,10 @@ node_modules
 .nyc_output
 coverage
 .npmrc
+commands.json
+*.proto
+dist
+
 
 # Mac OS
 .DS_Store
