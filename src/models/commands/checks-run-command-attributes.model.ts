@@ -1,4 +1,6 @@
 export interface ChecksRunCommandAttributes {
+  /** Automatically enable new quality checks in liquibase.checks.conf file when they are available. Options: [true|false] */
+  autoEnableNewChecks?: boolean;
   /** Allows automatic backup and updating of liquibase.checks.conf file when new quality checks are available, or for file format changes. Options: [on|off] */
   autoUpdate?: string;
   /** If true, sqlFile change type contents will be cached in memory to improve performance, at the cost of higher memory usage. To reduce memory usage, set this to false. */

@@ -17,6 +17,7 @@ export enum LiquibaseCommands {
   ClearCheckSums = 'clearCheckSums',
   Connect = 'connect',
   DbDoc = 'dbDoc',
+  DbclHistory = 'dbclHistory',
   DeactivateChangeLog = 'deactivateChangeLog',
   Diff = 'diff',
   DiffChangeLog = 'diffChangeLog',

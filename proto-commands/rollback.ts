@@ -5,35 +5,69 @@ import { GlobalOptions } from "./global_options";
 /** Rollback changes made to the database based on the specific tag */
 export interface RollbackRequest {
   /** Fully-qualified class which specifies a ChangeExecListener */
-  changeExecListenerClass?: string;
+  changeExecListenerClass?:
+    | string
+    | undefined;
   /** Path to a properties file for the ChangeExecListenerClass */
-  changeExecListenerPropertiesFile?: string;
+  changeExecListenerPropertiesFile?:
+    | string
+    | undefined;
   /** required* The root changelog file */
   changelogFile: string;
   /** Context string to use for filtering */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Label expression to use for filtering */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
+  /** [PRO] Enable or disable reporting. */
+  reportEnabled?:
+    | boolean
+    | undefined;
+  /** [PRO] The name of the report. */
+  reportName?:
+    | string
+    | undefined;
+  /** [PRO] The path to the directory to generate the report. */
+  reportPath?:
+    | string
+    | undefined;
   /** Rollback script to execute */
-  rollbackScript?: string;
+  rollbackScript?:
+    | string
+    | undefined;
   /** required* Tag to rollback to */
   tag: string;
   /** Tag version to use for multiple occurrences of a tag */
-  tagVersion?: string;
+  tagVersion?:
+    | string
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -53,6 +87,9 @@ function createBaseRollbackRequest(): RollbackRequest {
     driverPropertiesFile: undefined,
     labelFilter: undefined,
     password: undefined,
+    reportEnabled: undefined,
+    reportName: undefined,
+    reportPath: undefined,
     rollbackScript: undefined,
     tag: "",
     tagVersion: undefined,
@@ -94,23 +131,32 @@ export const RollbackRequest = {
     if (message.password !== undefined) {
       writer.uint32(82).string(message.password);
     }
+    if (message.reportEnabled !== undefined) {
+      writer.uint32(88).bool(message.reportEnabled);
+    }
+    if (message.reportName !== undefined) {
+      writer.uint32(98).string(message.reportName);
+    }
+    if (message.reportPath !== undefined) {
+      writer.uint32(106).string(message.reportPath);
+    }
     if (message.rollbackScript !== undefined) {
-      writer.uint32(90).string(message.rollbackScript);
+      writer.uint32(114).string(message.rollbackScript);
     }
     if (message.tag !== "") {
-      writer.uint32(98).string(message.tag);
+      writer.uint32(122).string(message.tag);
     }
     if (message.tagVersion !== undefined) {
-      writer.uint32(106).string(message.tagVersion);
+      writer.uint32(130).string(message.tagVersion);
     }
     if (message.url !== "") {
-      writer.uint32(114).string(message.url);
+      writer.uint32(138).string(message.url);
     }
     if (message.username !== undefined) {
-      writer.uint32(122).string(message.username);
+      writer.uint32(146).string(message.username);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(130).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(154).fork()).ldelim();
     }
     return writer;
   },
@@ -193,42 +239,63 @@ export const RollbackRequest = {
           message.password = reader.string();
           continue;
         case 11:
-          if (tag !== 90) {
+          if (tag !== 88) {
             break;
           }
 
-          message.rollbackScript = reader.string();
+          message.reportEnabled = reader.bool();
           continue;
         case 12:
           if (tag !== 98) {
             break;
           }
 
-          message.tag = reader.string();
+          message.reportName = reader.string();
           continue;
         case 13:
           if (tag !== 106) {
             break;
           }
 
-          message.tagVersion = reader.string();
+          message.reportPath = reader.string();
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.url = reader.string();
+          message.rollbackScript = reader.string();
           continue;
         case 15:
           if (tag !== 122) {
             break;
           }
 
-          message.username = reader.string();
+          message.tag = reader.string();
           continue;
         case 16:
           if (tag !== 130) {
+            break;
+          }
+
+          message.tagVersion = reader.string();
+          continue;
+        case 17:
+          if (tag !== 138) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        case 18:
+          if (tag !== 146) {
+            break;
+          }
+
+          message.username = reader.string();
+          continue;
+        case 19:
+          if (tag !== 154) {
             break;
           }
 
@@ -261,6 +328,9 @@ export const RollbackRequest = {
         : undefined,
       labelFilter: isSet(object.labelFilter) ? globalThis.String(object.labelFilter) : undefined,
       password: isSet(object.password) ? globalThis.String(object.password) : undefined,
+      reportEnabled: isSet(object.reportEnabled) ? globalThis.Boolean(object.reportEnabled) : undefined,
+      reportName: isSet(object.reportName) ? globalThis.String(object.reportName) : undefined,
+      reportPath: isSet(object.reportPath) ? globalThis.String(object.reportPath) : undefined,
       rollbackScript: isSet(object.rollbackScript) ? globalThis.String(object.rollbackScript) : undefined,
       tag: isSet(object.tag) ? globalThis.String(object.tag) : "",
       tagVersion: isSet(object.tagVersion) ? globalThis.String(object.tagVersion) : undefined,
@@ -302,6 +372,15 @@ export const RollbackRequest = {
     if (message.password !== undefined) {
       obj.password = message.password;
     }
+    if (message.reportEnabled !== undefined) {
+      obj.reportEnabled = message.reportEnabled;
+    }
+    if (message.reportName !== undefined) {
+      obj.reportName = message.reportName;
+    }
+    if (message.reportPath !== undefined) {
+      obj.reportPath = message.reportPath;
+    }
     if (message.rollbackScript !== undefined) {
       obj.rollbackScript = message.rollbackScript;
     }
@@ -338,6 +417,9 @@ export const RollbackRequest = {
     message.driverPropertiesFile = object.driverPropertiesFile ?? undefined;
     message.labelFilter = object.labelFilter ?? undefined;
     message.password = object.password ?? undefined;
+    message.reportEnabled = object.reportEnabled ?? undefined;
+    message.reportName = object.reportName ?? undefined;
+    message.reportPath = object.reportPath ?? undefined;
     message.rollbackScript = object.rollbackScript ?? undefined;
     message.tag = object.tag ?? "";
     message.tagVersion = object.tagVersion ?? undefined;

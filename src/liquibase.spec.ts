@@ -14,6 +14,7 @@ import {
   ChecksRunCommandAttributes,
   ChecksShowCommandAttributes,
   DbDocCommandAttributes,
+  DbclHistoryCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
   ExecuteSqlCommandAttributes,
@@ -361,6 +362,16 @@ describe('Liquibase', () => {
       spyOn<any>(instance, 'run');
 
       instance.dbDoc(param);
+      expect(instance['run']).toHaveBeenCalled();
+    });
+  });
+
+  describe('#dbclHistory', () => {
+    it('should call run method', async () => {
+      const param = {} as DbclHistoryCommandAttributes;
+      spyOn<any>(instance, 'run');
+
+      instance.dbclHistory(param);
       expect(instance['run']).toHaveBeenCalled();
     });
   });

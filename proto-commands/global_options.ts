@@ -4,157 +4,322 @@ import * as _m0 from "protobufjs/minimal";
 /** Liquibase Global Options */
 export interface GlobalOptions {
   /** If true, a subset of the MdcKeys, as defined by product, will be set to empty strings upon system startup. */
-  addEmptyMdcValues?: boolean;
+  addEmptyMdcValues?:
+    | boolean
+    | undefined;
   /** Allows duplicated changeset identifiers without failing Liquibase execution. */
-  allowDuplicatedChangesetIdentifiers?: boolean;
+  allowDuplicatedChangesetIdentifiers?:
+    | boolean
+    | undefined;
   /** If true, drop and recreate a view instead of replacing it. */
-  alwaysDropInsteadOfReplace?: boolean;
+  alwaysDropInsteadOfReplace?:
+    | boolean
+    | undefined;
   /** When generating SQL for createProcedure, should the procedure schema be forced to the default schema if no schemaName attribute is set? */
-  alwaysOverrideStoredLogicSchema?: boolean;
+  alwaysOverrideStoredLogicSchema?:
+    | boolean
+    | undefined;
   /** Should Liquibase automatically include REORG TABLE commands when needed? */
-  autoReorg?: boolean;
+  autoReorg?:
+    | boolean
+    | undefined;
   /** Number of seconds wait between checks to the changelog lock when it is locked */
-  changelogLockPollRate?: string;
+  changelogLockPollRate?:
+    | string
+    | undefined;
   /** Number of minutes to wait for the changelog lock to be available before giving up */
-  changelogLockWaitTimeInMinutes?: string;
+  changelogLockWaitTimeInMinutes?:
+    | string
+    | undefined;
   /** Configures how to handle unknown fields in changelog files. Possible values: STRICT which causes parsing to fail, and LAX which continues with the parsing. */
-  changelogParseMode?: string;
+  changelogParseMode?:
+    | string
+    | undefined;
   /** Additional classpath entries to use */
-  classpath?: string;
+  classpath?:
+    | string
+    | undefined;
   /** Should Liquibase convert to/from STANDARD data types. Applies to both snapshot and update commands. */
-  convertDataTypes?: boolean;
+  convertDataTypes?:
+    | boolean
+    | undefined;
   /** [PRO]Relative or fully qualified path to a yaml file containing key:value data to inject or exclude data from JSON structured logs. Learn more at https://docs.liquibase.com/structured-logging */
-  customLogDataFile?: string;
+  customLogDataFile?:
+    | string
+    | undefined;
   /** [PRO]The frequency that the custom log data will be entered into the logs. Available options are: ONCE,REPEATED */
-  customLogDataFrequency?: string;
+  customLogDataFrequency?:
+    | string
+    | undefined;
   /** Name of table to use for tracking concurrent Liquibase usage */
-  databaseChangelogLockTableName?: string;
+  databaseChangelogLockTableName?:
+    | string
+    | undefined;
   /** Name of table to use for tracking change history */
-  databaseChangelogTableName?: string;
+  databaseChangelogTableName?:
+    | string
+    | undefined;
   /** Class to use for Database implementation */
-  databaseClass?: string;
+  databaseClass?:
+    | string
+    | undefined;
+  /** If true, extensions are captured in the history table */
+  dbclhistoryCaptureExtensions?:
+    | boolean
+    | undefined;
+  /** If true, executed SQL is captured in the history table */
+  dbclhistoryCaptureSql?:
+    | boolean
+    | undefined;
+  /** [PRO]This property enables Liquibase Pro users to store a record of all database changing liquibase operations in a new table DATABASECHANGELOGHISTORY. This table includes records of rollback, dropalls, and repeated runOnChange type activity, which is not available in the standard DATABASECHANGELOG table. */
+  dbclhistoryEnabled?:
+    | boolean
+    | undefined;
+  /** The exit code to use if an exception is encountered while recording history events */
+  dbclhistorySeverity?: number | undefined;
+  dbclhistoryTableName?:
+    | string
+    | undefined;
   /** The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases. */
-  ddlLockTimeout?: number;
+  ddlLockTimeout?:
+    | number
+    | undefined;
   /** File with default Liquibase properties */
-  defaultsFile?: string;
+  defaultsFile?:
+    | string
+    | undefined;
   /** Should Liquibase compare column order in diff operation? */
-  diffColumnOrder?: boolean;
+  diffColumnOrder?:
+    | boolean
+    | undefined;
   /** Database driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** Driver-specific properties */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation) */
-  duplicateFileMode?: string;
+  duplicateFileMode?:
+    | string
+    | undefined;
   /** Throw an error if Liquibase detects that an includeAll will cause a circular reference (and thus a changelog parse error). */
-  errorOnCircularIncludeAll?: boolean;
+  errorOnCircularIncludeAll?:
+    | boolean
+    | undefined;
   /** Encoding to use when reading files. Valid values include: UTF-8, UTF-16, UTF-16BE, UTF-16LE, US-ASCII, or OS to use the system configured encoding. */
-  fileEncoding?: string;
+  fileEncoding?:
+    | string
+    | undefined;
   /** DEPRECATED: No longer used */
-  filterLogMessages?: boolean;
+  filterLogMessages?:
+    | boolean
+    | undefined;
   /** If true, display a more verbose output for the FlowFile toString representation */
-  flowVerboseToString?: boolean;
+  flowVerboseToString?:
+    | boolean
+    | undefined;
   /** Should Liquibase include a 'created' attribute in diff/generateChangelog changesets with the current datetime */
-  generateChangesetCreatedValues?: boolean;
+  generateChangesetCreatedValues?:
+    | boolean
+    | undefined;
   /** Should Liquibase include the change description in the id when generating changesets? */
-  generatedChangesetIdsContainsDescription?: boolean;
+  generatedChangesetIdsContainsDescription?:
+    | boolean
+    | undefined;
   /** Force liquibase to think it has no access to a keyboard */
-  headless?: boolean;
+  headless?:
+    | boolean
+    | undefined;
   /** Should Liquibase include the catalog name when determining equality? */
-  includeCatalogInSpecification?: boolean;
+  includeCatalogInSpecification?:
+    | boolean
+    | undefined;
   /** If set to true, and there are multiple identical tags in the database changelog table, all of the newer matching tags will be rolled back while rolling back to the oldest tag. The default value for this option was false for all Liquibase versions equal to or older than 4.25.1. */
-  includeMatchingTagInRollbackOldest?: boolean;
+  includeMatchingTagInRollbackOldest?:
+    | boolean
+    | undefined;
   /** If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff */
-  includeRelationsForComputedColumns?: boolean;
+  includeRelationsForComputedColumns?:
+    | boolean
+    | undefined;
   /** Include the system classpath when resolving classes at runtime */
-  includeSystemClasspath?: boolean;
+  includeSystemClasspath?:
+    | boolean
+    | undefined;
   /** Liquibase Pro or Liquibase Labs license key used to unlock paid capabilities. Get a free trial at https://liquibase.com/trial and use in CLI or add liquibase.licenseKey=<yourKey> into your defaults file. */
-  licenseKey?: string;
+  licenseKey?:
+    | string
+    | undefined;
   /** Catalog to use for Liquibase objects */
-  liquibaseCatalogName?: string;
+  liquibaseCatalogName?:
+    | string
+    | undefined;
   /** Schema to use for Liquibase objects */
-  liquibaseSchemaName?: string;
+  liquibaseSchemaName?:
+    | string
+    | undefined;
   /** Tablespace to use for Liquibase objects */
-  liquibaseTablespaceName?: string;
+  liquibaseTablespaceName?:
+    | string
+    | undefined;
   /** Controls which log channels have their level set by the liquibase.logLevel setting. Comma separate multiple values. To set the level of all channels, use 'all'. Example: liquibase,org.mariadb.jdbc */
-  logChannels?: string;
-  logFile?: string;
+  logChannels?: string | undefined;
+  logFile?:
+    | string
+    | undefined;
   /** Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs to the console or output log files. Pro users have the option to set value as "JSON" or "JSON_PRETTY" to enable json-structured log files to the console or output log files. */
-  logFormat?: string;
+  logFormat?:
+    | string
+    | undefined;
   /** Controls which logs get set to stderr AND to any log file. The CLI defaults, if log file set, to SEVERE. Others vary by integration. The official log levels are: OFF, SEVERE, WARNING, INFO, FINE */
-  logLevel?: string;
+  logLevel?:
+    | string
+    | undefined;
   /** When set to true, the console messages are mirrored to the logs as [liquibase.ui] to provide a more complete picture of liquibase operations to log analysis tools. Set to false to change this behavior. */
-  mirrorConsoleMessagesToLog?: boolean;
+  mirrorConsoleMessagesToLog?:
+    | boolean
+    | undefined;
   /** How to handle changelog property expressions where a value is not set. For example, a string '${address}' when no 'address' property was defined. Values can be: 'preserve' which leaves the string as-is, 'empty' which replaces it with an empty string, or 'error' which stops processing with an error. */
-  missingPropertyMode?: string;
+  missingPropertyMode?:
+    | string
+    | undefined;
   /** Enable performance tracking. Set to 'false' to disable. If set to 'true', data is stored to a `liquibase-TIMESTAMP.jfr` file in your working directory. Any other value will enable tracking and be used as the name of the file to write the data to. */
-  monitorPerformance?: string;
+  monitorPerformance?:
+    | string
+    | undefined;
   /** Custom executor that can specified */
-  nativeExecutor?: string;
+  nativeExecutor?:
+    | string
+    | undefined;
   /** If set to WARN, then liquibase will not throw exception on missing changelog file, instead will show a warning message. */
-  onMissingIncludeChangelog?: string;
+  onMissingIncludeChangelog?:
+    | string
+    | undefined;
   /** If set to WARN, then Liquibase will not throw exception on missing sqlFile inside a sqlFile change type, instead will show a warning message */
-  onMissingSqlFile?: string;
-  outputFile?: string;
+  onMissingSqlFile?: string | undefined;
+  outputFile?:
+    | string
+    | undefined;
   /** Encoding to use when writing files */
-  outputFileEncoding?: string;
+  outputFileEncoding?:
+    | string
+    | undefined;
   /** Line separator for output */
-  outputLineSeparator?: string;
+  outputLineSeparator?:
+    | string
+    | undefined;
   /** Should liquibase treat schema and catalog names as case sensitive? */
-  preserveSchemaCase?: boolean;
+  preserveSchemaCase?:
+    | boolean
+    | undefined;
   /** If true, rollback execution will be forced when having partial changes that needs to be rolled back. Defaults to false. */
-  proForceOnPartialChanges?: boolean;
+  proForceOnPartialChanges?:
+    | boolean
+    | undefined;
   /** [PRO]The default end delimiter to use for all change sets */
-  proGlobalEndDelimiter?: string;
+  proGlobalEndDelimiter?:
+    | string
+    | undefined;
   /** [PRO]If true, the global end delimiter overrides all other settings */
-  proGlobalEndDelimiterPrioritized?: boolean;
+  proGlobalEndDelimiterPrioritized?:
+    | boolean
+    | undefined;
   /** DEPRECATED: Liquibase Pro license key used to unlock paid capabilities. Get a free trial at https://www.liquibase.com/protrial and use in CLI or add liquibase.pro.licenseKey=<yourKey> into your defaults file. */
-  proLicenseKey?: string;
+  proLicenseKey?:
+    | string
+    | undefined;
   /** If a column would be dropped in a diffChangeLog, call markUnused instead if set to true */
-  proMarkUnusedNotDrop?: boolean;
+  proMarkUnusedNotDrop?:
+    | boolean
+    | undefined;
   /** If true, generate changeSets with SQL-based changes inlined instead of saving them to an external file */
-  proSqlInline?: boolean;
+  proSqlInline?:
+    | boolean
+    | undefined;
   /** If false, do not drop public synonyms in diffChangeLog/dropAll */
-  proSynonymsDropPublic?: boolean;
+  proSynonymsDropPublic?:
+    | boolean
+    | undefined;
   /** Should Liquibase prompt if a non-local database is being accessed */
-  promptForNonLocalDatabase?: boolean;
+  promptForNonLocalDatabase?:
+    | boolean
+    | undefined;
   /** Implementation of Properties class to provide additional driver properties */
-  propertyProviderClass?: string;
+  propertyProviderClass?:
+    | string
+    | undefined;
   /** Enable or disable reporting. */
-  reportsEnabled?: boolean;
+  reportsEnabled?:
+    | boolean
+    | undefined;
   /** The format of the report. Currently, can only be set to "html". */
-  reportsFormat?: string;
+  reportsFormat?:
+    | string
+    | undefined;
   /** The name of the reports. */
-  reportsName?: string;
+  reportsName?:
+    | string
+    | undefined;
   /** The path to the directory to generate the reports. */
-  reportsPath?: string;
+  reportsPath?:
+    | string
+    | undefined;
   /** Complete list of Location(s) to search for files such as changelog files in. Multiple paths can be specified by separating them with commas. */
-  searchPath?: string;
+  searchPath?:
+    | string
+    | undefined;
   /** If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support. */
-  secureParsing?: boolean;
-  /** If true, the rollback report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report. */
-  shouldGenerateRollbackReport?: boolean;
+  secureParsing?:
+    | boolean
+    | undefined;
   /** Should Liquibase commands execute */
-  shouldRun?: boolean;
+  shouldRun?:
+    | boolean
+    | undefined;
   /** Should Liquibase snapshot data by default? */
-  shouldSnapshotData?: boolean;
+  shouldSnapshotData?:
+    | boolean
+    | undefined;
   /** If true, show a Liquibase banner on startup. */
-  showBanner?: boolean;
+  showBanner?:
+    | boolean
+    | undefined;
   /** If true, all command arguments marked as hidden will be shown in the help output, ignoring the hidden flag. NOTE, due to the order of value provider loading at such an early point in Liquibase startup, you MUST set this as a environment variable. Command line parameters will not be recognized. */
-  showHiddenArgs?: boolean;
+  showHiddenArgs?:
+    | boolean
+    | undefined;
   /** Level to log SQL statements to */
-  sqlLogLevel?: string;
+  sqlLogLevel?:
+    | string
+    | undefined;
   /** Show SQLWarning messages */
-  sqlShowSqlWarnings?: boolean;
+  sqlShowSqlWarnings?:
+    | boolean
+    | undefined;
   /** Be stricter on allowed Liquibase configuration and setup? */
-  strict?: boolean;
+  strict?:
+    | boolean
+    | undefined;
   /** Support escaping changelog parameters using a colon. Example: ${:user.name} */
-  supportPropertyEscaping?: boolean;
+  supportPropertyEscaping?:
+    | boolean
+    | undefined;
   /** Changes the default UI Service Logger used by Liquibase. Options are CONSOLE or LOGGER. */
-  uiService?: string;
+  uiService?:
+    | string
+    | undefined;
   /** If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name. */
-  useProcedureSchema?: boolean;
+  useProcedureSchema?:
+    | boolean
+    | undefined;
   /** Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true. */
-  validateXmlChangelogFiles?: boolean;
+  validateXmlChangelogFiles?:
+    | boolean
+    | undefined;
+  /** If true, long strings in Oracle will be chunked at 4000 characters when an insert statement is run, to avoid running afoul of Oracle's 4000 character limit for insert statements to clob type columns (which appears as 'ORA-01704: string literal too long.') */
+  workaroundOracleClobCharacterLimit?: boolean | undefined;
 }
 
 function createBaseGlobalOptions(): GlobalOptions {
@@ -174,6 +339,11 @@ function createBaseGlobalOptions(): GlobalOptions {
     databaseChangelogLockTableName: undefined,
     databaseChangelogTableName: undefined,
     databaseClass: undefined,
+    dbclhistoryCaptureExtensions: undefined,
+    dbclhistoryCaptureSql: undefined,
+    dbclhistoryEnabled: undefined,
+    dbclhistorySeverity: undefined,
+    dbclhistoryTableName: undefined,
     ddlLockTimeout: undefined,
     defaultsFile: undefined,
     diffColumnOrder: undefined,
@@ -224,7 +394,6 @@ function createBaseGlobalOptions(): GlobalOptions {
     reportsPath: undefined,
     searchPath: undefined,
     secureParsing: undefined,
-    shouldGenerateRollbackReport: undefined,
     shouldRun: undefined,
     shouldSnapshotData: undefined,
     showBanner: undefined,
@@ -236,6 +405,7 @@ function createBaseGlobalOptions(): GlobalOptions {
     uiService: undefined,
     useProcedureSchema: undefined,
     validateXmlChangelogFiles: undefined,
+    workaroundOracleClobCharacterLimit: undefined,
   };
 }
 
@@ -286,191 +456,206 @@ export const GlobalOptions = {
     if (message.databaseClass !== undefined) {
       writer.uint32(122).string(message.databaseClass);
     }
+    if (message.dbclhistoryCaptureExtensions !== undefined) {
+      writer.uint32(128).bool(message.dbclhistoryCaptureExtensions);
+    }
+    if (message.dbclhistoryCaptureSql !== undefined) {
+      writer.uint32(136).bool(message.dbclhistoryCaptureSql);
+    }
+    if (message.dbclhistoryEnabled !== undefined) {
+      writer.uint32(144).bool(message.dbclhistoryEnabled);
+    }
+    if (message.dbclhistorySeverity !== undefined) {
+      writer.uint32(152).int32(message.dbclhistorySeverity);
+    }
+    if (message.dbclhistoryTableName !== undefined) {
+      writer.uint32(162).string(message.dbclhistoryTableName);
+    }
     if (message.ddlLockTimeout !== undefined) {
-      writer.uint32(128).int32(message.ddlLockTimeout);
+      writer.uint32(168).int32(message.ddlLockTimeout);
     }
     if (message.defaultsFile !== undefined) {
-      writer.uint32(138).string(message.defaultsFile);
+      writer.uint32(178).string(message.defaultsFile);
     }
     if (message.diffColumnOrder !== undefined) {
-      writer.uint32(144).bool(message.diffColumnOrder);
+      writer.uint32(184).bool(message.diffColumnOrder);
     }
     if (message.driver !== undefined) {
-      writer.uint32(154).string(message.driver);
+      writer.uint32(194).string(message.driver);
     }
     if (message.driverPropertiesFile !== undefined) {
-      writer.uint32(162).string(message.driverPropertiesFile);
+      writer.uint32(202).string(message.driverPropertiesFile);
     }
     if (message.duplicateFileMode !== undefined) {
-      writer.uint32(170).string(message.duplicateFileMode);
+      writer.uint32(210).string(message.duplicateFileMode);
     }
     if (message.errorOnCircularIncludeAll !== undefined) {
-      writer.uint32(176).bool(message.errorOnCircularIncludeAll);
+      writer.uint32(216).bool(message.errorOnCircularIncludeAll);
     }
     if (message.fileEncoding !== undefined) {
-      writer.uint32(186).string(message.fileEncoding);
+      writer.uint32(226).string(message.fileEncoding);
     }
     if (message.filterLogMessages !== undefined) {
-      writer.uint32(192).bool(message.filterLogMessages);
+      writer.uint32(232).bool(message.filterLogMessages);
     }
     if (message.flowVerboseToString !== undefined) {
-      writer.uint32(200).bool(message.flowVerboseToString);
+      writer.uint32(240).bool(message.flowVerboseToString);
     }
     if (message.generateChangesetCreatedValues !== undefined) {
-      writer.uint32(208).bool(message.generateChangesetCreatedValues);
+      writer.uint32(248).bool(message.generateChangesetCreatedValues);
     }
     if (message.generatedChangesetIdsContainsDescription !== undefined) {
-      writer.uint32(216).bool(message.generatedChangesetIdsContainsDescription);
+      writer.uint32(256).bool(message.generatedChangesetIdsContainsDescription);
     }
     if (message.headless !== undefined) {
-      writer.uint32(224).bool(message.headless);
+      writer.uint32(264).bool(message.headless);
     }
     if (message.includeCatalogInSpecification !== undefined) {
-      writer.uint32(232).bool(message.includeCatalogInSpecification);
+      writer.uint32(272).bool(message.includeCatalogInSpecification);
     }
     if (message.includeMatchingTagInRollbackOldest !== undefined) {
-      writer.uint32(240).bool(message.includeMatchingTagInRollbackOldest);
+      writer.uint32(280).bool(message.includeMatchingTagInRollbackOldest);
     }
     if (message.includeRelationsForComputedColumns !== undefined) {
-      writer.uint32(248).bool(message.includeRelationsForComputedColumns);
+      writer.uint32(288).bool(message.includeRelationsForComputedColumns);
     }
     if (message.includeSystemClasspath !== undefined) {
-      writer.uint32(256).bool(message.includeSystemClasspath);
+      writer.uint32(296).bool(message.includeSystemClasspath);
     }
     if (message.licenseKey !== undefined) {
-      writer.uint32(266).string(message.licenseKey);
+      writer.uint32(306).string(message.licenseKey);
     }
     if (message.liquibaseCatalogName !== undefined) {
-      writer.uint32(274).string(message.liquibaseCatalogName);
+      writer.uint32(314).string(message.liquibaseCatalogName);
     }
     if (message.liquibaseSchemaName !== undefined) {
-      writer.uint32(282).string(message.liquibaseSchemaName);
+      writer.uint32(322).string(message.liquibaseSchemaName);
     }
     if (message.liquibaseTablespaceName !== undefined) {
-      writer.uint32(290).string(message.liquibaseTablespaceName);
+      writer.uint32(330).string(message.liquibaseTablespaceName);
     }
     if (message.logChannels !== undefined) {
-      writer.uint32(298).string(message.logChannels);
+      writer.uint32(338).string(message.logChannels);
     }
     if (message.logFile !== undefined) {
-      writer.uint32(306).string(message.logFile);
+      writer.uint32(346).string(message.logFile);
     }
     if (message.logFormat !== undefined) {
-      writer.uint32(314).string(message.logFormat);
+      writer.uint32(354).string(message.logFormat);
     }
     if (message.logLevel !== undefined) {
-      writer.uint32(322).string(message.logLevel);
+      writer.uint32(362).string(message.logLevel);
     }
     if (message.mirrorConsoleMessagesToLog !== undefined) {
-      writer.uint32(328).bool(message.mirrorConsoleMessagesToLog);
+      writer.uint32(368).bool(message.mirrorConsoleMessagesToLog);
     }
     if (message.missingPropertyMode !== undefined) {
-      writer.uint32(338).string(message.missingPropertyMode);
+      writer.uint32(378).string(message.missingPropertyMode);
     }
     if (message.monitorPerformance !== undefined) {
-      writer.uint32(346).string(message.monitorPerformance);
+      writer.uint32(386).string(message.monitorPerformance);
     }
     if (message.nativeExecutor !== undefined) {
-      writer.uint32(354).string(message.nativeExecutor);
+      writer.uint32(394).string(message.nativeExecutor);
     }
     if (message.onMissingIncludeChangelog !== undefined) {
-      writer.uint32(362).string(message.onMissingIncludeChangelog);
+      writer.uint32(402).string(message.onMissingIncludeChangelog);
     }
     if (message.onMissingSqlFile !== undefined) {
-      writer.uint32(370).string(message.onMissingSqlFile);
+      writer.uint32(410).string(message.onMissingSqlFile);
     }
     if (message.outputFile !== undefined) {
-      writer.uint32(378).string(message.outputFile);
+      writer.uint32(418).string(message.outputFile);
     }
     if (message.outputFileEncoding !== undefined) {
-      writer.uint32(386).string(message.outputFileEncoding);
+      writer.uint32(426).string(message.outputFileEncoding);
     }
     if (message.outputLineSeparator !== undefined) {
-      writer.uint32(394).string(message.outputLineSeparator);
+      writer.uint32(434).string(message.outputLineSeparator);
     }
     if (message.preserveSchemaCase !== undefined) {
-      writer.uint32(400).bool(message.preserveSchemaCase);
+      writer.uint32(440).bool(message.preserveSchemaCase);
     }
     if (message.proForceOnPartialChanges !== undefined) {
-      writer.uint32(408).bool(message.proForceOnPartialChanges);
+      writer.uint32(448).bool(message.proForceOnPartialChanges);
     }
     if (message.proGlobalEndDelimiter !== undefined) {
-      writer.uint32(418).string(message.proGlobalEndDelimiter);
+      writer.uint32(458).string(message.proGlobalEndDelimiter);
     }
     if (message.proGlobalEndDelimiterPrioritized !== undefined) {
-      writer.uint32(424).bool(message.proGlobalEndDelimiterPrioritized);
+      writer.uint32(464).bool(message.proGlobalEndDelimiterPrioritized);
     }
     if (message.proLicenseKey !== undefined) {
-      writer.uint32(434).string(message.proLicenseKey);
+      writer.uint32(474).string(message.proLicenseKey);
     }
     if (message.proMarkUnusedNotDrop !== undefined) {
-      writer.uint32(440).bool(message.proMarkUnusedNotDrop);
+      writer.uint32(480).bool(message.proMarkUnusedNotDrop);
     }
     if (message.proSqlInline !== undefined) {
-      writer.uint32(448).bool(message.proSqlInline);
+      writer.uint32(488).bool(message.proSqlInline);
     }
     if (message.proSynonymsDropPublic !== undefined) {
-      writer.uint32(456).bool(message.proSynonymsDropPublic);
+      writer.uint32(496).bool(message.proSynonymsDropPublic);
     }
     if (message.promptForNonLocalDatabase !== undefined) {
-      writer.uint32(464).bool(message.promptForNonLocalDatabase);
+      writer.uint32(504).bool(message.promptForNonLocalDatabase);
     }
     if (message.propertyProviderClass !== undefined) {
-      writer.uint32(474).string(message.propertyProviderClass);
+      writer.uint32(514).string(message.propertyProviderClass);
     }
     if (message.reportsEnabled !== undefined) {
-      writer.uint32(480).bool(message.reportsEnabled);
+      writer.uint32(520).bool(message.reportsEnabled);
     }
     if (message.reportsFormat !== undefined) {
-      writer.uint32(490).string(message.reportsFormat);
+      writer.uint32(530).string(message.reportsFormat);
     }
     if (message.reportsName !== undefined) {
-      writer.uint32(498).string(message.reportsName);
+      writer.uint32(538).string(message.reportsName);
     }
     if (message.reportsPath !== undefined) {
-      writer.uint32(506).string(message.reportsPath);
+      writer.uint32(546).string(message.reportsPath);
     }
     if (message.searchPath !== undefined) {
-      writer.uint32(514).string(message.searchPath);
+      writer.uint32(554).string(message.searchPath);
     }
     if (message.secureParsing !== undefined) {
-      writer.uint32(520).bool(message.secureParsing);
-    }
-    if (message.shouldGenerateRollbackReport !== undefined) {
-      writer.uint32(528).bool(message.shouldGenerateRollbackReport);
+      writer.uint32(560).bool(message.secureParsing);
     }
     if (message.shouldRun !== undefined) {
-      writer.uint32(536).bool(message.shouldRun);
+      writer.uint32(568).bool(message.shouldRun);
     }
     if (message.shouldSnapshotData !== undefined) {
-      writer.uint32(544).bool(message.shouldSnapshotData);
+      writer.uint32(576).bool(message.shouldSnapshotData);
     }
     if (message.showBanner !== undefined) {
-      writer.uint32(552).bool(message.showBanner);
+      writer.uint32(584).bool(message.showBanner);
     }
     if (message.showHiddenArgs !== undefined) {
-      writer.uint32(560).bool(message.showHiddenArgs);
+      writer.uint32(592).bool(message.showHiddenArgs);
     }
     if (message.sqlLogLevel !== undefined) {
-      writer.uint32(570).string(message.sqlLogLevel);
+      writer.uint32(602).string(message.sqlLogLevel);
     }
     if (message.sqlShowSqlWarnings !== undefined) {
-      writer.uint32(576).bool(message.sqlShowSqlWarnings);
+      writer.uint32(608).bool(message.sqlShowSqlWarnings);
     }
     if (message.strict !== undefined) {
-      writer.uint32(584).bool(message.strict);
+      writer.uint32(616).bool(message.strict);
     }
     if (message.supportPropertyEscaping !== undefined) {
-      writer.uint32(592).bool(message.supportPropertyEscaping);
+      writer.uint32(624).bool(message.supportPropertyEscaping);
     }
     if (message.uiService !== undefined) {
-      writer.uint32(602).string(message.uiService);
+      writer.uint32(634).string(message.uiService);
     }
     if (message.useProcedureSchema !== undefined) {
-      writer.uint32(608).bool(message.useProcedureSchema);
+      writer.uint32(640).bool(message.useProcedureSchema);
     }
     if (message.validateXmlChangelogFiles !== undefined) {
-      writer.uint32(616).bool(message.validateXmlChangelogFiles);
+      writer.uint32(648).bool(message.validateXmlChangelogFiles);
+    }
+    if (message.workaroundOracleClobCharacterLimit !== undefined) {
+      writer.uint32(656).bool(message.workaroundOracleClobCharacterLimit);
     }
     return writer;
   },
@@ -592,434 +777,469 @@ export const GlobalOptions = {
             break;
           }
 
-          message.ddlLockTimeout = reader.int32();
+          message.dbclhistoryCaptureExtensions = reader.bool();
           continue;
         case 17:
-          if (tag !== 138) {
+          if (tag !== 136) {
             break;
           }
 
-          message.defaultsFile = reader.string();
+          message.dbclhistoryCaptureSql = reader.bool();
           continue;
         case 18:
           if (tag !== 144) {
             break;
           }
 
-          message.diffColumnOrder = reader.bool();
+          message.dbclhistoryEnabled = reader.bool();
           continue;
         case 19:
-          if (tag !== 154) {
+          if (tag !== 152) {
             break;
           }
 
-          message.driver = reader.string();
+          message.dbclhistorySeverity = reader.int32();
           continue;
         case 20:
           if (tag !== 162) {
             break;
           }
 
-          message.driverPropertiesFile = reader.string();
+          message.dbclhistoryTableName = reader.string();
           continue;
         case 21:
-          if (tag !== 170) {
+          if (tag !== 168) {
+            break;
+          }
+
+          message.ddlLockTimeout = reader.int32();
+          continue;
+        case 22:
+          if (tag !== 178) {
+            break;
+          }
+
+          message.defaultsFile = reader.string();
+          continue;
+        case 23:
+          if (tag !== 184) {
+            break;
+          }
+
+          message.diffColumnOrder = reader.bool();
+          continue;
+        case 24:
+          if (tag !== 194) {
+            break;
+          }
+
+          message.driver = reader.string();
+          continue;
+        case 25:
+          if (tag !== 202) {
+            break;
+          }
+
+          message.driverPropertiesFile = reader.string();
+          continue;
+        case 26:
+          if (tag !== 210) {
             break;
           }
 
           message.duplicateFileMode = reader.string();
-          continue;
-        case 22:
-          if (tag !== 176) {
-            break;
-          }
-
-          message.errorOnCircularIncludeAll = reader.bool();
-          continue;
-        case 23:
-          if (tag !== 186) {
-            break;
-          }
-
-          message.fileEncoding = reader.string();
-          continue;
-        case 24:
-          if (tag !== 192) {
-            break;
-          }
-
-          message.filterLogMessages = reader.bool();
-          continue;
-        case 25:
-          if (tag !== 200) {
-            break;
-          }
-
-          message.flowVerboseToString = reader.bool();
-          continue;
-        case 26:
-          if (tag !== 208) {
-            break;
-          }
-
-          message.generateChangesetCreatedValues = reader.bool();
           continue;
         case 27:
           if (tag !== 216) {
             break;
           }
 
-          message.generatedChangesetIdsContainsDescription = reader.bool();
+          message.errorOnCircularIncludeAll = reader.bool();
           continue;
         case 28:
-          if (tag !== 224) {
+          if (tag !== 226) {
             break;
           }
 
-          message.headless = reader.bool();
+          message.fileEncoding = reader.string();
           continue;
         case 29:
           if (tag !== 232) {
             break;
           }
 
-          message.includeCatalogInSpecification = reader.bool();
+          message.filterLogMessages = reader.bool();
           continue;
         case 30:
           if (tag !== 240) {
             break;
           }
 
-          message.includeMatchingTagInRollbackOldest = reader.bool();
+          message.flowVerboseToString = reader.bool();
           continue;
         case 31:
           if (tag !== 248) {
             break;
           }
 
-          message.includeRelationsForComputedColumns = reader.bool();
+          message.generateChangesetCreatedValues = reader.bool();
           continue;
         case 32:
           if (tag !== 256) {
             break;
           }
 
-          message.includeSystemClasspath = reader.bool();
+          message.generatedChangesetIdsContainsDescription = reader.bool();
           continue;
         case 33:
-          if (tag !== 266) {
+          if (tag !== 264) {
             break;
           }
 
-          message.licenseKey = reader.string();
+          message.headless = reader.bool();
           continue;
         case 34:
-          if (tag !== 274) {
+          if (tag !== 272) {
             break;
           }
 
-          message.liquibaseCatalogName = reader.string();
+          message.includeCatalogInSpecification = reader.bool();
           continue;
         case 35:
-          if (tag !== 282) {
+          if (tag !== 280) {
             break;
           }
 
-          message.liquibaseSchemaName = reader.string();
+          message.includeMatchingTagInRollbackOldest = reader.bool();
           continue;
         case 36:
-          if (tag !== 290) {
+          if (tag !== 288) {
             break;
           }
 
-          message.liquibaseTablespaceName = reader.string();
+          message.includeRelationsForComputedColumns = reader.bool();
           continue;
         case 37:
-          if (tag !== 298) {
+          if (tag !== 296) {
             break;
           }
 
-          message.logChannels = reader.string();
+          message.includeSystemClasspath = reader.bool();
           continue;
         case 38:
           if (tag !== 306) {
             break;
           }
 
-          message.logFile = reader.string();
+          message.licenseKey = reader.string();
           continue;
         case 39:
           if (tag !== 314) {
             break;
           }
 
-          message.logFormat = reader.string();
+          message.liquibaseCatalogName = reader.string();
           continue;
         case 40:
           if (tag !== 322) {
             break;
           }
 
-          message.logLevel = reader.string();
+          message.liquibaseSchemaName = reader.string();
           continue;
         case 41:
-          if (tag !== 328) {
+          if (tag !== 330) {
             break;
           }
 
-          message.mirrorConsoleMessagesToLog = reader.bool();
+          message.liquibaseTablespaceName = reader.string();
           continue;
         case 42:
           if (tag !== 338) {
             break;
           }
 
-          message.missingPropertyMode = reader.string();
+          message.logChannels = reader.string();
           continue;
         case 43:
           if (tag !== 346) {
             break;
           }
 
-          message.monitorPerformance = reader.string();
+          message.logFile = reader.string();
           continue;
         case 44:
           if (tag !== 354) {
             break;
           }
 
-          message.nativeExecutor = reader.string();
+          message.logFormat = reader.string();
           continue;
         case 45:
           if (tag !== 362) {
             break;
           }
 
-          message.onMissingIncludeChangelog = reader.string();
+          message.logLevel = reader.string();
           continue;
         case 46:
-          if (tag !== 370) {
+          if (tag !== 368) {
             break;
           }
 
-          message.onMissingSqlFile = reader.string();
+          message.mirrorConsoleMessagesToLog = reader.bool();
           continue;
         case 47:
           if (tag !== 378) {
             break;
           }
 
-          message.outputFile = reader.string();
+          message.missingPropertyMode = reader.string();
           continue;
         case 48:
           if (tag !== 386) {
             break;
           }
 
-          message.outputFileEncoding = reader.string();
+          message.monitorPerformance = reader.string();
           continue;
         case 49:
           if (tag !== 394) {
             break;
           }
 
-          message.outputLineSeparator = reader.string();
+          message.nativeExecutor = reader.string();
           continue;
         case 50:
-          if (tag !== 400) {
+          if (tag !== 402) {
             break;
           }
 
-          message.preserveSchemaCase = reader.bool();
+          message.onMissingIncludeChangelog = reader.string();
           continue;
         case 51:
-          if (tag !== 408) {
+          if (tag !== 410) {
             break;
           }
 
-          message.proForceOnPartialChanges = reader.bool();
+          message.onMissingSqlFile = reader.string();
           continue;
         case 52:
           if (tag !== 418) {
             break;
           }
 
-          message.proGlobalEndDelimiter = reader.string();
+          message.outputFile = reader.string();
           continue;
         case 53:
-          if (tag !== 424) {
+          if (tag !== 426) {
             break;
           }
 
-          message.proGlobalEndDelimiterPrioritized = reader.bool();
+          message.outputFileEncoding = reader.string();
           continue;
         case 54:
           if (tag !== 434) {
             break;
           }
 
-          message.proLicenseKey = reader.string();
+          message.outputLineSeparator = reader.string();
           continue;
         case 55:
           if (tag !== 440) {
             break;
           }
 
-          message.proMarkUnusedNotDrop = reader.bool();
+          message.preserveSchemaCase = reader.bool();
           continue;
         case 56:
           if (tag !== 448) {
             break;
           }
 
-          message.proSqlInline = reader.bool();
+          message.proForceOnPartialChanges = reader.bool();
           continue;
         case 57:
-          if (tag !== 456) {
+          if (tag !== 458) {
             break;
           }
 
-          message.proSynonymsDropPublic = reader.bool();
+          message.proGlobalEndDelimiter = reader.string();
           continue;
         case 58:
           if (tag !== 464) {
             break;
           }
 
-          message.promptForNonLocalDatabase = reader.bool();
+          message.proGlobalEndDelimiterPrioritized = reader.bool();
           continue;
         case 59:
           if (tag !== 474) {
             break;
           }
 
-          message.propertyProviderClass = reader.string();
+          message.proLicenseKey = reader.string();
           continue;
         case 60:
           if (tag !== 480) {
             break;
           }
 
-          message.reportsEnabled = reader.bool();
+          message.proMarkUnusedNotDrop = reader.bool();
           continue;
         case 61:
-          if (tag !== 490) {
+          if (tag !== 488) {
             break;
           }
 
-          message.reportsFormat = reader.string();
+          message.proSqlInline = reader.bool();
           continue;
         case 62:
-          if (tag !== 498) {
+          if (tag !== 496) {
             break;
           }
 
-          message.reportsName = reader.string();
+          message.proSynonymsDropPublic = reader.bool();
           continue;
         case 63:
-          if (tag !== 506) {
+          if (tag !== 504) {
             break;
           }
 
-          message.reportsPath = reader.string();
+          message.promptForNonLocalDatabase = reader.bool();
           continue;
         case 64:
           if (tag !== 514) {
             break;
           }
 
-          message.searchPath = reader.string();
+          message.propertyProviderClass = reader.string();
           continue;
         case 65:
           if (tag !== 520) {
             break;
           }
 
-          message.secureParsing = reader.bool();
+          message.reportsEnabled = reader.bool();
           continue;
         case 66:
-          if (tag !== 528) {
+          if (tag !== 530) {
             break;
           }
 
-          message.shouldGenerateRollbackReport = reader.bool();
+          message.reportsFormat = reader.string();
           continue;
         case 67:
-          if (tag !== 536) {
+          if (tag !== 538) {
             break;
           }
 
-          message.shouldRun = reader.bool();
+          message.reportsName = reader.string();
           continue;
         case 68:
-          if (tag !== 544) {
+          if (tag !== 546) {
             break;
           }
 
-          message.shouldSnapshotData = reader.bool();
+          message.reportsPath = reader.string();
           continue;
         case 69:
-          if (tag !== 552) {
+          if (tag !== 554) {
             break;
           }
 
-          message.showBanner = reader.bool();
+          message.searchPath = reader.string();
           continue;
         case 70:
           if (tag !== 560) {
             break;
           }
 
-          message.showHiddenArgs = reader.bool();
+          message.secureParsing = reader.bool();
           continue;
         case 71:
-          if (tag !== 570) {
+          if (tag !== 568) {
             break;
           }
 
-          message.sqlLogLevel = reader.string();
+          message.shouldRun = reader.bool();
           continue;
         case 72:
           if (tag !== 576) {
             break;
           }
 
-          message.sqlShowSqlWarnings = reader.bool();
+          message.shouldSnapshotData = reader.bool();
           continue;
         case 73:
           if (tag !== 584) {
             break;
           }
 
-          message.strict = reader.bool();
+          message.showBanner = reader.bool();
           continue;
         case 74:
           if (tag !== 592) {
             break;
           }
 
-          message.supportPropertyEscaping = reader.bool();
+          message.showHiddenArgs = reader.bool();
           continue;
         case 75:
           if (tag !== 602) {
             break;
           }
 
-          message.uiService = reader.string();
+          message.sqlLogLevel = reader.string();
           continue;
         case 76:
           if (tag !== 608) {
             break;
           }
 
-          message.useProcedureSchema = reader.bool();
+          message.sqlShowSqlWarnings = reader.bool();
           continue;
         case 77:
           if (tag !== 616) {
             break;
           }
 
+          message.strict = reader.bool();
+          continue;
+        case 78:
+          if (tag !== 624) {
+            break;
+          }
+
+          message.supportPropertyEscaping = reader.bool();
+          continue;
+        case 79:
+          if (tag !== 634) {
+            break;
+          }
+
+          message.uiService = reader.string();
+          continue;
+        case 80:
+          if (tag !== 640) {
+            break;
+          }
+
+          message.useProcedureSchema = reader.bool();
+          continue;
+        case 81:
+          if (tag !== 648) {
+            break;
+          }
+
           message.validateXmlChangelogFiles = reader.bool();
+          continue;
+        case 82:
+          if (tag !== 656) {
+            break;
+          }
+
+          message.workaroundOracleClobCharacterLimit = reader.bool();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -1063,6 +1283,19 @@ export const GlobalOptions = {
         ? globalThis.String(object.databaseChangelogTableName)
         : undefined,
       databaseClass: isSet(object.databaseClass) ? globalThis.String(object.databaseClass) : undefined,
+      dbclhistoryCaptureExtensions: isSet(object.dbclhistoryCaptureExtensions)
+        ? globalThis.Boolean(object.dbclhistoryCaptureExtensions)
+        : undefined,
+      dbclhistoryCaptureSql: isSet(object.dbclhistoryCaptureSql)
+        ? globalThis.Boolean(object.dbclhistoryCaptureSql)
+        : undefined,
+      dbclhistoryEnabled: isSet(object.dbclhistoryEnabled) ? globalThis.Boolean(object.dbclhistoryEnabled) : undefined,
+      dbclhistorySeverity: isSet(object.dbclhistorySeverity)
+        ? globalThis.Number(object.dbclhistorySeverity)
+        : undefined,
+      dbclhistoryTableName: isSet(object.dbclhistoryTableName)
+        ? globalThis.String(object.dbclhistoryTableName)
+        : undefined,
       ddlLockTimeout: isSet(object.ddlLockTimeout) ? globalThis.Number(object.ddlLockTimeout) : undefined,
       defaultsFile: isSet(object.defaultsFile) ? globalThis.String(object.defaultsFile) : undefined,
       diffColumnOrder: isSet(object.diffColumnOrder) ? globalThis.Boolean(object.diffColumnOrder) : undefined,
@@ -1159,9 +1392,6 @@ export const GlobalOptions = {
       reportsPath: isSet(object.reportsPath) ? globalThis.String(object.reportsPath) : undefined,
       searchPath: isSet(object.searchPath) ? globalThis.String(object.searchPath) : undefined,
       secureParsing: isSet(object.secureParsing) ? globalThis.Boolean(object.secureParsing) : undefined,
-      shouldGenerateRollbackReport: isSet(object.shouldGenerateRollbackReport)
-        ? globalThis.Boolean(object.shouldGenerateRollbackReport)
-        : undefined,
       shouldRun: isSet(object.shouldRun) ? globalThis.Boolean(object.shouldRun) : undefined,
       shouldSnapshotData: isSet(object.shouldSnapshotData) ? globalThis.Boolean(object.shouldSnapshotData) : undefined,
       showBanner: isSet(object.showBanner) ? globalThis.Boolean(object.showBanner) : undefined,
@@ -1176,6 +1406,9 @@ export const GlobalOptions = {
       useProcedureSchema: isSet(object.useProcedureSchema) ? globalThis.Boolean(object.useProcedureSchema) : undefined,
       validateXmlChangelogFiles: isSet(object.validateXmlChangelogFiles)
         ? globalThis.Boolean(object.validateXmlChangelogFiles)
+        : undefined,
+      workaroundOracleClobCharacterLimit: isSet(object.workaroundOracleClobCharacterLimit)
+        ? globalThis.Boolean(object.workaroundOracleClobCharacterLimit)
         : undefined,
     };
   },
@@ -1226,6 +1459,21 @@ export const GlobalOptions = {
     }
     if (message.databaseClass !== undefined) {
       obj.databaseClass = message.databaseClass;
+    }
+    if (message.dbclhistoryCaptureExtensions !== undefined) {
+      obj.dbclhistoryCaptureExtensions = message.dbclhistoryCaptureExtensions;
+    }
+    if (message.dbclhistoryCaptureSql !== undefined) {
+      obj.dbclhistoryCaptureSql = message.dbclhistoryCaptureSql;
+    }
+    if (message.dbclhistoryEnabled !== undefined) {
+      obj.dbclhistoryEnabled = message.dbclhistoryEnabled;
+    }
+    if (message.dbclhistorySeverity !== undefined) {
+      obj.dbclhistorySeverity = Math.round(message.dbclhistorySeverity);
+    }
+    if (message.dbclhistoryTableName !== undefined) {
+      obj.dbclhistoryTableName = message.dbclhistoryTableName;
     }
     if (message.ddlLockTimeout !== undefined) {
       obj.ddlLockTimeout = Math.round(message.ddlLockTimeout);
@@ -1377,9 +1625,6 @@ export const GlobalOptions = {
     if (message.secureParsing !== undefined) {
       obj.secureParsing = message.secureParsing;
     }
-    if (message.shouldGenerateRollbackReport !== undefined) {
-      obj.shouldGenerateRollbackReport = message.shouldGenerateRollbackReport;
-    }
     if (message.shouldRun !== undefined) {
       obj.shouldRun = message.shouldRun;
     }
@@ -1413,6 +1658,9 @@ export const GlobalOptions = {
     if (message.validateXmlChangelogFiles !== undefined) {
       obj.validateXmlChangelogFiles = message.validateXmlChangelogFiles;
     }
+    if (message.workaroundOracleClobCharacterLimit !== undefined) {
+      obj.workaroundOracleClobCharacterLimit = message.workaroundOracleClobCharacterLimit;
+    }
     return obj;
   },
 
@@ -1436,6 +1684,11 @@ export const GlobalOptions = {
     message.databaseChangelogLockTableName = object.databaseChangelogLockTableName ?? undefined;
     message.databaseChangelogTableName = object.databaseChangelogTableName ?? undefined;
     message.databaseClass = object.databaseClass ?? undefined;
+    message.dbclhistoryCaptureExtensions = object.dbclhistoryCaptureExtensions ?? undefined;
+    message.dbclhistoryCaptureSql = object.dbclhistoryCaptureSql ?? undefined;
+    message.dbclhistoryEnabled = object.dbclhistoryEnabled ?? undefined;
+    message.dbclhistorySeverity = object.dbclhistorySeverity ?? undefined;
+    message.dbclhistoryTableName = object.dbclhistoryTableName ?? undefined;
     message.ddlLockTimeout = object.ddlLockTimeout ?? undefined;
     message.defaultsFile = object.defaultsFile ?? undefined;
     message.diffColumnOrder = object.diffColumnOrder ?? undefined;
@@ -1486,7 +1739,6 @@ export const GlobalOptions = {
     message.reportsPath = object.reportsPath ?? undefined;
     message.searchPath = object.searchPath ?? undefined;
     message.secureParsing = object.secureParsing ?? undefined;
-    message.shouldGenerateRollbackReport = object.shouldGenerateRollbackReport ?? undefined;
     message.shouldRun = object.shouldRun ?? undefined;
     message.shouldSnapshotData = object.shouldSnapshotData ?? undefined;
     message.showBanner = object.showBanner ?? undefined;
@@ -1498,6 +1750,7 @@ export const GlobalOptions = {
     message.uiService = object.uiService ?? undefined;
     message.useProcedureSchema = object.useProcedureSchema ?? undefined;
     message.validateXmlChangelogFiles = object.validateXmlChangelogFiles ?? undefined;
+    message.workaroundOracleClobCharacterLimit = object.workaroundOracleClobCharacterLimit ?? undefined;
     return message;
   },
 };

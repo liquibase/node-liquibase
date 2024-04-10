@@ -20,6 +20,7 @@ import {
   ChecksRunCommandAttributes,
   ChecksShowCommandAttributes,
   DbDocCommandAttributes,
+  DbclHistoryCommandAttributes,
   DiffChangelogCommandAttributes,
   DiffCommandAttributes,
   ExecuteSqlCommandAttributes,
@@ -722,6 +723,19 @@ export class Liquibase {
    */
   public dbDoc(params: DbDocCommandAttributes): Promise<string> {
     return this.run(LiquibaseCommands.DbDoc, params);
+  }
+
+  /**
+   * The `dbclHistory <format>` command displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users.
+   *
+   * @param params Arguments/Attribute for the command.
+   *
+   * @description The `dbclHistory <format>` displays the DATABASECHANGELOGHISTORY table. By default, the command displays the table in STDOUT. It is available in Liquibase 4.27.0 and later. It is only available to Liquibase Pro users.
+   *
+   * {@link https://docs.liquibase.com/commands/change-tracking/dbcl-history.html Documentation}
+   */
+  public dbclHistory(params: DbclHistoryCommandAttributes): Promise<string> {
+    return this.run(LiquibaseCommands.DbclHistory, params);
   }
 
   /**

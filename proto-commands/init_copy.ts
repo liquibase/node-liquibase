@@ -7,12 +7,16 @@ export interface Init {
 }
 
 export interface Init_CopyRequest {
-  /** Recursive copy files from the source directory */
-  recursive?: boolean;
-  /** Path to the directory where the project files will be created */
-  source?: string;
+  /** Recursively copy files from the source directory */
+  recursive?:
+    | boolean
+    | undefined;
   /** Source directory where the project files will be copied from */
-  target?: string;
+  source?:
+    | string
+    | undefined;
+  /** Path to the directory where the project files will be created */
+  target?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 

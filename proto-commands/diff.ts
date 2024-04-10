@@ -5,65 +5,119 @@ import { GlobalOptions } from "./global_options";
 /** Outputs a description of differences.  If you have a Liquibase Pro key, you can output the differences as JSON using the --format=JSON option */
 export interface DiffRequest {
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** Types of objects to compare */
-  diffTypes?: string;
+  diffTypes?:
+    | string
+    | undefined;
   /** [PRO] Sets the return code for all drift types found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverity?: number;
+  driftSeverity?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "changed" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityChanged?: number;
+  driftSeverityChanged?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "missing" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityMissing?: number;
+  driftSeverityMissing?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "unexpected" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityUnexpected?: number;
+  driftSeverityUnexpected?:
+    | number
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Objects to exclude from diff */
-  excludeObjects?: string;
+  excludeObjects?:
+    | string
+    | undefined;
   /** [PRO] Option to create JSON output */
-  format?: string;
+  format?:
+    | string
+    | undefined;
   /** Objects to include in diff */
-  includeObjects?: string;
+  includeObjects?:
+    | string
+    | undefined;
   /** Output schemas names. This is a CSV list. */
-  outputSchemas?: string;
+  outputSchemas?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
   /** The default catalog name to use for the reference database connection */
-  referenceDefaultCatalogName?: string;
+  referenceDefaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the reference database connection */
-  referenceDefaultSchemaName?: string;
+  referenceDefaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class for the reference database */
-  referenceDriver?: string;
+  referenceDriver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file for the reference database */
-  referenceDriverPropertiesFile?: string;
+  referenceDriverPropertiesFile?:
+    | string
+    | undefined;
   /** Reference catalog to use for Liquibase objects */
-  referenceLiquibaseCatalogName?: string;
+  referenceLiquibaseCatalogName?:
+    | string
+    | undefined;
   /** Reference schema to use for Liquibase objects */
-  referenceLiquibaseSchemaName?: string;
+  referenceLiquibaseSchemaName?:
+    | string
+    | undefined;
   /** The reference database password */
-  referencePassword?: string;
+  referencePassword?:
+    | string
+    | undefined;
   /** Schemas names on reference database to use in diff. This is a CSV list. */
-  referenceSchemas?: string;
+  referenceSchemas?:
+    | string
+    | undefined;
   /** required* The JDBC reference database connection URL */
   referenceUrl: string;
   /** The reference database username */
-  referenceUsername?: string;
+  referenceUsername?:
+    | string
+    | undefined;
   /** [PRO] Enable or disable reporting. */
-  reportEnabled?: boolean;
+  reportEnabled?:
+    | boolean
+    | undefined;
   /** [PRO] The name of the report. */
-  reportName?: string;
+  reportName?:
+    | string
+    | undefined;
   /** [PRO] The path to the directory to generate the report. */
-  reportPath?: string;
+  reportPath?:
+    | string
+    | undefined;
   /** Schemas to include in diff */
-  schemas?: string;
+  schemas?:
+    | string
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 

@@ -5,83 +5,157 @@ import { GlobalOptions } from "./global_options";
 /** Compare two databases to produce changesets and write them to a changelog file */
 export interface DiffChangelogRequest {
   /** Specifies the author for changesets in the generated changelog */
-  author?: string;
+  author?:
+    | string
+    | undefined;
   /** required* Changelog file to write results */
   changelogFile: string;
   /** Changeset contexts to generate */
-  contextFilter?: string;
+  contextFilter?:
+    | string
+    | undefined;
   /** The default catalog name to use for the database connection */
-  defaultCatalogName?: string;
+  defaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the database connection */
-  defaultSchemaName?: string;
+  defaultSchemaName?:
+    | string
+    | undefined;
   /** Types of objects to compare */
-  diffTypes?: string;
+  diffTypes?:
+    | string
+    | undefined;
   /** [PRO] Sets the return code for all drift types found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverity?: number;
+  driftSeverity?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "changed" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityChanged?: number;
+  driftSeverityChanged?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "missing" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityMissing?: number;
+  driftSeverityMissing?:
+    | number
+    | undefined;
   /** [PRO] Sets the return code for "unexpected" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4 */
-  driftSeverityUnexpected?: number;
+  driftSeverityUnexpected?:
+    | number
+    | undefined;
   /** The JDBC driver class */
-  driver?: string;
+  driver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file */
-  driverPropertiesFile?: string;
+  driverPropertiesFile?:
+    | string
+    | undefined;
   /** Objects to exclude from diff */
-  excludeObjects?: string;
+  excludeObjects?:
+    | string
+    | undefined;
   /** If true, the catalog will be included in generated changeSets. Defaults to false. */
-  includeCatalog?: boolean;
+  includeCatalog?:
+    | boolean
+    | undefined;
   /** Objects to include in diff */
-  includeObjects?: string;
+  includeObjects?:
+    | string
+    | undefined;
   /** If true, the schema will be included in generated changeSets. Defaults to false. */
-  includeSchema?: boolean;
+  includeSchema?:
+    | boolean
+    | undefined;
   /** Include the tablespace attribute in the changelog. Defaults to false. */
-  includeTablespace?: boolean;
+  includeTablespace?:
+    | boolean
+    | undefined;
   /** Changeset labels to generate */
-  labelFilter?: string;
+  labelFilter?:
+    | string
+    | undefined;
   /** Output schemas names. This is a CSV list. */
-  outputSchemas?: string;
+  outputSchemas?:
+    | string
+    | undefined;
   /** Password to use to connect to the database */
-  password?: string;
+  password?:
+    | string
+    | undefined;
   /** The default catalog name to use for the reference database connection */
-  referenceDefaultCatalogName?: string;
+  referenceDefaultCatalogName?:
+    | string
+    | undefined;
   /** The default schema name to use for the reference database connection */
-  referenceDefaultSchemaName?: string;
+  referenceDefaultSchemaName?:
+    | string
+    | undefined;
   /** The JDBC driver class for the reference database */
-  referenceDriver?: string;
+  referenceDriver?:
+    | string
+    | undefined;
   /** The JDBC driver properties file for the reference database */
-  referenceDriverPropertiesFile?: string;
+  referenceDriverPropertiesFile?:
+    | string
+    | undefined;
   /** Reference catalog to use for Liquibase objects */
-  referenceLiquibaseCatalogName?: string;
+  referenceLiquibaseCatalogName?:
+    | string
+    | undefined;
   /** Reference schema to use for Liquibase objects */
-  referenceLiquibaseSchemaName?: string;
+  referenceLiquibaseSchemaName?:
+    | string
+    | undefined;
   /** The reference database password */
-  referencePassword?: string;
+  referencePassword?:
+    | string
+    | undefined;
   /** Schemas names on reference database to use in diff. This is a CSV list. */
-  referenceSchemas?: string;
+  referenceSchemas?:
+    | string
+    | undefined;
   /** required* The JDBC reference database connection URL */
   referenceUrl: string;
   /** The reference database username */
-  referenceUsername?: string;
+  referenceUsername?:
+    | string
+    | undefined;
   /** Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView) */
-  replaceIfExistsTypes?: string;
+  replaceIfExistsTypes?:
+    | string
+    | undefined;
   /** [PRO] Enable or disable reporting. */
-  reportEnabled?: boolean;
+  reportEnabled?:
+    | boolean
+    | undefined;
   /** [PRO] The name of the report. */
-  reportName?: string;
+  reportName?:
+    | string
+    | undefined;
   /** [PRO] The path to the directory to generate the report. */
-  reportPath?: string;
+  reportPath?:
+    | string
+    | undefined;
   /** Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...). */
-  runOnChangeTypes?: string;
+  runOnChangeTypes?:
+    | string
+    | undefined;
   /** Schemas to include in diff */
-  schemas?: string;
+  schemas?:
+    | string
+    | undefined;
+  /** When true will skip object sorting. This can be useful on databases that have a lot of packages/procedures that are linked to each other */
+  skipObjectSorting?:
+    | boolean
+    | undefined;
   /** required* The JDBC database connection URL */
   url: string;
   /** If true, will add 'OR REPLACE' option to the create view change object */
-  useOrReplaceOption?: boolean;
+  useOrReplaceOption?:
+    | boolean
+    | undefined;
   /** Username to use to connect to the database */
-  username?: string;
+  username?: string | undefined;
   globalOptions: GlobalOptions | undefined;
 }
 
@@ -127,6 +201,7 @@ function createBaseDiffChangelogRequest(): DiffChangelogRequest {
     reportPath: undefined,
     runOnChangeTypes: undefined,
     schemas: undefined,
+    skipObjectSorting: undefined,
     url: "",
     useOrReplaceOption: undefined,
     username: undefined,
@@ -244,17 +319,20 @@ export const DiffChangelogRequest = {
     if (message.schemas !== undefined) {
       writer.uint32(290).string(message.schemas);
     }
+    if (message.skipObjectSorting !== undefined) {
+      writer.uint32(296).bool(message.skipObjectSorting);
+    }
     if (message.url !== "") {
-      writer.uint32(298).string(message.url);
+      writer.uint32(306).string(message.url);
     }
     if (message.useOrReplaceOption !== undefined) {
-      writer.uint32(304).bool(message.useOrReplaceOption);
+      writer.uint32(312).bool(message.useOrReplaceOption);
     }
     if (message.username !== undefined) {
-      writer.uint32(314).string(message.username);
+      writer.uint32(322).string(message.username);
     }
     if (message.globalOptions !== undefined) {
-      GlobalOptions.encode(message.globalOptions, writer.uint32(322).fork()).ldelim();
+      GlobalOptions.encode(message.globalOptions, writer.uint32(330).fork()).ldelim();
     }
     return writer;
   },
@@ -519,28 +597,35 @@ export const DiffChangelogRequest = {
           message.schemas = reader.string();
           continue;
         case 37:
-          if (tag !== 298) {
+          if (tag !== 296) {
+            break;
+          }
+
+          message.skipObjectSorting = reader.bool();
+          continue;
+        case 38:
+          if (tag !== 306) {
             break;
           }
 
           message.url = reader.string();
           continue;
-        case 38:
-          if (tag !== 304) {
+        case 39:
+          if (tag !== 312) {
             break;
           }
 
           message.useOrReplaceOption = reader.bool();
           continue;
-        case 39:
-          if (tag !== 314) {
+        case 40:
+          if (tag !== 322) {
             break;
           }
 
           message.username = reader.string();
           continue;
-        case 40:
-          if (tag !== 322) {
+        case 41:
+          if (tag !== 330) {
             break;
           }
 
@@ -613,6 +698,7 @@ export const DiffChangelogRequest = {
       reportPath: isSet(object.reportPath) ? globalThis.String(object.reportPath) : undefined,
       runOnChangeTypes: isSet(object.runOnChangeTypes) ? globalThis.String(object.runOnChangeTypes) : undefined,
       schemas: isSet(object.schemas) ? globalThis.String(object.schemas) : undefined,
+      skipObjectSorting: isSet(object.skipObjectSorting) ? globalThis.Boolean(object.skipObjectSorting) : undefined,
       url: isSet(object.url) ? globalThis.String(object.url) : "",
       useOrReplaceOption: isSet(object.useOrReplaceOption) ? globalThis.Boolean(object.useOrReplaceOption) : undefined,
       username: isSet(object.username) ? globalThis.String(object.username) : undefined,
@@ -730,6 +816,9 @@ export const DiffChangelogRequest = {
     if (message.schemas !== undefined) {
       obj.schemas = message.schemas;
     }
+    if (message.skipObjectSorting !== undefined) {
+      obj.skipObjectSorting = message.skipObjectSorting;
+    }
     if (message.url !== "") {
       obj.url = message.url;
     }
@@ -786,6 +875,7 @@ export const DiffChangelogRequest = {
     message.reportPath = object.reportPath ?? undefined;
     message.runOnChangeTypes = object.runOnChangeTypes ?? undefined;
     message.schemas = object.schemas ?? undefined;
+    message.skipObjectSorting = object.skipObjectSorting ?? undefined;
     message.url = object.url ?? "";
     message.useOrReplaceOption = object.useOrReplaceOption ?? undefined;
     message.username = object.username ?? undefined;
