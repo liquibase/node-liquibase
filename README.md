@@ -110,11 +110,10 @@ node-liquibase /Users/me/path/to/my/executable/for/liquibase
 import {
 	LiquibaseConfig,
 	Liquibase,
-	POSTGRESQL_DEFAULT_CONFIG,
 } from 'liquibase';
 
 const myConfig: LiquibaseConfig = {
-	...POSTGRESQL_DEFAULT_CONFIG,
+	changeLogFile: './changelog.xml',
 	url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
 	username: 'yourusername',
 	password: 'yoursecurepassword',
@@ -134,10 +133,8 @@ doEet();
 
 ```js
 const Liquibase = require('liquibase').Liquibase;
-const POSTGRESQL_DEFAULT_CONFIG = require('liquibase').POSTGRESQL_DEFAULT_CONFIG;
 
 const myConfig = {
-  ...POSTGRESQL_DEFAULT_CONFIG,
   changeLogFile: './changelog.xml',
   url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
   username: 'yourusername',
@@ -242,7 +239,6 @@ Using the `liquibase` property on your config object.
 import { Liquibase, LiquibaseConfig, POSTGRESQL_DEFAULT_CONFIG } from 'liquibase';
 
 const myConfig: LiquibaseConfig = {
-  ...POSTGRESQL_DEFAULT_CONFIG,
   changeLogFile: './changelog.xml',
   url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
   username: 'yourusername',
@@ -258,7 +254,6 @@ inst.status();
 import { Liquibase, LiquibaseConfig, POSTGRESQL_DEFAULT_CONFIG } from 'liquibase';
 
 const myConfig: LiquibaseConfig = {
-  ...POSTGRESQL_DEFAULT_CONFIG,
   changeLogFile: './changelog.xml',
   url: 'jdbc:postgresql://localhost:5432/node_liquibase_testing',
   username: 'yourusername',
