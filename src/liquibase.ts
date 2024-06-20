@@ -89,6 +89,14 @@ export class Liquibase {
    * ```
    */
   constructor(private config: LiquibaseConfig) {
+		const defaults: LiquibaseConfig = {
+			liquibase: FileHelper.bundledLiquibasePath,
+			changeLogFile: '',
+			url: '',
+			username: '',
+			password: ''
+		};
+		this.config = Object.assign({}, defaults, config);
     this.commandHandler = new CommandHandler(this.config);
   }
 
