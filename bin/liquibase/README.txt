@@ -1,8 +1,8 @@
-Liquibase Version 4.27.0
+Liquibase Version 4.28.0
 
 Introduction
 --------------------------------------------
-Thanks for downloading and installing Liquibase 4.27.0 from Liquibase.
+Thanks for downloading and installing Liquibase 4.28.0 from Liquibase.
 By using the installer, you already have all the dependencies, directories, config, 
 and properties files to get started exploring the Liquibase examples provided.
 
