@@ -37,14 +37,20 @@ export class Logger {
       return;
     }
 
-    if(this.logLevel == LiquibaseLogLevels.Debug)
+    if (this.logLevel === LiquibaseLogLevels.Debug) {
       return this._debug(message);
+    }
 
     return console.log(`${LIQUIBASE_LABEL} ${this.sanitizeOutput(message)}`);
   }
 
   private _debug(message: string) {
-    const levels = [LiquibaseLogLevels.Debug, LiquibaseLogLevels.Info, LiquibaseLogLevels.Severe, LiquibaseLogLevels.Warning];
+    const levels = [
+      LiquibaseLogLevels.Debug,
+      LiquibaseLogLevels.Info,
+      LiquibaseLogLevels.Severe,
+      LiquibaseLogLevels.Warning,
+    ];
 
     if (!this.shouldOperate(levels)) {
       return;
@@ -98,5 +104,4 @@ export class Logger {
   private sanitizeOutput(output: string): string {
     return output.replace(/password=("?\S+"?)/gi, 'password=******');
   }
-
 }
