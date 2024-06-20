@@ -90,7 +90,6 @@ export class Liquibase {
    * ```
    */
   constructor(private config: LiquibaseConfig) {
-    this.mergeConfigWithDefaults(config);
     this.commandHandler = new CommandHandler(this.config);
   }
 
@@ -920,20 +919,6 @@ export class Liquibase {
    */
   private spawnChildProcess(commandString: string): Promise<string> {
     return this.commandHandler.spawnChildProcess(commandString);
-  }
-
-  /**
-   * For now, we will assume Postgres is the 'default' database type.
-   * In the future we can be smarter about how we merge these configs.
-   *
-   * @param config User Provided `LiquibaseConfig`
-   */
-  private mergeConfigWithDefaults(config: LiquibaseConfig) {
-    const defaults: LiquibaseConfig = {
-      ...POSTGRESQL_DEFAULT_CONFIG,
-      liquibase: FileHelper.bundledLiquibasePath,
-    };
-    this.config = Object.assign({}, defaults, config);
   }
 
   /**
