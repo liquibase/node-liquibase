@@ -1,5 +1,5 @@
 Liquibase License Information (Used by Liquibase OSS)
-Version: 4.27.0
+Version: 4.28.0
 
 Liquibase ships with 3rd party components using the following licenses:
 
@@ -26,6 +26,7 @@ Apache 2.0 License
 - org.apache.commons:commons-lang3
 - org.apache.commons:commons-text
 - org.apache.commons:commons-collections4
+- commons-io:commons-io
 
 BSD 2 Clause License
 - org.hsqldb:hsqldb
