@@ -50,7 +50,6 @@ import {
   UpdateOneChangesetSQLCommandAttributes,
 } from './index';
 import { LiquibaseConfig } from './models/index';
-import { POSTGRESQL_DEFAULT_CONFIG } from './constants/defaults/postgresql-default.config';
 import { join } from 'path';
 import { LiquibaseCommands } from './enums';
 require('dotenv').config();
