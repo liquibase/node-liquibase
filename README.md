@@ -86,7 +86,7 @@ node-liquibase
 --url="jdbc:postgresql://localhost:5432/postgres"
 --username="yourusername"
 --password="yoursecurepassword"
---classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar"
+--classpath="/Users/me/path/to/my/db-drivers/postgresql-42.7.3.jar"
 status
 ```
 
@@ -98,7 +98,7 @@ node-liquibase /Users/me/path/to/my/executable/for/liquibase
  --url="jdbc:postgresql://localhost:5432/postgres"
  --username="yourusername"
  --password="yoursecurepassword"
- --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar"
+ --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.7.3.jar"
  status
 ```
 
@@ -270,12 +270,12 @@ Using the `--liquibase` flag on your CLI command.
 
 #### Before
 ```bash
-yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar" status
+yarn node-liquibase --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.7.3.jar" status
 ```
 
 #### After
 ```bash
-yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.4.2.jar" status
+yarn node-liquibase --liquibase="Users/me/absolute/path/to/executable/directory" --changeLogFile="changelog.xml" --url="jdbc:postgresql://localhost:5432/node_liquibase_testing" --username="yourusername" --password="yoursecurepassword" --classpath="/Users/me/path/to/my/db-drivers/postgresql-42.7.3.jar" status
 ```
 
 ### Sandbox: @pd
