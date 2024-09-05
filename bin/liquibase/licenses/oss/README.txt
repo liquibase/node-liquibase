@@ -1,5 +1,5 @@
 Liquibase License Information (Used by Liquibase OSS)
-Version: 4.28.0
+Version: 4.29.1
 
 Liquibase ships with 3rd party components using the following licenses:
 
