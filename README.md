@@ -16,7 +16,7 @@
 [5]: https://www.youtube.com/channel/UC5qMsRjObu685rTBq0PJX8w
 
 ![Node and Liquibase](/docs/assets/node-liquibase.png)
-Use Node and databases? Want to do smart architecture decisions? Do not invent wheel, use Liquibase.
+Do you use Node and databases and want to implement smart architecture decisions? Liquibase is here to help.
 Liquibase is an open-source database-independent library for tracking, managing and applying database schema changes.
 
 ### :panda_face: Concerned About Install Size?
