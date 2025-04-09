@@ -1,4 +1,5 @@
 ARG VERSION
+
 FROM liquibase/liquibase:$VERSION
 
 USER root
@@ -8,3 +9,4 @@ WORKDIR /proto
 USER liquibase
 
 RUN lpm update && lpm add protobuf-generator@v0.3.7 --global
+
