@@ -3,27 +3,27 @@ import { LiquibaseConfig } from '../models';
 import { Logger } from '../util';
 
 export class CommandHandler {
-  private logger: Logger;
+	private logger: Logger;
 
-  constructor(config: LiquibaseConfig) {
-    this.logger = new Logger(config);
-  }
+	constructor(config: LiquibaseConfig) {
+		this.logger = new Logger(config);
+	}
 
-  public spawnChildProcess(commandString: string): Promise<string> {
-    this.logger.log(`Running ${commandString}...`);
+	public spawnChildProcess(commandString: string): Promise<string> {
+		this.logger.log(`Running ${commandString}...`);
 
-    return new Promise((resolve, reject) => {
-      exec(commandString, (error, stdout, stderr) => {
-        this.logger.log(`\n ${stdout}`);
+		return new Promise((resolve, reject) => {
+			exec(commandString, (error, stdout, stderr) => {
+				this.logger.log(`\n ${stdout}`);
 
-        if (error) {
-          this.logger.error(`\n ${stderr}`);
-          // error.stderr = stderr;
-          return reject(error);
-        }
+				if (error) {
+					this.logger.error(`\n ${stderr}`);
+					// error.stderr = stderr;
+					return reject(error);
+				}
 
-        resolve(stdout);
-      });
-    });
-  }
+				resolve(stdout);
+			});
+		});
+	}
 }
