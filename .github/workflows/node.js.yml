@@ -30,6 +30,6 @@ jobs:
     # Install Dependencies
     - run: npm install
     # Run Linters
-    - run: npm run lint
+    - run: npm run lint --fix
     # Run Tests
     - run: npm run test
