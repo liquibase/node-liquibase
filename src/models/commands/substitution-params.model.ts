@@ -1,11 +1,11 @@
 export interface ParamsModel {
-  [key: string]: any;
+	[key: string]: any;
 }
 
 export type SubstitutionParamsModel = ParamsModel;
 
 type HasSubstitutionParams = {
-  substitutionParams: SubstitutionParamsModel;
+	substitutionParams: SubstitutionParamsModel;
 };
 
 export type WithSubstitutionParams<T> = HasSubstitutionParams & T;
