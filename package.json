@@ -30,7 +30,7 @@
     "rimraf": "rimraf"
   },
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=14.17.0"
   },
   "repository": {
     "type": "git",
@@ -75,7 +75,7 @@
     "ncp": "^2.0.0",
     "proto": "^1.0.19",
     "rimraf": "^3.0.2",
-    "semantic-release": "^25.0.3",
+    "semantic-release": "^19.0.5",
     "ts-proto": "^1.180.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.2.0",
