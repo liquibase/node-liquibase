@@ -112,6 +112,8 @@
     "tabWidth": 2,
     "singleQuote": true,
     "printWidth": 100
-}
-
+  },
+  "overrides": {
+    "braces": "3.0.3"
+  }
 }
