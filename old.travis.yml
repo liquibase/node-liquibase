@@ -16,4 +16,4 @@ deploy:
   script:
     # - yarn build:lib && npx semantic-release
   on:
-    branch: master
+    branch: main

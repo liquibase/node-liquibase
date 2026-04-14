@@ -78,7 +78,7 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config --global init.defaultBranch master
+          git config --global init.defaultBranch main
           git config --global user.name "liquibot"
           git config --global user.email "liquibot@liquibase.org"
 
@@ -89,4 +89,4 @@ jobs:
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
           body: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
           branch: ${{ inputs.version }}
-          base: master
+          base: main
