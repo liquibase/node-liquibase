@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Check if feature branch for ${{ inputs.version }} exists
         id: branch_check
@@ -83,7 +83,7 @@ jobs:
           git config --global user.email "liquibot@liquibase.org"
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6
         with:
           commit-message: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
           title: Auto Pull Request for protobuf files [liquibase ${{ inputs.version }}]
