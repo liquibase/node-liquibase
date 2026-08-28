@@ -5,9 +5,16 @@ on:
   release:
     types: [published]
 
+# Deny by default: without this block the token inherits the org default, which is write.
+permissions: {}
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      # id-token: write is what lets npm mint the OIDC token it signs provenance with.
+      id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -21,6 +28,6 @@ jobs:
           npm install
           npm run build
 
-      - run: npm publish
+      - run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
