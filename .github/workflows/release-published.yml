@@ -24,8 +24,10 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
 
+      # npm ci installs exactly the committed package-lock.json, so the provenance
+      # attestation covers the same dependency tree every time.
       - run: |
-          npm install
+          npm ci
           npm run build
 
       - run: npm publish --provenance
